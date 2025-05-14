@@ -1,12 +1,10 @@
 // main.js
-const { createClient } = supabase;
-
-const supabaseClient = createClient(
+const supabase = supabase.createClient(
   "https://ecwxcwiclbsxxkdltttm.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjd3hjd2ljbGJzeHhrZGx0dHRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMzI4NTAsImV4cCI6MjA2MjgwODg1MH0.CzzF1lrCOJI3M40KuC9RInjjbbSqcAy28LAzy5K26bU"
 );
 
-let players = JSON.parse(supabaseClient.getItem('ligalockePlayers')) || [
+let players = JSON.parse(localStorage.getItem('ligalockePlayers')) || [
   { name: "Vargash", points: 0, img: "https://media.tenor.com/BS6MXJndFmgAAAAm/n-pokemon.webp" },
   { name: "Marci", points: 0, img: "https://media.tenor.com/nRP3gaOv5bIAAAAm/hi-beeg-hey-beeg.webp" },
   { name: "Garofa", points: 0, img: "https://media.tenor.com/X_xh7_GIN9YAAAAm/rojo-pokemon.webp" }
@@ -23,6 +21,7 @@ function renderPlayers() {
   if (!container) return;
   container.innerHTML = "";
 
+  // Ordena por puntos descendente
   players.sort((a, b) => b.points - a.points);
 
   players.forEach((p, index) => {

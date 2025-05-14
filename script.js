@@ -1,8 +1,4 @@
 // main.js
-const supabase = supabase.createClient(
-  "https://ecwxcwiclbsxxkdltttm.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjd3hjd2ljbGJzeHhrZGx0dHRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMzI4NTAsImV4cCI6MjA2MjgwODg1MH0.CzzF1lrCOJI3M40KuC9RInjjbbSqcAy28LAzy5K26bU"
-);
 
 let players = JSON.parse(localStorage.getItem('ligalockePlayers')) || [
   { name: "Vargash", points: 0, img: "https://media.tenor.com/BS6MXJndFmgAAAAm/n-pokemon.webp" },

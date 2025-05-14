@@ -1,45 +1,21 @@
-const supabase = window.supabase.createClient(
+// main.js
+const { createClient } = supabase;
+
+const supabaseClient = createClient(
   "https://ecwxcwiclbsxxkdltttm.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjd3hjd2ljbGJzeHhrZGx0dHRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMzI4NTAsImV4cCI6MjA2MjgwODg1MH0.CzzF1lrCOJI3M40KuC9RInjjbbSqcAy28LAzy5K26bU"
 );
 
-let players = [];
+let players = JSON.parse(supabaseClient.getItem('ligalockePlayers')) || [
+  { name: "Vargash", points: 0, img: "https://media.tenor.com/BS6MXJndFmgAAAAm/n-pokemon.webp" },
+  { name: "Marci", points: 0, img: "https://media.tenor.com/nRP3gaOv5bIAAAAm/hi-beeg-hey-beeg.webp" },
+  { name: "Garofa", points: 0, img: "https://media.tenor.com/X_xh7_GIN9YAAAAm/rojo-pokemon.webp" }
+];
 
-async function loadPlayers() {
-  const { data, error } = await supabase.from("players").select("*");
-  if (error) {
-    console.error("Error al cargar jugadores:", error.message);
-    return;
-  }
-  players = data || [];
-  renderPlayers();
-  updateChart();
-}
+const eventLog = [];
 
-async function savePlayer(player) {
-  const { error } = await supabase.from("players").insert([player]);
-  if (error) console.error("Error al guardar jugador:", error.message);
-}
-
-async function updatePoints(name, delta) {
-  const player = players.find(p => p.name === name);
-  if (!player) return;
-
-  player.points = Math.max(0, player.points + delta);
-
-  const { error } = await supabase
-    .from("players")
-    .update({ points: player.points })
-    .eq("name", name);
-
-  if (error) {
-    console.error("Error actualizando puntos:", error.message);
-    return;
-  }
-
-  addEvent(`${name} ${delta > 0 ? "gana" : "pierde"} ${Math.abs(delta)} punto(s).`);
-  renderPlayers();
-  updateChart();
+function savePlayers() {
+  localStorage.setItem('ligalockePlayers', JSON.stringify(players));
 }
 
 function renderPlayers() {
@@ -52,6 +28,7 @@ function renderPlayers() {
   players.forEach((p, index) => {
     const div = document.createElement("div");
     div.className = "card participant-card p-2 mb-2 d-flex flex-md-row flex-column align-items-center justify-content-between";
+
     div.innerHTML = `
       <div class="d-flex align-items-center mb-2 mb-md-0">
         <img src="${p.img}" alt="${p.name}" class="avatar me-3" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
@@ -59,34 +36,75 @@ function renderPlayers() {
       </div>
       <div>
         <span id="points-${p.name}" class="me-2">${p.points}</span> pts
-        <button class="btn btn-sm btn-primary me-1" onclick="updatePoints('${p.name}', 1)">+1</button>
-        <button class="btn btn-sm btn-danger" onclick="updatePoints('${p.name}', -1)">-1</button>
+        <button class="btn btn-sm btn-primary me-1" onclick="changePoints('${p.name}', 1)">+1</button>
+        <button class="btn btn-sm btn-danger" onclick="changePoints('${p.name}', -1)">-1</button>
       </div>
     `;
     container.appendChild(div);
   });
 }
 
-async function addNewPlayer() {
-  const name = document.getElementById("new-player-name").value.trim();
-  const img = document.getElementById("new-player-img").value.trim() || "img/default.png";
+function changePoints(name, delta) {
+  const player = players.find(p => p.name === name);
+  if (!player) return;
+
+  player.points = Math.max(0, player.points + delta);
+  const action = delta > 0 ? "gana" : "pierde";
+  const cantidad = Math.abs(delta);
+  addEvent(`${name} ${action} ${cantidad} punto(s).`);
+
+  savePlayers();
+  renderPlayers();
+  updateChart();
+}
+
+function addEvent(msg) {
+  const time = new Date().toLocaleTimeString();
+  const logEntry = `[${time}] ${msg}`;
+  eventLog.unshift(logEntry);
+
+  const logBox = document.getElementById("event-log");
+  if (logBox) {
+    logBox.innerHTML = eventLog.map(e => `<div>${e}</div>`).join('');
+  }
+}
+
+function addNewPlayer() {
+  const nameInput = document.getElementById("new-player-name");
+  const imgInput = document.getElementById("new-player-img");
+
+  const name = nameInput.value.trim();
+  const img = imgInput.value.trim() || "img/default.png";
 
   if (!name) return alert("El nombre no puede estar vacío.");
   if (players.some(p => p.name.toLowerCase() === name.toLowerCase())) {
     return alert("Ese jugador ya existe.");
   }
 
-  const newPlayer = { name, points: 0, img };
-  players.push(newPlayer);
-  await savePlayer(newPlayer);
+  players.push({ name, points: 0, img });
   addEvent(`Nuevo jugador: ${name}`);
+
+  nameInput.value = "";
+  imgInput.value = "";
+
+  savePlayers();
   renderPlayers();
   updateChart();
+}
 
-  document.getElementById("new-player-name").value = "";
-  document.getElementById("new-player-img").value = "";
+function toggleTheme() {
+  document.body.classList.toggle("light-mode");
+}
+
+function updateChart() {
+  if (typeof Chart !== "undefined" && window.pointsChart) {
+    pointsChart.data.labels = players.map(p => p.name);
+    pointsChart.data.datasets[0].data = players.map(p => p.points);
+    pointsChart.update();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadPlayers();
+  renderPlayers();
+  updateChart();
 });

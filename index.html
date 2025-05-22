@@ -6,21 +6,55 @@
   <meta name="description" content="Torneo Pokémon Ligalocke 1 - formato competitivo inspirado en Nuzlocke">
   <title>Inicio - Torneo Pokémon Ligalocke 1</title>
 
-  
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
   <!-- Estilo personalizado -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    .hero {
+      background-image: url('ligalocke-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+    }
+
+    .hero .content {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 1rem;
+    }
+
+    .btn-discord {
+      background-color: #5865F2;
+      color: white;
+    }
+
+    .btn-discord:hover {
+      background-color: #4752C4;
+    }
+
+    .img-gallery img {
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ENCABEZADO -->
-  <div class="header">
-    <h1>Torneo Pokémon Ligalocke 1</h1>
+  <!-- HERO -->
+  <div class="hero d-flex align-items-center justify-content-center text-white text-center">
+    <div class="content">
+      <h1 class="display-4 fw-bold">¡Bienvenido a Ligalocke!</h1>
+      <p class="lead">El desafío Nuzlocke definitivo, con un toque competitivo.</p>
+      <a href="reglas.html" class="btn btn-danger btn-lg mt-3">Ver Reglas</a>
+    </div>
   </div>
 
   <!-- NAVBAR -->
@@ -30,7 +64,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="participantes.html">Participantes</a></li>
@@ -47,31 +81,37 @@
       <div class="card-body">
         <h2 class="card-title text-danger">¿Qué es Ligalocke?</h2>
         <p class="card-text">
-          El Torneo Pokémon Ligalocke 1 es una competencia amistosa entre entrenadores, basada en las reglas del Nuzlocke pero adaptadas a un formato competitivo.
+          El Torneo Pokémon Ligalocke 2 es una competencia amistosa entre entrenadores, basada en las reglas del Nuzlocke pero adaptadas a un formato competitivo.
           Cada participante jugará una versión de Pokémon bajo ciertas restricciones y obtendrá puntos por logros específicos.
         </p>
         <p class="card-text">
           ¡Compite, entrena, sobrevive y alcanza la cima de la liga!
         </p>
-        <a href="https://discord.gg/HjPckqCvEt" class="btn btn-discord mt-3">Únete al Discord</a>
+        <a href="https://discord.gg/F6W9C2fJMR" class="btn btn-discord mt-3"><i class="bi bi-discord"></i> Únete al Discord</a>
       </div>
     </div>
 
-    <!-- Ejemplo de futura sección -->
-    <!--
-    <div class="card border-info mb-4">
-      <div class="card-body">
-        <h3 class="card-title text-info">Últimas noticias</h3>
-        <p class="card-text">Próximo combate: 20 de mayo, 18:00hs.</p>
+    <!-- GALERÍA -->
+    <div class="mt-5">
+      <h3 class="mb-3"><i class="bi bi-camera-fill text-primary"></i> Momentos del torneo</h3>
+      <div class="row img-gallery">
+        <div class="col-md-4"><img src="img1.jpg" class="img-fluid"></div>
+        <div class="col-md-4"><img src="img2.jpg" class="img-fluid"></div>
+        <div class="col-md-4"><img src="img3.jpg" class="img-fluid"></div>
       </div>
     </div>
-    -->
+
+    <!-- CONTADOR -->
+    <div class="text-center mt-5">
+      <h3><i class="bi bi-hourglass-split text-danger"></i> Próximo combate en:</h3>
+      <div id="countdown" class="fs-2 text-danger"></div>
+    </div>
 
   </div>
+<script src="script.js"></script>
+<script src="countdown.js"></script>
 
-  <!-- JS de Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+
 
 </body>
 </html>

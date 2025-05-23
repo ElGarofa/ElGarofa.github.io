@@ -1,44 +1,18 @@
 // main.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDk_8pll6f_muLBbNB-BS1n722kPoccAuU",
-  authDomain: "torneo-dd967.firebaseapp.com",
-  projectId: "torneo-dd967",
-  storageBucket: "torneo-dd967.appspot.com",
-  messagingSenderId: "903015354798",
-  appId: "1:903015354798:web:c02abe531b8e425601f83f"
-};
+let players = JSON.parse(localStorage.getItem('ligalockePlayers')) || [
+  { name: "Vargash", points: 0, img: "https://media.tenor.com/BS6MXJndFmgAAAAm/n-pokemon.webp" },
+  { name: "Marci", points: 0, img: "https://media.tenor.com/nRP3gaOv5bIAAAAm/hi-beeg-hey-beeg.webp" },
+  { name: "Exxis", points: 0, img: "https://media.tenor.com/4eHJK7PKU2QAAAAM/mari-marnie.gif" },
+  { name: "Shy-red", points: 0, img: "https://media.tenor.com/hUWnlzrcPgkAAAAm/gritar-pokemon-trainer.webp" },
+  { name: "BenjaOf", points: 0, img: "https://media.tenor.com/IyStLZUSsQIAAAAm/pok%C3%A9mon-serena-pok%C3%A9mon.webp" },
+  { name: "Leo", points: 0, img: "https://media.tenor.com/tm7bF8VmEZQAAAAm/skyla-pokemon.webp" },
+  { name: "Zeref", points: 0, img: "https://media.tenor.com/soWhgqIus1cAAAAM/pokemon-hilbert.gif" },
+  { name: "Garofa", points: 0, img: "https://media.tenor.com/X_xh7_GIN9YAAAAm/rojo-pokemon.webp" },
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+];
 
-let players = [];
 const eventLog = [];
-
-async function guardarJugadorEnFirebase(jugador) {
-  try {
-    await addDoc(collection(db, "jugadores"), jugador);
-    console.log("Jugador guardado en Firebase:", jugador.name);
-  } catch (e) {
-    console.error("Error al guardar en Firebase:", e);
-  }
-}
-
-async function cargarJugadoresDesdeFirebase() {
-  try {
-    const querySnapshot = await getDocs(collection(db, "jugadores"));
-    players = [];
-    querySnapshot.forEach((doc) => {
-      players.push(doc.data());
-    });
-    renderPlayers();
-    updateChart();
-  } catch (e) {
-    console.error("Error al cargar desde Firebase:", e);
-  }
-}
 
 function savePlayers() {
   localStorage.setItem('ligalockePlayers', JSON.stringify(players));
@@ -49,6 +23,7 @@ function renderPlayers() {
   if (!container) return;
   container.innerHTML = "";
 
+  // Ordena por puntos descendente
   players.sort((a, b) => b.points - a.points);
 
   players.forEach((p, index) => {
@@ -107,14 +82,12 @@ function addNewPlayer() {
     return alert("Ese jugador ya existe.");
   }
 
-  const nuevoJugador = { name, points: 0, img };
-  players.push(nuevoJugador);
+  players.push({ name, points: 0, img });
   addEvent(`Nuevo jugador: ${name}`);
 
   nameInput.value = "";
   imgInput.value = "";
 
-  guardarJugadorEnFirebase(nuevoJugador);
   savePlayers();
   renderPlayers();
   updateChart();
@@ -133,5 +106,6 @@ function updateChart() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  cargarJugadoresDesdeFirebase();
+  renderPlayers();
+  updateChart();
 });

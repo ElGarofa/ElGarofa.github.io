@@ -33,7 +33,7 @@ function renderPlayers() {
   if (!container) return;
   container.innerHTML = "";
 
-  players.sort((a, b) => b.points - a.points);
+  players.sort((a, b) => b.point - a.point);
 
   players.forEach((p, index) => {
     const div = document.createElement("div");
@@ -45,7 +45,7 @@ function renderPlayers() {
         <strong>${index + 1}. ${p.name}</strong>
       </div>
       <div>
-        <span id="points-${p.name}" class="me-2">${p.points}</span> pts
+        <span id="points-${p.name}" class="me-2">${p.point}</span> pts
         <button class="btn btn-sm btn-primary me-1" onclick="changePoints('${p.name}', 1)">+1</button>
         <button class="btn btn-sm btn-danger" onclick="changePoints('${p.name}', -1)">-1</button>
       </div>
@@ -58,7 +58,7 @@ async function changePoints(name, delta) {
   const player = players.find(p => p.name === name);
   if (!player) return;
 
-  player.points = Math.max(0, player.points + delta);
+  player.point = Math.max(0, player.point + delta);
   const action = delta > 0 ? "gana" : "pierde";
   const cantidad = Math.abs(delta);
   addEvent(`${name} ${action} ${cantidad} punto(s).`);
@@ -91,7 +91,7 @@ async function addNewPlayer() {
     return alert("Ese jugador ya existe.");
   }
 
-  const newPlayer = { name, points: 0, img };
+  const newPlayer = { name, point: 0, img };
   players.push(newPlayer);
   addEvent(`Nuevo jugador: ${name}`);
 

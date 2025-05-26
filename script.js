@@ -1,13 +1,13 @@
-// Supabase config
-const supabaseUrl = 'https://ecwxcwiclbsxxkdltttm.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjd3hjd2ljbGJzeHhrZGx0dHRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMzI4NTAsImV4cCI6MjA2MjgwODg1MH0.CzzF1lrCOJI3M40KuC9RInjjbbSqcAy28LAzy5K26bU'; // ← Pega aquí tu clave pública anon
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
 let players = [];
 const eventLog = [];
 
+// Supabase config
+const supabaseUrl = 'https://ecwxcwiclbsxxkdltttm.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjd3hjd2ljbGJzeHhrZGx0dHRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMzI4NTAsImV4cCI6MjA2MjgwODg1MH0.CzzF1lrCOJI3M40KuC9RInjjbbSqcAy28LAzy5K26bU'; // ← Pega aquí tu clave pública anon
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
 async function loadPlayersFromSupabase() {
-  const { data, error } = await supabase.from('players').select('*');
+  const { data, error } = await supabaseClient.from('players').select('*');
   if (error) {
     console.error("Error al cargar jugadores:", error);
     return;
@@ -18,14 +18,15 @@ async function loadPlayersFromSupabase() {
 }
 
 async function savePlayerToSupabase(player) {
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from('players')
-    .upsert(player, { onConflict: ['name'] }); // Usa 'name' como clave única
+    .upsert(player, { onConflict: ['name'] });
 
   if (error) {
     console.error(`Error al guardar a ${player.name}:`, error);
   }
 }
+
 
 function renderPlayers() {
   const container = document.getElementById("participants-list");

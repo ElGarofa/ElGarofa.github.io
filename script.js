@@ -1,21 +1,30 @@
-// main.js
+// Supabase config
+const supabaseUrl = 'https://ecwxcwiclbsxxkdltttm.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjd3hjd2ljbGJzeHhrZGx0dHRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyMzI4NTAsImV4cCI6MjA2MjgwODg1MH0.CzzF1lrCOJI3M40KuC9RInjjbbSqcAy28LAzy5K26bU'; // ← Pega aquí tu clave pública anon
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-let players = JSON.parse(localStorage.getItem('ligalockePlayers')) || [
-  { name: "Vargash", points: 0, img: "https://media.tenor.com/BS6MXJndFmgAAAAm/n-pokemon.webp" },
-  { name: "Marci", points: 0, img: "https://media.tenor.com/nRP3gaOv5bIAAAAm/hi-beeg-hey-beeg.webp" },
-  { name: "Exxis", points: 0, img: "https://media.tenor.com/4eHJK7PKU2QAAAAM/mari-marnie.gif" },
-  { name: "Shy-red", points: 0, img: "https://media.tenor.com/hUWnlzrcPgkAAAAm/gritar-pokemon-trainer.webp" },
-  { name: "BenjaOf", points: 0, img: "https://media.tenor.com/IyStLZUSsQIAAAAm/pok%C3%A9mon-serena-pok%C3%A9mon.webp" },
-  { name: "Leo", points: 0, img: "https://media.tenor.com/tm7bF8VmEZQAAAAm/skyla-pokemon.webp" },
-  { name: "Zeref", points: 0, img: "https://media.tenor.com/soWhgqIus1cAAAAM/pokemon-hilbert.gif" },
-  { name: "Garofa", points: 0, img: "https://media.tenor.com/X_xh7_GIN9YAAAAm/rojo-pokemon.webp" },
-
-];
-
+let players = [];
 const eventLog = [];
 
-function savePlayers() {
-  localStorage.setItem('ligalockePlayers', JSON.stringify(players));
+async function loadPlayersFromSupabase() {
+  const { data, error } = await supabase.from('players').select('*');
+  if (error) {
+    console.error("Error al cargar jugadores:", error);
+    return;
+  }
+  players = data;
+  renderPlayers();
+  updateChart();
+}
+
+async function savePlayerToSupabase(player) {
+  const { error } = await supabase
+    .from('players')
+    .upsert(player, { onConflict: ['name'] }); // Usa 'name' como clave única
+
+  if (error) {
+    console.error(`Error al guardar a ${player.name}:`, error);
+  }
 }
 
 function renderPlayers() {
@@ -23,7 +32,6 @@ function renderPlayers() {
   if (!container) return;
   container.innerHTML = "";
 
-  // Ordena por puntos descendente
   players.sort((a, b) => b.points - a.points);
 
   players.forEach((p, index) => {
@@ -45,7 +53,7 @@ function renderPlayers() {
   });
 }
 
-function changePoints(name, delta) {
+async function changePoints(name, delta) {
   const player = players.find(p => p.name === name);
   if (!player) return;
 
@@ -54,7 +62,7 @@ function changePoints(name, delta) {
   const cantidad = Math.abs(delta);
   addEvent(`${name} ${action} ${cantidad} punto(s).`);
 
-  savePlayers();
+  await savePlayerToSupabase(player);
   renderPlayers();
   updateChart();
 }
@@ -70,7 +78,7 @@ function addEvent(msg) {
   }
 }
 
-function addNewPlayer() {
+async function addNewPlayer() {
   const nameInput = document.getElementById("new-player-name");
   const imgInput = document.getElementById("new-player-img");
 
@@ -82,13 +90,14 @@ function addNewPlayer() {
     return alert("Ese jugador ya existe.");
   }
 
-  players.push({ name, points: 0, img });
+  const newPlayer = { name, points: 0, img };
+  players.push(newPlayer);
   addEvent(`Nuevo jugador: ${name}`);
 
   nameInput.value = "";
   imgInput.value = "";
 
-  savePlayers();
+  await savePlayerToSupabase(newPlayer);
   renderPlayers();
   updateChart();
 }
@@ -106,6 +115,5 @@ function updateChart() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderPlayers();
-  updateChart();
+  loadPlayersFromSupabase();
 });

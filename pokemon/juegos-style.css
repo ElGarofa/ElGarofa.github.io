@@ -1,0 +1,53 @@
+body {
+  background-color: #0a0a0a;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background: linear-gradient(90deg, #000, #1e3a8a, #dc2626);
+  padding: 30px;
+  text-align: center;
+}
+
+.juegos-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.juego {
+  background-color: #1e1e1e;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 8px #facc15;
+}
+
+.juego h2 {
+  margin-top: 0;
+  color: #facc15;
+}
+
+.juego p {
+  margin-bottom: 1rem;
+}
+
+.btn {
+  background-color: #facc15;
+  color: #111;
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #eab308;
+}

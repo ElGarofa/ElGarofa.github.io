@@ -320,3 +320,48 @@ button.btn-sm {
     padding: 15px 18px;
   }
 }
+/* ------------------------------ */
+/* ESTILOS EXCLUSIVOS CURRÍCULUM */
+/* ------------------------------ */
+
+.hero-img {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 2rem auto;
+  display: block;
+  position: relative;
+  filter: none;
+}
+
+
+.hero .hero-img {
+  border-bottom: 4px solid #facc15;
+}
+
+/* Mejorar avatar pequeño */
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #facc15;
+  transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+/* Cards más legibles en móvil */
+@media (max-width: 768px) {
+  .participant-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .avatar {
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dodge Game - Marcos Garofani</title>
+  <link rel="stylesheet" href="dodge-style.css" />
+</head>
+<body>
+  <header>
+    <h1 style="text-align:center; color:#facc15; margin-top:20px;">Juego: Esquiva Objetos</h1>
+  </header>
+
+  <main style="max-width:600px; margin: auto; text-align:center; padding: 10px;">
+    <canvas id="gameCanvas" width="500" height="400" style="background:#111; border-radius:12px; display:block; margin: auto;"></canvas>
+
+    <button id="restartBtn" style="display:none; margin-top: 15px; background:#dc2626; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">Reiniciar Juego</button>
+
+    <section id="instructions" style="margin-top: 20px; color:#facc15;">
+      <h2>Cómo jugar</h2>
+      <p>Usa las teclas ← y → o A y D para moverte y esquivar los objetos que caen.</p>
+      <p>Evita chocar y sube de nivel aumentando la dificultad.</p>
+    </section>
+
+    <section id="highscore" style="margin-top: 10px; color:#facc15;">
+      <h3>Récord: <span id="record">0</span></h3>
+    </section>
+
+    <section id="scoreDisplay" style="margin-top: 10px; color:#facc15;">
+      <h3>Puntaje: <span id="score">0</span> | Nivel: <span id="level">1</span></h3>
+    </section>
+  </main>
+
+  <footer style="text-align:center; margin-top: 40px; padding: 20px; color: #888;">
+    <p>© 2025 Marcos Garofani - 
+      <a href="../curriculum.html" style="color:#facc15;">Currículum</a> | 
+      <a href="../tienda.html" style="color:#facc15;">Tienda Gamer</a> | 
+      <a href="../juegos.html" style="color:#facc15;">Más Juegos</a>
+    </p>
+  </footer>
+
+  <script src="dodge.js"></script>
+</body>
+</html>

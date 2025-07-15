@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Combate Pokémon - Marcos Garofani</title>
+  <link rel="stylesheet" href="combat.css" />
+</head>
+<body>
+  <header>
+    <h1>Combate Pokémon</h1>
+  </header>
+  <main>
+    <section id="battle-area">
+
+      <div class="pokemon-container player">
+        <div class="pokemon-info">
+          <h2 id="player-name">Pikachu</h2>
+          <div class="hp-bar">
+            <div id="player-hp-bar" class="hp-fill"></div>
+          </div>
+          <p>HP: <span id="player-hp">100</span>/100</p>
+        </div>
+        <img id="player-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Jugador Pokémon" />
+      </div>
+
+      <div class="pokemon-container enemy">
+        <div class="pokemon-info">
+          <h2 id="enemy-name">Charmander</h2>
+          <div class="hp-bar">
+            <div id="enemy-hp-bar" class="hp-fill"></div>
+          </div>
+          <p>HP: <span id="enemy-hp">100</span>/100</p>
+        </div>
+        <img id="enemy-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="Enemigo Pokémon" />
+      </div>
+    </section>
+
+    <section id="battle-log"></section>
+
+    <section id="actions">
+      <button id="attack-btn">Atacar</button>
+      <button id="heal-btn">Curar</button>
+    </section>
+
+    <button id="restart-btn" style="display:none;">Reiniciar</button>
+  </main>
+
+  <script src="combat.js"></script>
+</body>
+</html>

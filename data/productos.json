@@ -5,7 +5,7 @@
     "precio": 1700,
     "categoria": "gaseosa",
     "marca": "Coca-Cola",
-    "imagen": "img/coca225.png",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCC0n-t7TY1uTtMap9hY0RH15PZ2WZC1YPsw&s",
     "oferta": true
   },
   {
@@ -14,7 +14,7 @@
     "precio": 1650,
     "categoria": "gaseosa",
     "marca": "Coca-Cola",
-    "imagen": "img/cocazero225.png",
+    "imagen": "https://jumboargentina.vtexassets.com/arquivos/ids/799869-800-600?v=638349573657430000&width=800&height=600&aspect=true",
     "oferta": false
   },
   {
@@ -23,16 +23,16 @@
     "precio": 1400,
     "categoria": "gaseosa",
     "marca": "Pepsi",
-    "imagen": "img/pepsi225.png",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-QYd1Wt6MPXUgnM6ATWXt3LghqwCvfoQznA&s",
     "oferta": true
   },
   {
     "id": 4,
-    "nombre": "Manaos Cola 2.25L",
+    "nombre": "Manaos 2.25L",
     "precio": 1100,
     "categoria": "gaseosa",
     "marca": "Manaos",
-    "imagen": "img/manaos225.png",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFspQnR6VrTUWE0ZKb1fIydWIdyIaMghygTQ&s",
     "oferta": false
   },
   {
@@ -41,7 +41,7 @@
     "precio": 1550,
     "categoria": "gaseosa",
     "marca": "Coca-Cola",
-    "imagen": "img/sprite225.png",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBfhhGRq80nxL_y2rw1FQcLiQNMsm_sDuQ0g&s",
     "oferta": false
   },
   {
@@ -50,7 +50,7 @@
     "precio": 1500,
     "categoria": "gaseosa",
     "marca": "Coca-Cola",
-    "imagen": "img/fanta225.png",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9-lyg58safhLNBErb-j0NkGG_NGSk-XI3Nw&s",
     "oferta": true
   },
   {

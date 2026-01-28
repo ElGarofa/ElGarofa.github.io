@@ -51,3 +51,29 @@ body {
   font-size: 0.75rem;
   border-radius: 8px;
 }
+/* Card general */
+.card {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  border: none;
+}
+
+/* Nombre del producto */
+.card:hover h6 {
+  color: #38bdf8; /* celeste suave */
+}
+.card h6 {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Precio */
+.card .fw-bold {
+  color: #4ade80; /* verde suave, muy visible */
+}
+
+/* Texto secundario */
+.card p {
+  color: #d1d5db;
+}

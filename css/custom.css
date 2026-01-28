@@ -1,0 +1,53 @@
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.card {
+  background-color: #1e1e1e;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+/* Hover imagen */
+.card-img-top {
+  transition: transform 0.4s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.08) rotate(-1deg);
+}
+
+.navbar {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+.producto-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+}
+
+.producto-card img {
+  transition: transform 0.4s ease;
+}
+
+.producto-card:hover img {
+  transform: scale(1.1) rotate(-1deg);
+}
+.badge-oferta {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #dc3545;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border-radius: 8px;
+}

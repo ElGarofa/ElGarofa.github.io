@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "nombre": "Coca-Cola 2.25L",
+    "precio": 1700,
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "imagen": "img/coca225.png",
+    "oferta": true
+  },
+  {
+    "id": 2,
+    "nombre": "Coca-Cola Zero 2.25L",
+    "precio": 1650,
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "imagen": "img/cocazero225.png",
+    "oferta": false
+  },
+  {
+    "id": 3,
+    "nombre": "Pepsi 2.25L",
+    "precio": 1400,
+    "categoria": "gaseosa",
+    "marca": "Pepsi",
+    "imagen": "img/pepsi225.png",
+    "oferta": true
+  },
+  {
+    "id": 4,
+    "nombre": "Manaos Cola 2.25L",
+    "precio": 1100,
+    "categoria": "gaseosa",
+    "marca": "Manaos",
+    "imagen": "img/manaos225.png",
+    "oferta": false
+  },
+  {
+    "id": 5,
+    "nombre": "Sprite 2.25L",
+    "precio": 1550,
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "imagen": "img/sprite225.png",
+    "oferta": false
+  },
+  {
+    "id": 6,
+    "nombre": "Fanta Naranja 2.25L",
+    "precio": 1500,
+    "categoria": "gaseosa",
+    "marca": "Coca-Cola",
+    "imagen": "img/fanta225.png",
+    "oferta": true
+  },
+  {
+    "id": 7,
+    "nombre": "Agua Villa del Sur 2L",
+    "precio": 900,
+    "categoria": "agua",
+    "marca": "Villa del Sur",
+    "imagen": "https://www.villadelsur.com.ar/img/origen/botellasombra.png",
+    "oferta": false
+  },
+  {
+    "id": 8,
+    "nombre": "Speed Energizante 473ml",
+    "precio": 1200,
+    "categoria": "energizante",
+    "marca": "Speed",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToi4-kKeXhImicJ5Dps7SC4dwCoCJju49m-g&s",
+    "oferta": true
+  },
+  {
+    "id": 9,
+    "nombre": "Gatorade Limón 1.25L",
+    "precio": 1300,
+    "categoria": "isotonica",
+    "marca": "Gatorade",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIhOAhtA0IpYypMJFCQue1iNaF2K1iYaZwEQ&s",
+    "oferta": false
+  },
+  {
+    "id": 10,
+    "nombre": "Cerveza Quilmes 1L",
+    "precio": 1600,
+    "categoria": "cerveza",
+    "marca": "Quilmes",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY1265M7KvIax11IDU-YNbVSvOf1J4OxCDjQ&s",
+    "oferta": false
+  }
+]

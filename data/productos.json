@@ -95,7 +95,7 @@
   "precio": 800,
   "categoria": "hielo",
   "marca": "E&M",
-  "imagen": "img/hielo2kg.png",
+  "imagen": "https://http2.mlstatic.com/D_917146-MLA43358681123_092020-C.jpg",
   "oferta": false
 }
 ,{
@@ -104,7 +104,7 @@
   "precio": 1800,
   "categoria": "hielo",
   "marca": "E&M",
-  "imagen": "img/hielo5kg.png",
+  "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1KEJujsJFbRibEY64Qhj9ltO2QMDWfoOHJA&s",
   "oferta": true
 }
 

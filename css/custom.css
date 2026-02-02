@@ -143,3 +143,115 @@ body {
   transform: scale(1.1);
   color: white;
 }
+.producto-card:hover img {
+  transform: scale(1.1) rotate(-1deg);
+}
+
+.producto-card {
+  transition: transform 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+.producto-card img {
+  height: 180px;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.producto-card:hover img {
+  transform: scale(1.15) rotate(-2deg);
+}
+
+.producto-card {
+  background: #111;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.5);
+}
+
+.badge-oferta {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: crimson;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: .75rem;
+}
+
+.producto-card.hielo {
+  border: 2px solid #38bdf8;
+}
+@media (max-width: 768px) {
+  .sticky-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    border-radius: 20px 20px 0 0;
+  }
+}
+body {
+  background-color: #0d0d0d;
+}
+
+.producto-card {
+  background: #111;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,.6);
+  transition: transform .3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+.producto-card img {
+  height: 180px;
+  object-fit: contain;
+  padding: 15px;
+  transition: transform .4s ease;
+}
+
+.producto-card:hover img {
+  transform: scale(1.15) rotate(-2deg);
+}
+
+.badge-oferta {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: crimson;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: .75rem;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: white;
+  font-size: 26px;
+  padding: 15px;
+  border-radius: 50%;
+  text-decoration: none;
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .sticky-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    border-radius: 20px 20px 0 0;
+  }
+}

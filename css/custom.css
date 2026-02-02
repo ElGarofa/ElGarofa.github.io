@@ -106,3 +106,40 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
+.producto-card.hielo {
+  border: 2px solid #38bdf8;
+}
+
+.producto-card.hielo::after {
+  content: "HIELO";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #38bdf8;
+  color: #000;
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background-color: #25d366;
+  color: white;
+  font-size: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 60px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  color: white;
+}

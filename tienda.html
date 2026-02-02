@@ -22,6 +22,14 @@
 
 <section class="container my-5">
   <h2 class="mb-4">🧃 Catálogo de Bebidas</h2>
+  <div class="d-flex flex-wrap gap-2 mb-4">
+  <button class="btn btn-outline-info active" onclick="filtrar('todos')">Todos</button>
+  <button class="btn btn-outline-info" onclick="filtrar('gaseosa')">Gaseosas</button>
+  <button class="btn btn-outline-info" onclick="filtrar('agua')">Aguas</button>
+  <button class="btn btn-outline-info" onclick="filtrar('energizante')">Energizantes</button>
+  <button class="btn btn-outline-info" onclick="filtrar('cerveza')">Cervezas</button>
+</div>
+
   <div id="productos" class="row g-4"></div>
 </section>
 

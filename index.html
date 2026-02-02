@@ -95,6 +95,38 @@
 
   </div>
 </section>
+<section class="container my-5">
+  <h2 class="mb-4 text-danger">🔥 Ofertas destacadas</h2>
+  <div id="ofertas" class="row g-4"></div>
+</section>
+
+<script>
+fetch("data/productos.json")
+  .then(res => res.json())
+  .then(productos => {
+    const ofertas = productos.filter(p => p.oferta);
+    const contenedor = document.getElementById("ofertas");
+
+    ofertas.forEach(p => {
+      contenedor.innerHTML += `
+        <div class="col-md-3">
+          <div class="card producto-card h-100 text-center position-relative">
+            <span class="badge-oferta">OFERTA</span>
+            <img src="${p.imagen}">
+            <div class="card-body">
+              <h6>${p.nombre}</h6>
+              <p class="fw-bold">$${p.precio}</p>
+              <a href="tienda.html" class="btn btn-danger w-100">
+                Comprar
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  });
+</script>
+
 
 <footer class="text-center py-4 text-secondary">
   © 2026 E&M Distribuidora

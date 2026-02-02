@@ -255,3 +255,7 @@ body {
     border-radius: 20px 20px 0 0;
   }
 }
+.logo-navbar {
+  height: 40px;      /* tamaño del logo */
+  width: auto;
+}

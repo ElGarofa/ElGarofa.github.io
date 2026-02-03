@@ -43,6 +43,37 @@ const productosGlobal = [
     imagen: "https://mondezza.com.ar/wp-content/uploads/2025/04/Mesa-de-trabajo-11-1.jpg",
     oferta: false,
     stock: 20
+  },
+  {
+    id: 3,
+    nombre: "Cerveza Quilmes Lata",
+    precio: 900,
+    categoria: "cerveza",
+    imagen: "img/quilmes.png",
+    stock: 30
+  },
+  {
+    id: 4,
+    nombre: "Fernet Branca 750ml",
+    precio: 8500,
+    categoria: "alcohol",
+    imagen: "img/fernet.png",
+    stock: 8
+  },
+];
+
+const combos = [
+  {
+    id: 101,
+    nombre: "Combo Previa",
+    precio: 4500,
+    categoria: "combo"
+  },
+  {
+    id: 102,
+    nombre: "Combo Birra",
+    precio: 6000,
+    categoria: "combo"
   }
 ];
 

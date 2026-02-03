@@ -1,0 +1,22 @@
+{
+  "name": "E&M Bebidas y Hielo",
+  "short_name": "E&M",
+  "description": "Venta de bebidas y hielo",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "img/ChatGPT Image 2 feb 2026, 02_01_46 p.m. (1).png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/ChatGPT Image 2 feb 2026, 02_01_46 p.m. (2).png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

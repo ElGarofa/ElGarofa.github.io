@@ -4,9 +4,9 @@ function guardarCarrito() {
   localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-function agregarAlCarrito(id) {
-  const producto = productosGlobal.find(p => p.id === id);
-  if (!producto || producto.stock === 0) return;
+function agregarProducto(id) {
+  const prod = productosGlobal.find(p => p.id === id);
+  if (!prod) return;
 
   const item = carrito.find(p => p.id === id);
 
@@ -14,9 +14,9 @@ function agregarAlCarrito(id) {
     item.cantidad++;
   } else {
     carrito.push({
-      id: producto.id,
-      nombre: producto.nombre,
-      precio: producto.precio,
+      id: prod.id,
+      nombre: prod.nombre,
+      precio: prod.precio,
       cantidad: 1
     });
   }
@@ -25,52 +25,16 @@ function agregarAlCarrito(id) {
   renderCarrito();
 }
 
-function renderCarrito() {
-  const contenedor = document.getElementById("carrito");
-  const totalEl = document.getElementById("total");
-  if (!contenedor) return;
+function agregarCombo(id) {
+  const combo = combos.find(c => c.id === id);
+  if (!combo) return;
 
-  contenedor.innerHTML = "";
-  let total = 0;
-
-  carrito.forEach(p => {
-    total += p.precio * p.cantidad;
-
-    contenedor.innerHTML += `
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <div>
-          <strong>${p.nombre}</strong><br>
-          <small>$${p.precio}</small>
-        </div>
-
-        <div class="d-flex gap-2 align-items-center">
-          <button class="btn btn-sm btn-outline-light"
-            onclick="cambiarCantidad(${p.id}, -1)">−</button>
-
-          <span>${p.cantidad}</span>
-
-          <button class="btn btn-sm btn-outline-light"
-            onclick="cambiarCantidad(${p.id}, 1)">+</button>
-
-          <button class="btn btn-sm btn-outline-danger"
-            onclick="eliminarProducto(${p.id})">✕</button>
-        </div>
-      </div>
-    `;
+  carrito.push({
+    id: combo.id,
+    nombre: combo.nombre,
+    precio: combo.precio,
+    cantidad: 1
   });
-
-  totalEl.innerText = `$${total}`;
-}
-
-function cambiarCantidad(id, cambio) {
-  const item = carrito.find(p => p.id === id);
-  if (!item) return;
-
-  item.cantidad += cambio;
-  if (item.cantidad <= 0) {
-    eliminarProducto(id);
-    return;
-  }
 
   guardarCarrito();
   renderCarrito();
@@ -82,10 +46,28 @@ function eliminarProducto(id) {
   renderCarrito();
 }
 
-function vaciarCarrito() {
-  carrito = [];
-  guardarCarrito();
-  renderCarrito();
+function renderCarrito() {
+  const contenedor = document.getElementById("carrito");
+  const totalEl = document.getElementById("total");
+
+  contenedor.innerHTML = "";
+  let total = 0;
+
+  carrito.forEach(p => {
+    total += p.precio * p.cantidad;
+
+    contenedor.innerHTML += `
+      <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+        <div>
+          <strong>${p.nombre}</strong><br>
+          <small>${p.cantidad} x $${p.precio}</small>
+        </div>
+        <button class="btn btn-sm btn-danger" onclick="eliminarProducto(${p.id})">✕</button>
+      </div>
+    `;
+  });
+
+  totalEl.innerText = total;
 }
 
 function enviarPedidoWhatsApp() {
@@ -94,51 +76,30 @@ function enviarPedidoWhatsApp() {
     return;
   }
 
-  let mensaje = "Hola! Quiero hacer el siguiente pedido:%0A%0A";
+  let mensaje = "🛒 *Pedido E&M Bebidas y Hielo*%0A%0A";
   let total = 0;
 
   carrito.forEach(p => {
-    mensaje += `- ${p.nombre} x${p.cantidad} = $${p.precio * p.cantidad}%0A`;
+    mensaje += `• ${p.nombre} x${p.cantidad}%0A`;
     total += p.precio * p.cantidad;
   });
 
-  mensaje += `%0A🧾 Total: $${total}`;
+  mensaje += `%0A💰 Total: $${total}`;
 
-  window.open(
-    `https://wa.me/549XXXXXXXXXX?text=${mensaje}`,
-    "_blank"
-  );
-}
+  // Historial
+  const historial = JSON.parse(localStorage.getItem("historial")) || [];
+  historial.push({
+    fecha: new Date().toLocaleString(),
+    pedido: carrito,
+    total
+  });
+  localStorage.setItem("historial", JSON.stringify(historial));
 
-function pedidoRapidoHielo() {
-  const hielo = productosGlobal.find(p => p.categoria === "hielo");
-  if (!hielo) return;
-
-  carrito = [{
-    id: hielo.id,
-    nombre: hielo.nombre,
-    precio: hielo.precio,
-    cantidad: 1
-  }];
-
+  carrito = [];
   guardarCarrito();
   renderCarrito();
-}
 
-function imprimirTicket() {
-  let texto = "E&M Bebidas y Hielo\n\n";
-  let total = 0;
-
-  carrito.forEach(p => {
-    texto += `${p.nombre} x${p.cantidad} - $${p.precio * p.cantidad}\n`;
-    total += p.precio * p.cantidad;
-  });
-
-  texto += `\nTOTAL: $${total}`;
-
-  const v = window.open("", "", "width=300,height=400");
-  v.document.write(`<pre>${texto}</pre>`);
-  v.print();
+  window.open(`https://wa.me/+5491166616722?text=${mensaje}`, "_blank");
 }
 
 renderCarrito();

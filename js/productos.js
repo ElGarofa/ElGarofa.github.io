@@ -49,7 +49,7 @@ const productosGlobal = [
     nombre: "Cerveza Quilmes Lata",
     precio: 900,
     categoria: "cerveza",
-    imagen: "img/quilmes.png",
+    imagen: "https://gobar.vtexassets.com/arquivos/ids/159719-800-auto?v=638942476457800000&width=800&height=auto&aspect=true",
     stock: 30
   },
   {
@@ -57,7 +57,7 @@ const productosGlobal = [
     nombre: "Fernet Branca 750ml",
     precio: 8500,
     categoria: "alcohol",
-    imagen: "img/fernet.png",
+    imagen: "https://lacoloniawinestore.com.ar/wp-content/uploads/2021/08/BRANCA-750.jpg",
     stock: 8
   },
 ];

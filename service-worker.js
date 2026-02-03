@@ -1,13 +1,13 @@
-const CACHE_NAME = "em-pwa-v2";
+const CACHE_NAME = "em-pwa-v3";
 
 const urlsToCache = [
   "./",
   "./index.html",
   "./tienda.html",
+  "./manifest.json",
   "./css/custom.css",
   "./js/productos.js",
-  "./js/carrito.js",
-  "./manifest.json"
+  "./js/carrito.js"
 ];
 
 self.addEventListener("install", event => {
@@ -18,6 +18,8 @@ self.addEventListener("install", event => {
 
 self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then(res => res || fetch(event.request))
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });

@@ -4,7 +4,7 @@ const productosGlobal = [
     nombre: "Coca-Cola 2.25L",
     precio: 1800,
     categoria: "gaseosa",
-    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCC0n-t7TY1uTtMap9hY0RH15PZ2WZC1YPsw&s",
+    imagen: "img/coca-cola-225L-almacen-gaseosas-casa-segal-mendoza-600x600.jpg",
     oferta: true,
     stock: 10
   },
@@ -13,7 +13,7 @@ const productosGlobal = [
     nombre: "Sprite 2.25L",
     precio: 1700,
     categoria: "gaseosa",
-    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBfhhGRq80nxL_y2rw1FQcLiQNMsm_sDuQ0g&s",
+    imagen: "img/144-03f228c49f14b9c1ac17155651946759-1024-1024.webp",
     oferta: false,
     stock: 8
   },
@@ -22,7 +22,7 @@ const productosGlobal = [
     nombre: "Quilmes 1L",
     precio: 1500,
     categoria: "cerveza",
-    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY1265M7KvIax11IDU-YNbVSvOf1J4OxCDjQ&s",
+    imagen: "img/Quilmes-Cristal-1-L-Retornable-3-18652.webp",
     oferta: true,
     stock: 6
   },
@@ -31,7 +31,7 @@ const productosGlobal = [
     nombre: "Agua Villa Del Sur 2.25L",
     precio: 1200,
     categoria: "agua",
-    imagen: "https://www.villadelsur.com.ar/img/origen/botellasombra.png",
+    imagen: "img/product_picture_6b46e604e2db4dccbf770ba78efa925b_637862206780185132_0_m.jpg",
     oferta: false,
     stock: 12
   },
@@ -40,7 +40,7 @@ const productosGlobal = [
     nombre: "Bolsa de Hielo 5kg",
     precio: 1000,
     categoria: "hielo",
-    imagen: "https://mondezza.com.ar/wp-content/uploads/2025/04/Mesa-de-trabajo-11-1.jpg",
+    imagen: "img/Mesa-de-trabajo-11-1.jpg",
     oferta: false,
     stock: 20
   },
@@ -49,7 +49,7 @@ const productosGlobal = [
     nombre: "Cerveza Quilmes Lata",
     precio: 900,
     categoria: "cerveza",
-    imagen: "https://gobar.vtexassets.com/arquivos/ids/159719-800-auto?v=638942476457800000&width=800&height=auto&aspect=true",
+    imagen: "img/14463-F1-42.jpg",
     stock: 30
   },
   {
@@ -57,7 +57,7 @@ const productosGlobal = [
     nombre: "Fernet Branca 750ml",
     precio: 8500,
     categoria: "alcohol",
-    imagen: "https://lacoloniawinestore.com.ar/wp-content/uploads/2021/08/BRANCA-750.jpg",
+    imagen: "img/156070-800-auto.webp",
     stock: 8
   },
 ];

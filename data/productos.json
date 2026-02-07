@@ -15,7 +15,7 @@
     "categoria": "gaseosa",
     "marca": "Coca-Cola",
     "imagen": "https://jumboargentina.vtexassets.com/arquivos/ids/799869-800-600?v=638349573657430000&width=800&height=600&aspect=true",
-    "oferta": false
+    "oferta": true
   },
   {
     "id": 3,
@@ -33,7 +33,7 @@
     "categoria": "gaseosa",
     "marca": "Manaos",
     "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFspQnR6VrTUWE0ZKb1fIydWIdyIaMghygTQ&s",
-    "oferta": false
+    "oferta": true
   },
   {
     "id": 5,

@@ -60,6 +60,33 @@ const productosGlobal = [
     imagen: "img/156070-800-auto.webp",
     stock: 8
   },
+  {
+     id: 4,
+     nombre : "Manaos 2.25L",
+     precio: 1100,
+     categoria: "gaseosa",
+     marca: "Manaos",
+     imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFspQnR6VrTUWE0ZKb1fIydWIdyIaMghygTQ&s",
+  },
+  {
+     id: 6,
+     nombre: "Fanta Naranja 2.25L",
+     precio: 1500,
+     categoria: "gaseosa",
+     marca: "Coca-Cola",
+     imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9-lyg58safhLNBErb-j0NkGG_NGSk-XI3Nw&s",
+  },
+  {
+     id: 8,
+     nombre: "Speed Energizante 473ml",
+     precio: 1200,
+     categoria: "energizante",
+     marca: "Speed",
+     imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToi4-kKeXhImicJ5Dps7SC4dwCoCJju49m-g&s",
+  },
+  {
+    
+  }
 ];
 
 const combos = [

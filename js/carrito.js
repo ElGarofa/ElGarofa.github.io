@@ -1,22 +1,43 @@
-function agregarAlCarrito(id) {
-  id = Number(id); // 👈 CLAVE
+console.log("carrito.js cargado");
 
-  if (!window.productosData) {
-    console.error("productosData no existe");
+/* =========================
+   CARRITO GLOBAL SEGURO
+========================= */
+let carrito = [];
+
+try {
+  const guardado = JSON.parse(localStorage.getItem("carrito"));
+  carrito = Array.isArray(guardado) ? guardado : [];
+} catch (e) {
+  carrito = [];
+}
+
+/* =========================
+   AGREGAR AL CARRITO
+========================= */
+function agregarAlCarrito(id) {
+  id = Number(id);
+
+  if (!Array.isArray(window.productosData)) {
+    console.error("productosData no disponible");
     return;
   }
 
-  const producto = window.productosData.find(p => p.id === id);
+  const producto = window.productosData.find(p => Number(p.id) === id);
 
   if (!producto) {
-    console.error("Producto no encontrado. ID:", id);
+    console.error("Producto no encontrado:", id);
     return;
   }
 
-  const existente = carrito.find(p => p.id === id);
+  if (!Array.isArray(carrito)) {
+    carrito = [];
+  }
+
+  const existente = carrito.find(p => Number(p.id) === id);
 
   if (existente) {
-    existente.cantidad++;
+    existente.cantidad += 1;
   } else {
     carrito.push({
       id: producto.id,
@@ -28,7 +49,6 @@ function agregarAlCarrito(id) {
 
   actualizarCarrito();
 }
-
 
 /* =========================
    ACTUALIZAR CARRITO
@@ -47,7 +67,7 @@ function actualizarCarrito() {
     total += subtotal;
 
     contenedor.innerHTML += `
-      <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-1">
+      <div class="d-flex justify-content-between align-items-center mb-2">
         <small>${prod.nombre} x${prod.cantidad}</small>
         <small>$${subtotal}</small>
       </div>
@@ -59,7 +79,7 @@ function actualizarCarrito() {
 }
 
 /* =========================
-   VACIAR CARRITO
+   VACIAR
 ========================= */
 function vaciarCarrito() {
   carrito = [];
@@ -71,7 +91,7 @@ function vaciarCarrito() {
    WHATSAPP
 ========================= */
 function enviarPedidoWhatsApp() {
-  if (carrito.length === 0) {
+  if (!carrito.length) {
     alert("El carrito está vacío");
     return;
   }
@@ -84,26 +104,13 @@ function enviarPedidoWhatsApp() {
 
   mensaje += `%0A🧾 Total: ${document.getElementById("total").textContent}`;
 
-  const telefono = "5491166616722";
-
   window.open(
-    `https://wa.me/${telefono}?text=${mensaje}`,
+    "https://wa.me/5491166616722?text=" + mensaje,
     "_blank"
   );
 }
 
 /* =========================
-   ESTADÍSTICAS
+   INICIO
 ========================= */
-function guardarEstadisticas(id) {
-  let stats = JSON.parse(localStorage.getItem("estadisticas")) || {};
-  stats[id] = (stats[id] || 0) + 1;
-  localStorage.setItem("estadisticas", JSON.stringify(stats));
-}
-
-/* =========================
-   INICIALIZAR
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  actualizarCarrito();
-});
+document.addEventListener("DOMContentLoaded", actualizarCarrito);

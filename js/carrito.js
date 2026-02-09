@@ -1,22 +1,15 @@
-console.log("carrito.js cargado correctamente");
-
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-/* =========================
-   AGREGAR AL CARRITO
-========================= */
 function agregarAlCarrito(id) {
-  console.log("Agregando producto ID:", id);
+  id = Number(id); // 👈 CLAVE
 
-  if (typeof productosData === "undefined") {
-    console.error("productosData no está definido");
+  if (!window.productosData) {
+    console.error("productosData no existe");
     return;
   }
 
-  const producto = productosData.find(p => p.id === id);
+  const producto = window.productosData.find(p => p.id === id);
 
   if (!producto) {
-    console.error("Producto no encontrado:", id);
+    console.error("Producto no encontrado. ID:", id);
     return;
   }
 
@@ -33,9 +26,9 @@ function agregarAlCarrito(id) {
     });
   }
 
-  guardarEstadisticas(id);
   actualizarCarrito();
 }
+
 
 /* =========================
    ACTUALIZAR CARRITO

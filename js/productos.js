@@ -1,4 +1,4 @@
-const productosGlobal = [
+window.productosData = [
   {
     id: 1,
     nombre: "Coca-Cola 2.25L",
@@ -112,7 +112,7 @@ function mostrarProductos() {
 
   contenedor.innerHTML = "";
 
-  productosGlobal
+  productosData
     .filter(p => categoriaActual === "todos" || p.categoria === categoriaActual)
     .forEach(p => {
 

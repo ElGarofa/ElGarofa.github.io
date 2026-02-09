@@ -45,7 +45,7 @@ window.productosData = [
     stock: 20
   },
   {
-    id: 3,
+    id: 6,
     nombre: "Cerveza Quilmes Lata",
     precio: 900,
     categoria: "cerveza",
@@ -53,7 +53,7 @@ window.productosData = [
     stock: 30
   },
   {
-    id: 4,
+    id: 7,
     nombre: "Fernet Branca 750ml",
     precio: 8500,
     categoria: "alcohol",
@@ -61,7 +61,7 @@ window.productosData = [
     stock: 8
   },
   {
-     id: 4,
+     id: 8,
      nombre : "Manaos 2.25L",
      precio: 1100,
      categoria: "gaseosa",
@@ -69,7 +69,7 @@ window.productosData = [
      imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFspQnR6VrTUWE0ZKb1fIydWIdyIaMghygTQ&s",
   },
   {
-     id: 6,
+     id: 9,
      nombre: "Fanta Naranja 2.25L",
      precio: 1500,
      categoria: "gaseosa",
@@ -77,7 +77,7 @@ window.productosData = [
      imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9-lyg58safhLNBErb-j0NkGG_NGSk-XI3Nw&s",
   },
   {
-     id: 8,
+     id: 10,
      nombre: "Speed Energizante 473ml",
      precio: 1200,
      categoria: "energizante",

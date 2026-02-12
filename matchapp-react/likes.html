@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Likes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark">
+
+<nav class="navbar navbar-dark bg-black px-3">
+  <a href="index.html" class="navbar-brand">⬅ Volver</a>
+</nav>
+
+<div class="container mt-4">
+  <div class="card bg-dark text-light p-4 rounded-4 shadow">
+    <h4>❤️ Tus Likes</h4>
+    <ul id="listaLikes"></ul>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+const u = getUsuario();
+const lista = document.getElementById("listaLikes");
+
+if(u.likesDados.length === 0){
+  lista.innerHTML = "<li>No diste likes aún</li>";
+}else{
+  u.likesDados.forEach(l=>{
+    lista.innerHTML += `<li>${l}</li>`;
+  });
+}
+</script>
+
+</body>
+</html>

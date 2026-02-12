@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi Perfil</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark">
+
+<nav class="navbar navbar-dark bg-black px-3">
+  <a href="index.html" class="navbar-brand">⬅ Volver</a>
+</nav>
+
+<div class="container mt-4">
+  <div class="card bg-dark text-light p-4 rounded-4 shadow">
+    <h4>👤 Mi Perfil</h4>
+    <p id="nombreUser"></p>
+    <p>🪙 Monedas: <span id="monedasUser"></span></p>
+    <p>💎 Premium: <span id="premiumUser"></span></p>
+    <button class="btn btn-warning" onclick="comprarPremium()">Comprar Premium (200)</button>
+
+    <hr>
+
+    <h5>🤖 Consejos IA</h5>
+    <ul id="consejosIA"></ul>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+const u = getUsuario();
+document.getElementById("nombreUser").innerText = u.nombre;
+document.getElementById("monedasUser").innerText = u.monedas;
+document.getElementById("premiumUser").innerText = u.premium ? "Sí" : "No";
+
+const lista = document.getElementById("consejosIA");
+consejosIA().forEach(c=>{
+ lista.innerHTML += `<li>${c}</li>`;
+});
+</script>
+
+</body>
+</html>

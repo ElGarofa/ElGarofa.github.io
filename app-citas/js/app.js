@@ -1,27 +1,11 @@
-// ========================
-// ESTADO GLOBAL
-// ========================
-
 let monedas = 200;
-let premium = false;
-let boostActivo = false;
-
 let nivelUsuario = 1;
 let experiencia = 0;
+let modoOscuro = true;
 
 let usuario = {
-  nombre: "Marcos",
-  edad: 25,
-  bio: "Amante de la música 🎵",
   intereses: ["música", "viajes"]
 };
-
-let likesDados = [];
-let likesRecibidos = [];
-
-// ========================
-// PERFILES
-// ========================
 
 const perfiles = [
   {
@@ -30,79 +14,61 @@ const perfiles = [
     edad: 24,
     distancia: 5,
     intereses: ["música", "fitness"],
-    foto: "https://randomuser.me/api/portraits/women/44.jpg",
-    online: true,
-    likes: 120
+    fotos: [
+      "https://randomuser.me/api/portraits/women/44.jpg",
+      "https://randomuser.me/api/portraits/women/45.jpg"
+    ],
+    online: true
   },
   {
     id: 2,
     nombre: "Valentina",
     edad: 27,
     distancia: 12,
-    intereses: ["viajes", "arte"],
-    foto: "https://randomuser.me/api/portraits/women/65.jpg",
-    online: false,
-    likes: 98
-  },
-  {
-    id: 3,
-    nombre: "Camila",
-    edad: 22,
-    distancia: 3,
-    intereses: ["música", "cine"],
-    foto: "https://randomuser.me/api/portraits/women/68.jpg",
-    online: true,
-    likes: 80
+    intereses: ["arte", "viajes"],
+    fotos: [
+      "https://randomuser.me/api/portraits/women/65.jpg",
+      "https://randomuser.me/api/portraits/women/66.jpg"
+    ],
+    online: false
   }
 ];
 
-// ========================
-// INICIO
-// ========================
-
 document.addEventListener("DOMContentLoaded", () => {
   mostrarPerfiles(perfiles);
-  actualizarMonedasUI();
-  actualizarNivelUI();
+  actualizarNivel();
 });
-
-// ========================
-// MOSTRAR PERFILES
-// ========================
 
 function mostrarPerfiles(lista) {
   const contenedor = document.getElementById("perfiles");
-  if (!contenedor) return;
-
   contenedor.innerHTML = "";
 
   lista.forEach(perfil => {
+
     const compat = calcularCompatibilidad(perfil);
 
     contenedor.innerHTML += `
       <div class="col-md-4 mb-4">
-        <div class="profile-card p-3 text-center"
-             ontouchstart="iniciarSwipe(event,this)"
-             ontouchmove="moverSwipe(event,this)"
-             ontouchend="finalizarSwipe(this)">
-             
-          <img src="${perfil.foto}" class="profile-img">
-          
-          <h4>${perfil.nombre}, ${perfil.edad}
+        <div class="profile-card p-2"
+             onmousedown="startSwipe(event,this)"
+             onmouseup="endSwipe(event,this)">
+
+          <img src="${perfil.fotos[0]}">
+
+          <div class="gallery mt-2">
+            ${perfil.fotos.map(f => `<img src="${f}">`).join("")}
+          </div>
+
+          <h5 class="mt-2">
+            ${perfil.nombre}, ${perfil.edad}
             ${perfil.online ? '<span class="online-dot"></span>' : ""}
-          </h4>
+          </h5>
 
-          <p>❤️ Compatibilidad: ${compat}%</p>
-          <p>📍 ${perfil.distancia} km</p>
+          <p>❤️ ${compat}% compatibilidad</p>
 
-          <button class="btn btn-success w-100 mb-2"
+          <button class="btn btn-success w-100"
             onclick="darLike(${perfil.id})">
             Me gusta
-          </button>
-
-          <button class="btn btn-danger w-100"
-            onclick="descartar(${perfil.id})">
-            Descartar
           </button>
         </div>
       </div>
@@ -110,60 +76,27 @@ function mostrarPerfiles(lista) {
   });
 }
 
-// ========================
-// COMPATIBILIDAD INTELIGENTE
-// ========================
-
 function calcularCompatibilidad(perfil) {
   let coincidencias = perfil.intereses.filter(i =>
     usuario.intereses.includes(i)
   ).length;
 
-  return 40 + coincidencias * 20;
+  return 50 + coincidencias * 20;
 }
-
-// ========================
-// SISTEMA DE LIKE + NIVEL
-// ========================
 
 function darLike(id) {
-  const perfil = perfiles.find(p => p.id === id);
-  if (!perfil) return;
-
-  likesDados.push(id);
   experiencia += 10;
-
-  perfil.intereses.forEach(i => {
-    if (!usuario.intereses.includes(i)) {
-      usuario.intereses.push(i);
-    }
-  });
-
-  subirNivel();
-  mostrarNotificacion("💖 Nuevo Like!");
-}
-
-function descartar(id) {
-  mostrarNotificacion("❌ Perfil descartado");
-}
-
-function subirNivel() {
   if (experiencia >= 50) {
     nivelUsuario++;
     experiencia = 0;
     mostrarNotificacion("🎉 Subiste a nivel " + nivelUsuario);
   }
-  actualizarNivelUI();
+  actualizarNivel();
 }
 
-function actualizarNivelUI() {
-  const nivel = document.getElementById("nivelUsuario");
-  if (nivel) nivel.innerText = nivelUsuario;
+function actualizarNivel() {
+  document.getElementById("nivelUsuario").innerText = nivelUsuario;
 }
-
-// ========================
-// FILTROS MEJORADOS
-// ========================
 
 function aplicarFiltros() {
   const edadMin = +document.getElementById("edadMin").value;
@@ -183,77 +116,64 @@ function aplicarFiltros() {
   mostrarPerfiles(filtrados);
 }
 
-// ========================
-// PERFIL EDITABLE
-// ========================
-
-function guardarPerfil() {
-  usuario.nombre = document.getElementById("editNombre").value;
-  usuario.edad = document.getElementById("editEdad").value;
-  usuario.bio = document.getElementById("editBio").value;
-
-  mostrarNotificacion("✅ Perfil actualizado");
+function toggleModo() {
+  modoOscuro = !modoOscuro;
+  document.body.className = modoOscuro ? "dark-mode" : "light-mode";
 }
-
-// ========================
-// IA DE ANÁLISIS
-// ========================
-
-function analizarPerfil() {
-  let mensaje = "";
-
-  if (usuario.bio.length < 20) {
-    mensaje += "Tu bio es muy corta. ";
-  }
-
-  if (usuario.intereses.length < 3) {
-    mensaje += "Agregá más intereses. ";
-  }
-
-  if (mensaje === "") {
-    mensaje = "Tu perfil está muy optimizado 🔥";
-  }
-
-  mostrarNotificacion("🤖 " + mensaje);
-}
-
-// ========================
-// ANIMACIONES SWIPE TÁCTIL
-// ========================
-
-let startX = 0;
-
-function iniciarSwipe(e, card) {
-  startX = e.touches[0].clientX;
-}
-
-function moverSwipe(e, card) {
-  let moveX = e.touches[0].clientX - startX;
-  card.style.transform = `translateX(${moveX}px) rotate(${moveX/10}deg)`;
-}
-
-function finalizarSwipe(card) {
-  card.style.transform = "translateX(0px)";
-}
-
-// ========================
-// MONEDAS
-// ========================
-
-function actualizarMonedasUI() {
-  const el = document.getElementById("monedas");
-  if (el) el.innerText = monedas;
-}
-
-// ========================
-// NOTIFICACIONES
-// ========================
 
 function mostrarNotificacion(texto) {
   const div = document.createElement("div");
   div.className = "notification";
   div.innerText = texto;
   document.body.appendChild(div);
-
   setTimeout(() => div.remove(), 3000);
+}
+
+// SWIPE REAL
+
+let swipeStart = 0;
+
+function startSwipe(e, card) {
+  swipeStart = e.clientX;
+}
+
+function endSwipe(e, card) {
+  let diff = e.clientX - swipeStart;
+
+  if (diff > 100) {
+    card.style.transform = "translateX(500px)";
+    setTimeout(() => card.parentElement.remove(), 300);
+  }
+
+  if (diff < -100) {
+    card.style.transform = "translateX(-500px)";
+    setTimeout(() => card.parentElement.remove(), 300);
+  }
+}
+
+// CHAT
+
+function enviarMensaje() {
+  const input = document.getElementById("mensajeInput");
+  const chat = document.getElementById("chat");
+
+  if (input.value.trim() === "") return;
+
+  chat.innerHTML += `
+    <div class="message me">${input.value}</div>
+  `;
+
+  input.value = "";
+
+  setTimeout(() => {
+    chat.innerHTML += `
+      <div class="message other">Hola 😊</div>
+    `;
+  }, 1000);
+}
+
+function simularTyping() {
+  const typing = document.getElementById("typing");
+  typing.innerText = "🟢 Está escribiendo...";
+  setTimeout(() => typing.innerText = "", 1500);
 }

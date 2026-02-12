@@ -5,206 +5,71 @@
   <title>App Citas Pro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="bg-dark text-light">
-
-<!-- ================= NAVBAR ================= -->
+<body class="dark-mode">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-black">
   <div class="container">
-
     <a class="navbar-brand fw-bold" href="#">🔥 AppCitas</a>
 
-    <button class="navbar-toggler" type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#menu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="menu">
-      <ul class="navbar-nav ms-auto align-items-lg-center">
-
-        <li class="nav-item me-3">
-          <span class="text-warning">
-            🪙 <span id="monedas">200</span>
-          </span>
-        </li>
-
-        <li class="nav-item me-3">
-          Nivel: <span id="nivelUsuario">1</span>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#perfil">Perfil</a>
-        </li>
-
-        <li class="nav-item ms-3">
-          <button class="btn btn-warning btn-sm"
-            onclick="comprarPremium()">⭐ Premium</button>
-        </li>
-
-        <li class="nav-item ms-2">
-          <button class="btn btn-danger btn-sm"
-            onclick="activarBoost()">🚀 Boost</button>
-        </li>
-
-      </ul>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <span>🪙 <span id="monedas">200</span></span>
+      <span>Nivel: <span id="nivelUsuario">1</span></span>
+      <button class="btn btn-warning btn-sm" onclick="comprarPremium()">⭐</button>
+      <button class="btn btn-danger btn-sm" onclick="activarBoost()">🚀</button>
+      <button class="btn btn-secondary btn-sm" onclick="toggleModo()">🌙</button>
     </div>
   </div>
 </nav>
 
-<!-- ================= STORIES ================= -->
-
-<div class="container mt-3">
-  <div class="d-flex gap-3 overflow-auto pb-2">
-
-    <div class="story">📸</div>
-    <div class="story">🌴</div>
-    <div class="story">🎉</div>
-    <div class="story">🏖</div>
-    <div class="story">🍹</div>
-
-  </div>
-</div>
-
-<!-- ================= FILTROS ================= -->
-
+<!-- FILTROS -->
 <div class="container mt-4">
+  <div class="card p-3">
 
-  <button class="btn btn-outline-info w-100"
-    data-bs-toggle="collapse"
-    data-bs-target="#filtrosCollapse">
-    🎯 Filtros avanzados
-  </button>
+    <h5 class="mb-3">🎯 Filtros</h5>
 
-  <div class="collapse mt-3" id="filtrosCollapse">
+    <label>Edad mínima: <span id="edadMinLabel">18</span></label>
+    <input type="range" id="edadMin" min="18" max="50" value="18"
+      class="form-range" onchange="aplicarFiltros()">
 
-    <div class="card bg-black p-3">
+    <label>Edad máxima: <span id="edadMaxLabel">40</span></label>
+    <input type="range" id="edadMax" min="18" max="50" value="40"
+      class="form-range" onchange="aplicarFiltros()">
 
-      <label>Edad mínima:
-        <span id="edadMinLabel">18</span>
-      </label>
-      <input type="range" id="edadMin"
-        min="18" max="50" value="18"
-        class="form-range"
-        onchange="aplicarFiltros()">
-
-      <label>Edad máxima:
-        <span id="edadMaxLabel">40</span>
-      </label>
-      <input type="range" id="edadMax"
-        min="18" max="50" value="40"
-        class="form-range"
-        onchange="aplicarFiltros()">
-
-      <label>Distancia máxima:
-        <span id="distanciaLabel">20</span> km
-      </label>
-      <input type="range" id="distancia"
-        min="1" max="50" value="20"
-        class="form-range"
-        onchange="aplicarFiltros()">
-
-    </div>
+    <label>Distancia máxima: <span id="distanciaLabel">20</span> km</label>
+    <input type="range" id="distancia" min="1" max="50" value="20"
+      class="form-range" onchange="aplicarFiltros()">
 
   </div>
 </div>
 
-<!-- ================= PERSONAS CERCA ================= -->
-
-<div class="container mt-5">
-  <h4>📍 Personas cerca tuyo</h4>
+<!-- PERFILES -->
+<div class="container mt-4">
   <div class="row" id="perfiles"></div>
 </div>
 
-<!-- ================= RANKING ================= -->
-
-<div class="container mt-5">
-  <h4>🏆 Ranking semanal</h4>
-  <ul class="list-group">
-
-    <li class="list-group-item bg-black text-light">
-      🥇 Sofía - 120 Likes
-    </li>
-
-    <li class="list-group-item bg-black text-light">
-      🥈 Valentina - 98 Likes
-    </li>
-
-    <li class="list-group-item bg-black text-light">
-      🥉 Camila - 80 Likes
-    </li>
-
-  </ul>
-</div>
-
-<!-- ================= CHAT ================= -->
-
+<!-- CHAT -->
 <div class="container mt-5">
   <h4>💬 Chat</h4>
 
-  <div class="chat-container mb-3" id="chat"></div>
+  <div class="chat-container" id="chat"></div>
+  <div class="typing-indicator" id="typing"></div>
 
-  <div class="input-group">
-    <input type="text"
-      id="mensajeInput"
+  <div class="input-group mt-3">
+    <input type="text" id="mensajeInput"
       class="form-control"
-      placeholder="Escribí un mensaje...">
+      placeholder="Escribí un mensaje..."
+      oninput="simularTyping()">
+
     <button class="btn btn-primary"
       onclick="enviarMensaje()">
       Enviar
     </button>
   </div>
 </div>
-
-<!-- ================= PERFIL EDITABLE ================= -->
-
-<section id="perfil" class="container mt-5 mb-5">
-  <h3>👤 Mi Perfil</h3>
-
-  <div class="card bg-black p-4">
-
-    <input id="editNombre"
-      class="form-control mb-3"
-      placeholder="Nombre">
-
-    <input id="editEdad"
-      type="number"
-      class="form-control mb-3"
-      placeholder="Edad">
-
-    <textarea id="editBio"
-      class="form-control mb-3"
-      placeholder="Biografía"></textarea>
-
-    <div class="d-flex gap-2">
-
-      <button class="btn btn-success"
-        onclick="guardarPerfil()">
-        Guardar cambios
-      </button>
-
-      <button class="btn btn-warning"
-        onclick="analizarPerfil()">
-        🤖 Analizar perfil
-      </button>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-
-<footer class="bg-black text-center text-secondary py-3">
-  AppCitas Pro • Proyecto Demo
-</footer>
-
-<!-- ================= JS ================= -->
 
 <script src="js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

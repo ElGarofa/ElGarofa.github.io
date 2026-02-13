@@ -1,179 +1,163 @@
-let monedas = 200;
-let nivelUsuario = 1;
-let experiencia = 0;
-let modoOscuro = true;
-
-let usuario = {
-  intereses: ["música", "viajes"]
-};
-
-const perfiles = [
-  {
-    id: 1,
-    nombre: "Sofía",
-    edad: 24,
-    distancia: 5,
-    intereses: ["música", "fitness"],
-    fotos: [
-      "https://randomuser.me/api/portraits/women/44.jpg",
-      "https://randomuser.me/api/portraits/women/45.jpg"
-    ],
-    online: true
-  },
-  {
-    id: 2,
-    nombre: "Valentina",
-    edad: 27,
-    distancia: 12,
-    intereses: ["arte", "viajes"],
-    fotos: [
-      "https://randomuser.me/api/portraits/women/65.jpg",
-      "https://randomuser.me/api/portraits/women/66.jpg"
-    ],
-    online: false
-  }
+let perfiles = [
+{nombre:"Luna",edad:22,img:"https://picsum.photos/400/600?1"},
+{nombre:"Kai",edad:25,img:"https://picsum.photos/400/600?2"},
+{nombre:"Aria",edad:21,img:"https://picsum.photos/400/600?3"},
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
-  mostrarPerfiles(perfiles);
-  actualizarNivel();
-});
+let indexPerfil = 0;
+let theracoins = 150;
+let nivel = 1;
+let xp = 0;
 
-function mostrarPerfiles(lista) {
-  const contenedor = document.getElementById("perfiles");
-  contenedor.innerHTML = "";
+const app = document.getElementById("app");
 
-  lista.forEach(perfil => {
+function renderInicio(){
+let perfil = perfiles[indexPerfil];
 
-    const compat = calcularCompatibilidad(perfil);
+app.innerHTML = `
+<div class="header">Descubrir</div>
 
-    contenedor.innerHTML += `
-      <div class="col-md-4 mb-4">
-        <div class="profile-card p-2"
-             onmousedown="startSwipe(event,this)"
-             onmouseup="endSwipe(event,this)">
-
-          <img src="${perfil.fotos[0]}">
-
-          <div class="gallery mt-2">
-            ${perfil.fotos.map(f => `<img src="${f}">`).join("")}
-          </div>
-
-          <h5 class="mt-2">
-            ${perfil.nombre}, ${perfil.edad}
-            ${perfil.online ? '<span class="online-dot"></span>' : ""}
-          </h5>
-
-          <p>❤️ ${compat}% compatibilidad</p>
-
-          <button class="btn btn-success w-100"
-            onclick="darLike(${perfil.id})">
-            Me gusta
-          </button>
+<div class="card-wrapper">
+    <div class="card-perfil" id="swipeCard">
+        <img src="${perfil.img}">
+        <div class="card-overlay">
+            <h4>${perfil.nombre}, ${perfil.edad}</h4>
+            <small>Nivel ${nivel}</small>
         </div>
-      </div>
-    `;
-  });
+    </div>
+</div>
+
+<div class="swipe-buttons">
+    <button class="swipe-btn dislike" onclick="dislike()">✖</button>
+    <button class="swipe-btn like" onclick="like()">❤</button>
+</div>
+`;
+
+activarSwipe();
 }
 
-function calcularCompatibilidad(perfil) {
-  let coincidencias = perfil.intereses.filter(i =>
-    usuario.intereses.includes(i)
-  ).length;
-
-  return 50 + coincidencias * 20;
+function like(){
+xp += 10;
+checkNivel();
+animacionSalida("right");
 }
 
-function darLike(id) {
-  experiencia += 10;
-  if (experiencia >= 50) {
-    nivelUsuario++;
-    experiencia = 0;
-    mostrarNotificacion("🎉 Subiste a nivel " + nivelUsuario);
-  }
-  actualizarNivel();
+function dislike(){
+animacionSalida("left");
 }
 
-function actualizarNivel() {
-  document.getElementById("nivelUsuario").innerText = nivelUsuario;
+function animacionSalida(dir){
+const card = document.getElementById("swipeCard");
+card.style.transition="0.4s";
+card.style.transform = dir==="right" ?
+"translateX(500px) rotate(25deg)" :
+"translateX(-500px) rotate(-25deg)";
+
+setTimeout(()=>{
+indexPerfil = (indexPerfil+1)%perfiles.length;
+renderInicio();
+},400);
 }
 
-function aplicarFiltros() {
-  const edadMin = +document.getElementById("edadMin").value;
-  const edadMax = +document.getElementById("edadMax").value;
-  const distancia = +document.getElementById("distancia").value;
+function activarSwipe(){
+let card = document.getElementById("swipeCard");
+let startX=0;
 
-  document.getElementById("edadMinLabel").innerText = edadMin;
-  document.getElementById("edadMaxLabel").innerText = edadMax;
-  document.getElementById("distanciaLabel").innerText = distancia;
-
-  const filtrados = perfiles.filter(p =>
-    p.edad >= edadMin &&
-    p.edad <= edadMax &&
-    p.distancia <= distancia
-  );
-
-  mostrarPerfiles(filtrados);
+card.addEventListener("mousedown",e=>startX=e.clientX);
+card.addEventListener("mouseup",e=>{
+if(e.clientX-startX>100) like();
+if(startX-e.clientX>100) dislike();
+});
 }
 
-function toggleModo() {
-  modoOscuro = !modoOscuro;
-  document.body.className = modoOscuro ? "dark-mode" : "light-mode";
+function checkNivel(){
+if(xp>=100){
+nivel++;
+xp=0;
+alert("Subiste a nivel "+nivel+"!");
+}
 }
 
-function mostrarNotificacion(texto) {
-  const div = document.createElement("div");
-  div.className = "notification";
-  div.innerText = texto;
-  document.body.appendChild(div);
-  setTimeout(() => div.remove(), 3000);
+/* MISIONS */
+function renderMisiones(){
+app.innerHTML=`
+<div class="header">Misiones</div>
+
+<div style="padding:20px">
+<p>🎯 Da 5 likes (50xp)</p>
+<p>💬 Envía 3 mensajes (30xp)</p>
+<p>🌍 Publica en el foro (40xp)</p>
+<p>🔥 Entra a una manada (60xp)</p>
+<p>📸 Sube una foto a galería (50xp)</p>
+</div>
+`;
 }
 
-// SWIPE REAL
+/* COMUNIDAD */
+function renderComunidad(){
+app.innerHTML=`
+<div class="header">Comunidad</div>
 
-let swipeStart = 0;
+<div style="padding:20px">
+<h5>🌍 Foro General</h5>
+<textarea class="form-control mb-2" placeholder="Escribe algo..."></textarea>
+<button class="btn btn-success w-100 mb-3">Publicar</button>
 
-function startSwipe(e, card) {
-  swipeStart = e.clientX;
+<h5>🐺 Manadas</h5>
+<button class="btn btn-outline-light w-100 mb-2">Unirse a Manada Lobo</button>
+<button class="btn btn-outline-light w-100 mb-2">Unirse a Manada Felina</button>
+
+<h5>🎨 Galería de Arte</h5>
+<input type="file" class="form-control">
+</div>
+`;
 }
 
-function endSwipe(e, card) {
-  let diff = e.clientX - swipeStart;
+/* PREMIUM */
+function renderPremium(){
+app.innerHTML=`
+<div class="header">Premium</div>
 
-  if (diff > 100) {
-    card.style.transform = "translateX(500px)";
-    setTimeout(() => card.parentElement.remove(), 300);
-  }
+<div style="padding:20px">
+<h5>Suscripciones</h5>
+<button class="btn btn-warning w-100 mb-2">1 Mes</button>
+<button class="btn btn-warning w-100 mb-2">3 Meses</button>
+<button class="btn btn-warning w-100 mb-2">1 Año</button>
+<button class="btn btn-danger w-100 mb-4">Permanente</button>
 
-  if (diff < -100) {
-    card.style.transform = "translateX(-500px)";
-    setTimeout(() => card.parentElement.remove(), 300);
-  }
+<h5>Comprar Theracoins</h5>
+<button class="btn btn-outline-light w-100 mb-2">150 Monedas</button>
+<button class="btn btn-outline-light w-100 mb-2">500 Monedas</button>
+<button class="btn btn-outline-light w-100 mb-2">1000 Monedas</button>
+
+<p class="mt-3">Saldo actual: ${theracoins} 🪙</p>
+</div>
+`;
 }
 
-// CHAT
+/* PERFIL */
+function renderPerfil(){
+app.innerHTML=`
+<div class="header">Mi Perfil</div>
 
-function enviarMensaje() {
-  const input = document.getElementById("mensajeInput");
-  const chat = document.getElementById("chat");
-
-  if (input.value.trim() === "") return;
-
-  chat.innerHTML += `
-    <div class="message me">${input.value}</div>
-  `;
-
-  input.value = "";
-
-  setTimeout(() => {
-    chat.innerHTML += `
-      <div class="message other">Hola 😊</div>
-    `;
-  }, 1000);
+<div style="padding:20px">
+<p>Nivel: ${nivel}</p>
+<p>XP: ${xp}/100</p>
+<p>Theracoins: ${theracoins}</p>
+<button class="btn btn-outline-light w-100 mb-2">Editar Perfil</button>
+<button class="btn btn-outline-warning w-100">Modo Boost</button>
+</div>
+`;
 }
 
-function simularTyping() {
-  const typing = document.getElementById("typing");
-  typing.innerText = "🟢 Está escribiendo...";
-  setTimeout(() => typing.innerText = "", 1500);
+/* MATCHES */
+function renderMatches(){
+app.innerHTML=`
+<div class="header">Chats</div>
+<div style="padding:20px">
+<p>No tienes matches aún</p>
+</div>
+`;
 }
+
+renderInicio();

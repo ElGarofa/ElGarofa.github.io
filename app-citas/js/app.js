@@ -1,163 +1,218 @@
-let perfiles = [
-{nombre:"Luna",edad:22,img:"https://picsum.photos/400/600?1"},
-{nombre:"Kai",edad:25,img:"https://picsum.photos/400/600?2"},
-{nombre:"Aria",edad:21,img:"https://picsum.photos/400/600?3"},
-];
+/* =========================
+   ESTADO GLOBAL
+========================= */
 
-let indexPerfil = 0;
-let theracoins = 150;
-let nivel = 1;
-let xp = 0;
+let state = {
+xp: 0,
+nivel: 1,
+theracoins: 150,
+seguidores: 10,
+reputacion: 25,
+premium: false,
+perfil: {
+tipo: "",
+personalidad: "",
+ubicacion: "",
+estado: "",
+instagram: "",
+tiktok: "",
+discord: ""
+}
+};
+
+/* =========================
+   PERSISTENCIA
+========================= */
+
+function saveState(){
+localStorage.setItem("therianState", JSON.stringify(state));
+}
+
+function loadState(){
+let saved = localStorage.getItem("therianState");
+if(saved){
+state = JSON.parse(saved);
+}
+}
+
+/* =========================
+   NAVEGACIÓN
+========================= */
 
 const app = document.getElementById("app");
 
-function renderInicio(){
-let perfil = perfiles[indexPerfil];
+function navigate(view){
+switch(view){
+case "inicio": renderInicio(); break;
+case "comunidad": renderComunidad(); break;
+case "eventos": renderEventos(); break;
+case "misiones": renderMisiones(); break;
+case "premium": renderPremium(); break;
+case "perfil": renderPerfil(); break;
+}
+}
 
+/* =========================
+   SWIPE
+========================= */
+
+function swipe(like){
+if(like){
+state.xp += 10;
+if(state.xp >= 100){
+state.nivel++;
+state.xp = 0;
+}
+}
+saveState();
+renderInicio();
+}
+
+/* =========================
+   VISTAS
+========================= */
+
+function renderInicio(){
 app.innerHTML = `
-<div class="header">Descubrir</div>
+<div class="header">Explorar</div>
 
 <div class="card-wrapper">
-    <div class="card-perfil" id="swipeCard">
-        <img src="${perfil.img}">
-        <div class="card-overlay">
-            <h4>${perfil.nombre}, ${perfil.edad}</h4>
-            <small>Nivel ${nivel}</small>
-        </div>
-    </div>
+<div class="card-perfil">
+<img src="https://picsum.photos/400/600">
+<div class="card-overlay">
+<h4>Luna, 22</h4>
+<p>Therian Lobo 🌙</p>
+</div>
+</div>
 </div>
 
-<div class="swipe-buttons">
-    <button class="swipe-btn dislike" onclick="dislike()">✖</button>
-    <button class="swipe-btn like" onclick="like()">❤</button>
+<div class="swipe-buttons text-center pb-5">
+<button class="btn btn-dark me-3" onclick="swipe(false)">❌</button>
+<button class="btn btn-danger" onclick="swipe(true)">❤️</button>
 </div>
 `;
-
-activarSwipe();
 }
 
-function like(){
-xp += 10;
-checkNivel();
-animacionSalida("right");
+function renderComunidad(){
+app.innerHTML = `
+<div class="header">Comunidad</div>
+
+<div style="padding:15px;overflow-y:auto;height:85vh">
+
+<h5>📢 Feed</h5>
+<textarea class="form-control mb-2" placeholder="¿Qué estás pensando?"></textarea>
+<button class="btn btn-success w-100 mb-3">Publicar</button>
+
+<div class="card p-2 mb-3 bg-dark text-white">
+<b>Kai</b>
+<p>Explorando el bosque 🌲</p>
+<small>❤️ 12 🔥 4 💬 3</small>
+</div>
+
+<hr>
+
+<h5>🐺 Manadas</h5>
+<p>Tu rango: Explorador</p>
+<button class="btn btn-outline-light w-100 mb-2">Manada Lobo</button>
+
+<hr>
+
+<h5>🏆 Ranking</h5>
+<p>1. Luna ⭐ 540xp</p>
+
+<hr>
+
+<h5>💡 Sugerencias</h5>
+<textarea class="form-control mb-2" placeholder="Envía tu idea..."></textarea>
+<button class="btn btn-warning w-100">Enviar</button>
+
+</div>
+`;
 }
 
-function dislike(){
-animacionSalida("left");
+function renderEventos(){
+app.innerHTML = `
+<div class="header">Eventos</div>
+
+<div style="padding:20px">
+<h5>🔥 Evento Artístico</h5>
+<button class="btn btn-success w-100 mb-3">Participar</button>
+
+<h5>🌕 Reunión Virtual</h5>
+<button class="btn btn-success w-100">Unirse</button>
+</div>
+`;
 }
 
-function animacionSalida(dir){
-const card = document.getElementById("swipeCard");
-card.style.transition="0.4s";
-card.style.transform = dir==="right" ?
-"translateX(500px) rotate(25deg)" :
-"translateX(-500px) rotate(-25deg)";
-
-setTimeout(()=>{
-indexPerfil = (indexPerfil+1)%perfiles.length;
-renderInicio();
-},400);
-}
-
-function activarSwipe(){
-let card = document.getElementById("swipeCard");
-let startX=0;
-
-card.addEventListener("mousedown",e=>startX=e.clientX);
-card.addEventListener("mouseup",e=>{
-if(e.clientX-startX>100) like();
-if(startX-e.clientX>100) dislike();
-});
-}
-
-function checkNivel(){
-if(xp>=100){
-nivel++;
-xp=0;
-alert("Subiste a nivel "+nivel+"!");
-}
-}
-
-/* MISIONS */
 function renderMisiones(){
-app.innerHTML=`
+app.innerHTML = `
 <div class="header">Misiones</div>
 
 <div style="padding:20px">
-<p>🎯 Da 5 likes (50xp)</p>
-<p>💬 Envía 3 mensajes (30xp)</p>
-<p>🌍 Publica en el foro (40xp)</p>
-<p>🔥 Entra a una manada (60xp)</p>
-<p>📸 Sube una foto a galería (50xp)</p>
+<p>🎯 Dar 5 likes</p>
+<p>💬 Enviar 3 mensajes</p>
+<p>📸 Subir foto</p>
+<p>🔥 Unirse a una manada</p>
 </div>
 `;
 }
 
-/* COMUNIDAD */
-function renderComunidad(){
-app.innerHTML=`
-<div class="header">Comunidad</div>
-
-<div style="padding:20px">
-<h5>🌍 Foro General</h5>
-<textarea class="form-control mb-2" placeholder="Escribe algo..."></textarea>
-<button class="btn btn-success w-100 mb-3">Publicar</button>
-
-<h5>🐺 Manadas</h5>
-<button class="btn btn-outline-light w-100 mb-2">Unirse a Manada Lobo</button>
-<button class="btn btn-outline-light w-100 mb-2">Unirse a Manada Felina</button>
-
-<h5>🎨 Galería de Arte</h5>
-<input type="file" class="form-control">
-</div>
-`;
-}
-
-/* PREMIUM */
 function renderPremium(){
-app.innerHTML=`
+app.innerHTML = `
 <div class="header">Premium</div>
 
 <div style="padding:20px">
+
 <h5>Suscripciones</h5>
 <button class="btn btn-warning w-100 mb-2">1 Mes</button>
 <button class="btn btn-warning w-100 mb-2">3 Meses</button>
 <button class="btn btn-warning w-100 mb-2">1 Año</button>
-<button class="btn btn-danger w-100 mb-4">Permanente</button>
+<button class="btn btn-danger w-100 mb-3">Permanente</button>
+
+<hr>
 
 <h5>Comprar Theracoins</h5>
-<button class="btn btn-outline-light w-100 mb-2">150 Monedas</button>
-<button class="btn btn-outline-light w-100 mb-2">500 Monedas</button>
-<button class="btn btn-outline-light w-100 mb-2">1000 Monedas</button>
+<button class="btn btn-outline-light w-100 mb-2">150</button>
+<button class="btn btn-outline-light w-100 mb-2">500</button>
+<button class="btn btn-outline-light w-100 mb-2">1000</button>
 
-<p class="mt-3">Saldo actual: ${theracoins} 🪙</p>
 </div>
 `;
 }
 
-/* PERFIL */
 function renderPerfil(){
-app.innerHTML=`
+app.innerHTML = `
 <div class="header">Mi Perfil</div>
 
 <div style="padding:20px">
-<p>Nivel: ${nivel}</p>
-<p>XP: ${xp}/100</p>
-<p>Theracoins: ${theracoins}</p>
-<button class="btn btn-outline-light w-100 mb-2">Editar Perfil</button>
-<button class="btn btn-outline-warning w-100">Modo Boost</button>
+
+<input class="form-control mb-2" placeholder="Tipo Therian" value="${state.perfil.tipo}">
+<input class="form-control mb-2" placeholder="Personalidad" value="${state.perfil.personalidad}">
+<input class="form-control mb-2" placeholder="Ubicación" value="${state.perfil.ubicacion}">
+<input class="form-control mb-2" placeholder="Estado" value="${state.perfil.estado}">
+
+<h5>Redes Sociales</h5>
+<input class="form-control mb-2" placeholder="Instagram" value="${state.perfil.instagram}">
+<input class="form-control mb-2" placeholder="TikTok" value="${state.perfil.tiktok}">
+<input class="form-control mb-2" placeholder="Discord" value="${state.perfil.discord}">
+
+<hr>
+
+<p>Nivel: ${state.nivel}</p>
+<p>XP: ${state.xp}/100</p>
+<p>Theracoins: ${state.theracoins}</p>
+<p>Seguidores: ${state.seguidores}</p>
+<p>Reputación: ${state.reputacion}</p>
+
+<button class="btn btn-success w-100 mt-3" onclick="saveState()">Guardar</button>
+
 </div>
 `;
 }
 
-/* MATCHES */
-function renderMatches(){
-app.innerHTML=`
-<div class="header">Chats</div>
-<div style="padding:20px">
-<p>No tienes matches aún</p>
-</div>
-`;
-}
+/* =========================
+   INIT
+========================= */
 
-renderInicio();
+loadState();
+navigate("inicio");

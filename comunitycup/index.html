@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html>
 <head>
 
 <meta charset="UTF-8">
-
-<title>Torneo Locke</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Community Cup</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,132 +12,122 @@
 <body>
 
 
-<nav class="navbar navbar-dark bg-dark">
+<!-- TITULO -->
 
-<div class="container">
-
-<h2 class="neon-blue">
-
-TORNEO LOCKE
-
-</h2>
-
-<div>
-
-<span class="sinocoins">
-
-💰 Sinocoins:
-
-<span id="coins">0</span>
-
-</span>
-
-</div>
-
-</div>
-
-</nav>
+<h1 class="neon-blue">
+Community Cup
+</h1>
 
 
 
-<div class="container mt-4">
-
-<div class="row">
-
-
-<div class="col-md-4">
-
+<!-- CREAR JUGADOR -->
 
 <div class="neon-card">
 
-<h3>Agregar Jugador</h3>
+<h2>Crear Participante</h2>
 
-<input id="name" class="form-control mb-2" placeholder="Nombre">
+<input id="nombreInput" placeholder="Nombre">
 
-<input id="image" class="form-control mb-2" placeholder="URL Imagen">
+<br><br>
 
-<select id="tier" class="form-control mb-2">
+<input id="fotoInput" placeholder="URL Foto">
 
-<option>Bronce</option>
-<option>Plata</option>
-<option>Oro</option>
-<option>Elite</option>
+<br><br>
 
-</select>
-
-<button class="btn btn-neon w-100"
-onclick="addPlayer()">
-
-Agregar
-
+<button class="btn-neon" onclick="crearJugador()">
+Crear
 </button>
 
 </div>
 
 
 
+
+<!-- LISTA -->
+
 <div class="neon-card">
 
-<h3>Agregar Pokemon</h3>
+<h2>Participantes</h2>
 
-<select id="playerSelect"
-class="form-control mb-2">
+<div id="listaJugadores"></div>
 
-</select>
+</div>
 
-<input id="pokemon"
-class="form-control mb-2"
-placeholder="Pokemon">
 
-<button class="btn btn-neon w-100"
-onclick="addPokemon()">
 
-Agregar
 
+
+<!-- PERFIL -->
+
+<div id="perfil" class="profile hidden">
+
+<h2 id="nombrePerfil"></h2>
+
+<img id="fotoPerfil" class="avatarBig">
+
+
+<br><br>
+
+Victorias:
+
+<span id="wins"></span>
+
+<br>
+
+Derrotas:
+
+<span id="loses"></span>
+
+<br>
+
+Empates:
+
+<span id="draws"></span>
+
+<br><br>
+
+
+<button class="btn-neon" onclick="modificarEstadistica('wins',1)">
++ Win
 </button>
 
-</div>
+<button class="btn-neon" onclick="modificarEstadistica('loses',1)">
++ Lose
+</button>
+
+<button class="btn-neon" onclick="modificarEstadistica('draws',1)">
++ Draw
+</button>
+
+
+<br><br>
+
+<button class="btn-neon" onclick="randomPokemon()">
+Pokemon Random
+</button>
+
+<button class="btn-neon" onclick="agregarPokemonManual()">
+Agregar Pokemon
+</button>
 
 
 
-<div class="neon-card">
+<h3>Equipo</h3>
 
-<h3>Tienda Sinocoins</h3>
-
-<div id="shop"></div>
-
-</div>
-
-
-</div>
-
-
-
-<div class="col-md-8">
-
-
-<div id="profile"
-class="profile hidden">
-
-</div>
-
-
-
-<div class="neon-card">
-
-<h3>Participantes</h3>
-
-<div id="players"></div>
+<div id="team" class="team">
 
 </div>
 
 
-</div>
+<br>
+
+<button onclick="cerrarPerfil()">
+Cerrar
+</button>
 
 
 </div>
 
-</div>
 
 
 <script src="script.js"></script>

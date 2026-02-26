@@ -2,8 +2,8 @@ body{
 
 background:#04040a;
 color:white;
-
 font-family:Arial;
+padding:20px;
 
 }
 
@@ -89,6 +89,8 @@ background:#00f7ff;
 border:none;
 
 font-weight:bold;
+padding:10px;
+cursor:pointer;
 
 }
 
@@ -117,45 +119,6 @@ font-size:14px;
 
 
 
-/* SIN O COINS */
-
-.sinocoins{
-
-color:#00ff88;
-
-font-size:22px;
-
-text-shadow:
-
-0 0 10px #00ff88;
-
-animation:glowCoins 1.5s infinite alternate;
-
-}
-
-
-@keyframes glowCoins{
-
-from{
-
-text-shadow:0 0 5px #00ff88;
-
-}
-
-to{
-
-text-shadow:
-
-0 0 20px #00ff88,
-
-0 0 40px #00ff88;
-
-}
-
-}
-
-
-
 /* PLAYER */
 
 .playerCard{
@@ -171,6 +134,10 @@ border-radius:12px;
 transition:0.3s;
 
 cursor:pointer;
+
+display:flex;
+align-items:center;
+gap:10px;
 
 }
 
@@ -227,35 +194,6 @@ width:110px;
 
 
 
-/* MISIONES */
-
-.mission{
-
-border:1px solid #ff00ff;
-
-padding:15px;
-
-margin:10px;
-
-border-radius:10px;
-
-background:#140014;
-
-transition:0.3s;
-
-}
-
-
-.mission:hover{
-
-box-shadow:
-
-0 0 20px #ff00ff;
-
-}
-
-
-
 /* PERFIL */
 
 .profile{
@@ -288,12 +226,17 @@ color:#00f7ff;
 display:none;
 
 }
+
+
+
 .avatar{
 
 width:70px;
 border-radius:50%;
 
 }
+
+
 
 .avatarBig{
 

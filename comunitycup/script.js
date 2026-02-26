@@ -1,128 +1,55 @@
-players=[]
-coins=0
-
-selectedPlayer=null
-
+players = []
+coins = 0
+currentPlayer = null
 
 
-shop=[
+missions=[
 
-{name:"Cambio habilidad",price:80},
-
-{name:"Captura extra",price:120},
-
-{name:"Cambio naturaleza",price:70},
-
-{name:"Segunda oportunidad",price:200},
-
-{name:"Revivir Pokemon",price:250},
-
-{name:"MT gratis",price:60},
-
-{name:"Objeto equipado",price:40},
-
-{name:"Repetir ruta",price:150},
-
-{name:"Cambiar muerto",price:180},
-
-{name:"Info rival",price:50}
+{name:"Vencer Gimnasio 1",reward:30},
+{name:"Vencer Gimnasio 2",reward:40},
+{name:"Vencer Gimnasio 3",reward:50},
+{name:"Vencer Gimnasio 4",reward:60},
+{name:"Vencer Rival",reward:40},
+{name:"Vencer Equipo Galaxia",reward:50},
+{name:"Capturar Shiny",reward:200},
+{name:"Equipo Completo",reward:100},
+{name:"Sin muertes",reward:150},
+{name:"Vencer Liga",reward:300}
 
 ]
 
 
-
-load()
-
+updateMissions()
 
 
-function save(){
-
-localStorage.setItem(
-
-"torneo",
-
-JSON.stringify({
-
-players:players,
-
-coins:coins
-
-})
-
-)
-
-}
-
-
-
-function load(){
-
-data=
-
-JSON.parse(
-
-localStorage.getItem("torneo")
-
-)
-
-
-if(data){
-
-players=data.players
-
-coins=data.coins
-
-}
-
-
-update()
-
-updateCoins()
-
-updateShop()
-
-}
-
-
-
+// CREAR JUGADOR
 
 function addPlayer(){
 
-name=
+name=document.getElementById("name").value
+tier=document.getElementById("tier").value
 
-document.getElementById("name").value
+img=prompt("URL imagen jugador (opcional)")
 
-img=
-
-document.getElementById("image").value
-
-tier=
-
-document.getElementById("tier").value
+if(!img)
+img="https://via.placeholder.com/100"
 
 
-players.push({
+player={
 
 name:name,
-
+tier:tier,
 img:img,
 
-tier:tier,
-
 wins:0,
-
 loss:0,
-
 deaths:0,
 
-team:[],
+team:[]
 
-dead:[]
+}
 
-})
-
-
-save()
+players.push(player)
 
 update()
 
@@ -130,32 +57,30 @@ update()
 
 
 
+// ACTUALIZAR
 
 function update(){
 
+playersDiv=document.getElementById("players")
+playersDiv.innerHTML=""
 
-div=
-
-document.getElementById("players")
-
-div.innerHTML=""
-
-
-select=
-
-document.getElementById("playerSelect")
-
+select=document.getElementById("playerSelect")
 select.innerHTML=""
+
+p1=document.getElementById("player1")
+p1.innerHTML=""
+
+p2=document.getElementById("player2")
+p2.innerHTML=""
+
 
 
 players.forEach((p,i)=>{
 
 
-div.innerHTML+=`
+playersDiv.innerHTML+=`
 
-<div class="playerCard"
-
-onclick="openProfile(${i})">
+<div class="playerCard">
 
 <img src="${p.img}" class="avatar">
 
@@ -166,6 +91,40 @@ onclick="openProfile(${i})">
 Tier ${p.tier}
 
 </div>
+
+<div>
+
+Wins ${p.wins}
+<button onclick="stat(${i},'wins',1)">+</button>
+<button onclick="stat(${i},'wins',-1)">-</button>
+
+<br>
+
+Loss ${p.loss}
+<button onclick="stat(${i},'loss',1)">+</button>
+<button onclick="stat(${i},'loss',-1)">-</button>
+
+<br>
+
+Muertes ${p.deaths}
+<button onclick="stat(${i},'deaths',1)">+</button>
+<button onclick="stat(${i},'deaths',-1)">-</button>
+
+</div>
+
+<div class="team">
+
+${renderTeam(p)}
+
+</div>
+
+<button
+class="btn btn-neon w-100 mt-2"
+onclick="randomPokemon(${i})">
+
+Pokemon Random (50)
+
+</button>
 
 </div>
 
@@ -179,183 +138,62 @@ ${p.name}
 </option>`
 
 
+p1.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
+p2.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
 })
 
 
-save()
+
+document.getElementById("coins").innerText=coins
 
 }
 
 
 
-/* PERFIL */
+// STATS
 
-function openProfile(i){
+function stat(i,type,value){
 
-selectedPlayer=i
+players[i][type]+=value
 
-p=players[i]
+if(players[i][type]<0)
+players[i][type]=0
 
-
-profile=
-
-document.getElementById("profile")
-
-
-profile.innerHTML=`
-
-<img src="${p.img}" class="avatarBig">
-
-<h2>${p.name}</h2>
-
-<div>Tier ${p.tier}</div>
-
-
-<h4>
-
-Victorias ${p.wins}
-
-</h4>
-
-<button onclick="win()">+</button>
-
-
-<h4>
-
-Derrotas ${p.loss}
-
-</h4>
-
-<button onclick="lose()">+</button>
-
-
-<h4>
-
-Muertes ${p.deaths}
-
-</h4>
-
-
-<button onclick="death()">
-
-+ muerte
-
-</button>
-
-
-<h3>Equipo</h3>
-
-<div class="team">
-
-${renderTeam(p)}
-
-</div>
-
-
-<h3>Cementerio</h3>
-
-${renderDead(p)}
-
-
-<button
-class="btn btn-neon mt-3"
-onclick="closeProfile()">
-
-Volver
-
-</button>
-
-`
-
-
-profile.classList.remove("hidden")
+update()
 
 }
 
 
 
 
-function closeProfile(){
-
-document
-
-.getElementById("profile")
-
-.classList.add("hidden")
-
-}
-
-
-
-/* STATS */
-
-function win(){
-
-players[selectedPlayer].wins++
-
-save()
-
-openProfile(selectedPlayer)
-
-}
-
-
-
-function lose(){
-
-players[selectedPlayer].loss++
-
-save()
-
-openProfile(selectedPlayer)
-
-}
-
-
-
-function death(){
-
-players[selectedPlayer].deaths++
-
-save()
-
-openProfile(selectedPlayer)
-
-}
-
-
-
-/* POKEMON */
+// AGREGAR POKEMON NORMAL
 
 function addPokemon(){
 
-i=
+i=document.getElementById("playerSelect").value
 
-document.getElementById(
-
-"playerSelect"
-
-).value
-
-
-pokemon=
-
-document.getElementById(
-
-"pokemon"
-
-).value
-
-.toLowerCase()
-
+pokemon=document.getElementById("pokemon").value.toLowerCase()
 
 if(players[i].team.length>=6){
 
-alert("Maximo 6")
+alert("Equipo lleno")
 
 return
 
 }
+
 
 
 fetch(
@@ -369,23 +207,16 @@ fetch(
 .then(data=>{
 
 
-img=
-
-data.sprites
-
-.front_default
+img=data.sprites.front_default
 
 
 players[i].team.push({
 
 name:pokemon,
-
 img:img
 
 })
 
-
-save()
 
 update()
 
@@ -395,14 +226,103 @@ update()
 
 
 
-/* RENDER */
+
+// RANDOM POKEMON
+
+async function randomPokemon(i){
+
+if(coins<50){
+
+alert("No tienes coins")
+
+return
+
+}
+
+
+if(players[i].team.length>=6){
+
+alert("Equipo lleno")
+
+return
+
+}
+
+
+coins-=50
+
+update()
+
+
+card=document.querySelectorAll(".playerCard")[i]
+
+
+ruleta=document.createElement("div")
+
+card.appendChild(ruleta)
+
+
+
+delay=30
+
+
+for(x=0;x<20;x++){
+
+id=Math.floor(Math.random()*493)+1
+
+
+res=await fetch(
+
+"https://pokeapi.co/api/v2/pokemon/"+id
+
+)
+
+data=await res.json()
+
+
+ruleta.innerHTML=`
+
+<div class="pokemonCard">
+
+<img src="${data.sprites.front_default}">
+
+${data.name}
+
+</div>
+
+`
+
+
+await new Promise(r=>setTimeout(r,delay))
+
+delay+=20
+
+}
+
+
+
+players[i].team.push({
+
+name:data.name,
+img:data.sprites.front_default
+
+})
+
+
+update()
+
+}
+
+
+
+
+// RENDER TEAM
 
 function renderTeam(player){
 
 html=""
 
-player.team.forEach((p,i)=>{
-
+player.team.forEach(p=>{
 
 html+=`
 
@@ -416,18 +336,11 @@ ${p.name}
 
 </div>
 
-<button onclick="kill(${i})">
-
-☠
-
-</button>
-
 </div>
 
 `
 
 })
-
 
 return html
 
@@ -436,84 +349,44 @@ return html
 
 
 
-function renderDead(player){
 
-html=""
+// MISIONES
 
+function updateMissions(){
 
-player.dead.forEach(p=>{
+div=document.getElementById("missions")
 
-
-html+=`
-
-<div>
-
-☠ ${p.name}
-
-</div>
-
-`
-
-
-})
-
-
-return html
-
-}
-
-
-
-
-function kill(i){
-
-p=players[selectedPlayer]
-
-dead=p.team.splice(i,1)[0]
-
-p.dead.push(dead)
-
-p.deaths++
-
-save()
-
-openProfile(selectedPlayer)
-
-}
-
-
-
-
-/* SHOP */
-
-function updateShop(){
-
-div=document.getElementById("shop")
+if(!div)return
 
 div.innerHTML=""
 
 
-shop.forEach((s,i)=>{
+
+missions.forEach((m,i)=>{
 
 
 div.innerHTML+=`
 
 <div class="mission">
 
-${s.name}
+<h5>
 
--
+${m.name}
 
-${s.price}
+</h5>
 
+<div>
 
-<button
+Recompensa:
 
-onclick="buy(${i})"
+${m.reward}
 
+</div>
+
+<button onclick="completeMission(${i})"
 class="btn btn-neon">
 
-Comprar
+Completar
 
 </button>
 
@@ -529,32 +402,35 @@ Comprar
 
 
 
-function buy(i){
+// COMPLETAR MISION
 
-if(coins>=shop[i].price){
+function completeMission(i){
 
-coins-=shop[i].price
+coins+=missions[i].reward
 
-updateCoins()
-
-save()
-
-alert("Comprado")
-
-}
+update()
 
 }
 
 
 
-/* COINS */
 
-function updateCoins(){
+// INTERCAMBIO
 
-document
+function tradeCoins(){
 
-.getElementById("coins")
+p1=document.getElementById("player1").value
+p2=document.getElementById("player2").value
 
-.innerText=coins
+
+if(coins>=50){
+
+coins-=50
+
+update()
+
+alert("Intercambio hecho")
+
+}
 
 }

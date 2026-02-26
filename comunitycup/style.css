@@ -1,178 +1,201 @@
-/* ===== FONDO GENERAL ===== */
-
 body{
 
-background:#0a0a0a;
-
-color:#eaeaea;
+background:#04040a;
+color:white;
 
 font-family:Arial;
 
 }
 
 
+/* NAV */
 
-/* ===== TITULO ===== */
+.neon-blue{
 
-.titulo{
-
-font-size:48px;
-
-color:#00ffff;
+color:#00f7ff;
 
 text-shadow:
+0 0 5px #00f7ff,
+0 0 15px #00f7ff,
+0 0 30px #00f7ff;
 
-0 0 10px #00ffff,
+animation:glowBlue 2s infinite alternate;
 
-0 0 20px #00ffff,
+}
 
-0 0 40px #00ffff;
 
-margin-top:20px;
+
+@keyframes glowBlue{
+
+from{
+
+text-shadow:
+0 0 5px #00f7ff,
+0 0 15px #00f7ff;
+
+}
+
+to{
+
+text-shadow:
+0 0 20px #00f7ff,
+0 0 40px #00f7ff;
+
+}
+
+}
+
+
+
+/* CARDS */
+
+.neon-card{
+
+background:#0c0c1a;
+
+padding:20px;
+
+border-radius:15px;
 
 margin-bottom:20px;
 
-}
+box-shadow:
 
+0 0 10px #00f7ff;
 
-
-/* ===== TEXTO NORMAL ===== */
-
-p,span,label{
-
-color:#d0d0d0;
-
-font-size:16px;
+transition:0.4s;
 
 }
 
 
+.neon-card:hover{
 
-/* ===== SIN0COINS ===== */
+box-shadow:
 
-.sinocoinsBox{
+0 0 20px #00f7ff,
 
-font-size:24px;
-
-text-align:center;
-
-margin:20px;
-
-color:#00ffcc;
-
-text-shadow:
-
-0 0 10px #00ffcc;
+0 0 40px #00f7ff;
 
 }
 
 
 
-/* ===== BOTONES NEON ===== */
+/* BOTONES */
 
 .btn-neon{
 
-background:black;
+background:#00f7ff;
 
-border:2px solid #00ffff;
+border:none;
 
-color:#00ffff;
-
-margin:5px;
-
-padding:8px 14px;
-
-transition:0.3s;
+font-weight:bold;
 
 }
-
 
 
 .btn-neon:hover{
 
-background:#00ffff;
-
-color:black;
-
 box-shadow:
 
-0 0 10px #00ffff,
+0 0 10px #00f7ff,
 
-0 0 20px #00ffff,
-
-0 0 40px #00ffff;
+0 0 30px #00f7ff;
 
 }
 
 
 
-/* ===== PARTICIPANTES ===== */
+/* TEXTO */
+
+.smallText{
+
+color:#aaaaaa;
+
+font-size:14px;
+
+}
+
+
+
+/* SIN O COINS */
+
+.sinocoins{
+
+color:#00ff88;
+
+font-size:22px;
+
+text-shadow:
+
+0 0 10px #00ff88;
+
+animation:glowCoins 1.5s infinite alternate;
+
+}
+
+
+@keyframes glowCoins{
+
+from{
+
+text-shadow:0 0 5px #00ff88;
+
+}
+
+to{
+
+text-shadow:
+
+0 0 20px #00ff88,
+
+0 0 40px #00ff88;
+
+}
+
+}
+
+
+
+/* PLAYER */
 
 .playerCard{
 
-border:2px solid #00ffff;
+border:1px solid #00f7ff;
 
 padding:15px;
 
-margin:10px;
+margin-top:15px;
 
-border-radius:10px;
+border-radius:12px;
 
-background:#111;
+transition:0.3s;
+
+cursor:pointer;
+
+}
+
+
+.playerCard:hover{
+
+transform:scale(1.02);
 
 box-shadow:
 
-0 0 10px #00ffff33;
+0 0 20px #00f7ff;
 
 }
 
 
 
-/* ===== FOTO PARTICIPANTE ===== */
+/* TEAM */
 
-.playerImg{
+.team{
 
-width:80px;
+display:grid;
 
-height:80px;
+grid-template-columns:
 
-border-radius:50%;
-
-border:2px solid #00ffff;
-
-margin-bottom:10px;
-
-}
-
-
-
-/* ===== PERFIL ===== */
-
-#perfil{
-
-border:2px solid #00ffcc;
-
-padding:15px;
-
-margin:10px 0;
-
-border-radius:10px;
-
-background:#111;
-
-min-height:120px;
-
-}
-
-
-
-/* ===== EQUIPO ===== */
-
-#equipo{
-
-display:flex;
-
-flex-wrap:wrap;
+repeat(3,1fr);
 
 gap:10px;
 
@@ -181,193 +204,87 @@ margin-top:10px;
 }
 
 
-
-/* ===== POKEMON ===== */
-
 .pokemonCard{
 
-width:120px;
-
-height:120px;
-
-border:2px solid #ff00ff;
+background:#111125;
 
 border-radius:10px;
 
-background:#111;
+padding:10px;
 
 text-align:center;
 
-padding:5px;
-
-box-shadow:
-
-0 0 10px #ff00ff55;
+border:1px solid #00f7ff;
 
 }
 
-
-
-/* IMAGEN POKEMON */
 
 .pokemonCard img{
 
-width:90px;
-
-height:90px;
+width:110px;
 
 }
 
 
 
-/* NOMBRE POKEMON */
+/* MISIONES */
 
-.pokemonCard p{
+.mission{
 
-font-size:14px;
+border:1px solid #ff00ff;
 
-color:#ffffff;
+padding:15px;
 
-margin:0;
+margin:10px;
 
-}
+border-radius:10px;
 
-
-
-/* ===== MISIONES ===== */
-
-.mision{
-
-border:2px solid #00ff00;
-
-margin:6px;
-
-padding:10px;
-
-border-radius:8px;
-
-background:#111;
-
-box-shadow:
-
-0 0 10px #00ff0033;
-
-}
-
-
-
-/* ===== TIENDA ===== */
-
-.shopItem{
-
-display:block;
-
-width:100%;
-
-background:#111;
-
-color:#00ffff;
-
-border:1px solid #00ffff;
-
-margin:4px 0;
-
-padding:6px;
-
-font-size:14px;
+background:#140014;
 
 transition:0.3s;
 
 }
 
 
-
-.shopItem:hover{
-
-background:#00ffff;
-
-color:black;
+.mission:hover{
 
 box-shadow:
 
-0 0 10px #00ffff;
+0 0 20px #ff00ff;
 
 }
 
 
 
-/* ===== INVENTARIO ===== */
+/* PERFIL */
 
-#inventario{
+.profile{
 
-border:2px solid #ffaa00;
-
-padding:10px;
-
-border-radius:10px;
-
-background:#111;
-
-min-height:80px;
-
-}
-
-
-
-/* ===== TITULOS ===== */
-
-h2{
-
-color:#ff00ff;
-
-text-shadow:
-
-0 0 10px #ff00ff;
-
-margin-top:20px;
-
-}
-
-
-
-/* ===== INPUTS ===== */
-
-input{
-
-background:#111;
-
-border:1px solid #00ffff;
-
-color:white;
-
-padding:6px;
-
-margin:5px;
-
-}
-
-
-
-/* ===== HR ===== */
-
-hr{
-
-border:1px solid #333;
-
-margin:20px 0;
-
-}
-
-
-
-/* ===== EFECTO NEON SUAVE ===== */
-
-.container{
-
-box-shadow:
-
-0 0 40px #000 inset;
+background:#000010;
 
 padding:20px;
+
+border-radius:15px;
+
+box-shadow:
+
+0 0 20px #00f7ff;
+
+margin-bottom:20px;
+
+}
+
+
+.profile h2{
+
+color:#00f7ff;
+
+}
+
+
+
+.hidden{
+
+display:none;
 
 }

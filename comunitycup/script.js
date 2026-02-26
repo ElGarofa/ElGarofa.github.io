@@ -1,57 +1,37 @@
 players=[]
+coins=0
 selectedPlayer=null
 
 
-/* MISIONES REALES */
-
 missions=[
 
-{name:"Lider Rocavelo",reward:50},
-{name:"Lider Corazon",reward:50},
-{name:"Lider Canal",reward:60},
-{name:"Lider Pradera",reward:60},
-{name:"Lider Puntaneva",reward:70},
-{name:"Lider Marina",reward:70},
-{name:"Lider Pirita",reward:80},
-{name:"Lider Liga",reward:200},
+{name:"Capturar starter",reward:20},
 
-{name:"Rival batalla 1",reward:30},
-{name:"Rival batalla 2",reward:40},
-{name:"Rival batalla final",reward:100},
+{name:"Gimnasio 1",reward:30},
 
-{name:"Equipo villano base",reward:50},
-{name:"Equipo villano jefe",reward:120}
+{name:"Gimnasio 2",reward:40},
 
-]
+{name:"Gimnasio 3",reward:50},
 
+{name:"Gimnasio 4",reward:60},
 
+{name:"Legendario",reward:150},
 
-/* TIENDA */
+{name:"Sin muertes",reward:200},
 
-shop=[
+{name:"Liga",reward:300},
 
-{name:"Cambio habilidad",price:80},
+{name:"Shiny",reward:250},
 
-{name:"Captura extra",price:120},
-
-{name:"Cambio naturaleza",price:70},
-
-{name:"Segunda oportunidad",price:200},
-
-{name:"Revivir Pokemon",price:250},
-
-{name:"MT gratis",price:60},
-
-{name:"Objeto equipado",price:40},
-
-{name:"Repetir ruta",price:150}
+{name:"Equipo completo",reward:100}
 
 ]
 
 
+
+/* GUARDADO */
 
 load()
-
 
 
 function save(){
@@ -60,7 +40,13 @@ localStorage.setItem(
 
 "torneo",
 
-JSON.stringify(players)
+JSON.stringify({
+
+players:players,
+
+coins:coins
+
+})
 
 )
 
@@ -81,53 +67,43 @@ localStorage.getItem("torneo")
 
 if(data){
 
-players=data
+players=data.players
+
+coins=data.coins
 
 }
 
 
 update()
 
+updateCoins()
+
 updateMissions()
-
-updateShop()
-
-updateRanking()
 
 }
 
 
 
-/* JUGADOR */
+/* PARTICIPANTES */
 
 function addPlayer(){
 
-const nombre = document.getElementById("nombreJugadorInput").value;
-  const tier = document.getElementById("tierJugadorInput").value;
-  const imgInput = document.getElementById("imgJugadorInput").value;
+name=
 
-  if(!nombre) return;
+document.getElementById("name").value
 
-  const img = imgInput || "https://via.placeholder.com/80";
+tier=
+
+document.getElementById("tier").value
 
 
 players.push({
 
 name:name,
 
-img:img,
-
 tier:tier,
 
-wins:0,
-
-loss:0,
-
-deaths:0,
-
-team:[],
-
-dead:[]
+team:[]
 
 })
 
@@ -140,16 +116,37 @@ update()
 
 
 
-
-/* UPDATE */
+/* UPDATE GENERAL */
 
 function update(){
 
-div=playersDiv
+
+div=
+
+document.getElementById("players")
 
 div.innerHTML=""
 
+
+select=
+
+document.getElementById("playerSelect")
+
 select.innerHTML=""
+
+
+p1=
+
+document.getElementById("player1")
+
+p1.innerHTML=""
+
+
+p2=
+
+document.getElementById("player2")
+
+p2.innerHTML=""
 
 
 players.forEach((p,i)=>{
@@ -157,17 +154,23 @@ players.forEach((p,i)=>{
 
 div.innerHTML+=`
 
-<div class="playerCard tier${p.tier}"
+<div class="playerCard"
 
 onclick="openProfile(${i})">
 
-<img src="${p.img}" class="avatar">
-
 <h4>${p.name}</h4>
 
-Coins ${p.coins}
+<div class="smallText">
 
-Wins ${p.wins}
+Tier ${p.tier}
+
+</div>
+
+<div class="team">
+
+${renderTeam(p)}
+
+</div>
 
 </div>
 
@@ -181,10 +184,22 @@ ${p.name}
 </option>`
 
 
+p1.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
+p2.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
 })
 
-
-updateRanking()
 
 save()
 
@@ -201,58 +216,44 @@ selectedPlayer=i
 p=players[i]
 
 
-profile.innerHTML=`
+profile=
 
-<img src="${p.img}" class="avatarBig">
+document.getElementById("profile")
+
+
+profile.innerHTML=`
 
 <h2>${p.name}</h2>
 
+<div class="smallText">
+
 Tier ${p.tier}
 
-
-<h3>
-
-Coins ${p.coins}
-
-</h3>
-
-
-Victorias ${p.wins}
-
-<button onclick="win()">+</button>
-
-
-Derrotas ${p.loss}
-
-<button onclick="lose()">+</button>
+</div>
 
 
 <h3>Equipo</h3>
 
+
+<div class="team">
+
 ${renderTeam(p)}
 
-
-<h3>Cementerio</h3>
-
-${renderDead(p)}
+</div>
 
 
-<h3>Progreso</h3>
+<button
 
-${renderProgress(p)}
+class="btn btn-neon mt-3"
 
-
-<h3>Historial</h3>
-
-${renderLog(p)}
-
-<button onclick="closeProfile()">
+onclick="closeProfile()">
 
 Volver
 
 </button>
 
 `
+
 
 profile.classList.remove("hidden")
 
@@ -262,36 +263,110 @@ profile.classList.remove("hidden")
 
 function closeProfile(){
 
-profile.classList.add("hidden")
+document
+
+.getElementById("profile")
+
+.classList.add("hidden")
 
 }
 
 
 
-/* RANKING */
+/* POKEMON */
 
-function updateRanking(){
+function addPokemon(){
 
-rankDiv.innerHTML=""
+i=
 
+document
 
-sorted=
+.getElementById(
 
-[...players]
+"playerSelect"
 
-.sort((a,b)=>b.wins-a.wins)
-
-
-sorted.forEach(p=>{
+).value
 
 
-rankDiv.innerHTML+=`
+pokemon=
+
+document
+
+.getElementById(
+
+"pokemon"
+
+).value
+
+.toLowerCase()
+
+
+if(players[i].team.length>=6){
+
+alert("Maximo 6")
+
+return
+
+}
+
+
+fetch(
+
+"https://pokeapi.co/api/v2/pokemon/"+pokemon
+
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+
+img=
+
+data.sprites
+
+.front_default
+
+
+players[i].team.push({
+
+name:pokemon,
+
+img:img
+
+})
+
+
+save()
+
+update()
+
+})
+
+}
+
+
+
+/* RENDER TEAM */
+
+function renderTeam(player){
+
+html=""
+
+player.team.forEach(p=>{
+
+
+html+=`
+
+<div class="pokemonCard">
+
+<img src="${p.img}">
 
 <div>
 
 ${p.name}
 
-${p.wins}
+</div>
 
 </div>
 
@@ -299,6 +374,9 @@ ${p.wins}
 
 
 })
+
+
+return html
 
 }
 
@@ -308,180 +386,51 @@ ${p.wins}
 
 function updateMissions(){
 
-missionsDiv.innerHTML=""
+div=
+
+document.getElementById(
+
+"missions"
+
+)
+
+
+if(!div)return
+
+
+div.innerHTML=""
 
 
 missions.forEach((m,i)=>{
 
 
-missionsDiv.innerHTML+=`
+div.innerHTML+=`
 
 <div class="mission">
 
+<h5>
+
 ${m.name}
+
+</h5>
+
+
+<div>
 
 ${m.reward}
 
-<select onchange="missionPlayer(${i},this.value)">
-
-${playerOptions()}
-
-</select>
+Sinocoins
 
 </div>
 
-`
 
+<button
 
-})
+class="btn btn-neon"
 
-}
+onclick="completeMission(${i})">
 
-
-
-function missionPlayer(m,i){
-
-p=players[i]
-
-p.coins+=missions[m].reward
-
-p.log.push(
-
-"Completo "+missions[m].name
-
-)
-
-save()
-
-update()
-
-}
-
-
-
-/* SHOP */
-
-function updateShop(){
-
-shopDiv.innerHTML=""
-
-
-shop.forEach((s,i)=>{
-
-
-shopDiv.innerHTML+=`
-
-<div class="shopItem">
-
-${s.name}
-
-${s.price}
-
-<select onchange="buy(${i},this.value)">
-
-${playerOptions()}
-
-</select>
-
-</div>
-
-`
-
-
-})
-
-}
-
-
-
-function buy(i,p){
-
-pl=players[p]
-
-
-if(pl.coins>=shop[i].price){
-
-pl.coins-=shop[i].price
-
-pl.log.push(
-
-"Compro "+shop[i].name
-
-)
-
-save()
-
-update()
-
-}
-
-}
-
-
-
-/* TEAM */
-
-function addPokemon(){
-
-i=select.value
-
-name=pokemon.value
-
-
-fetch(
-
-"https://pokeapi.co/api/v2/pokemon/"+name
-
-)
-
-.then(r=>r.json())
-
-.then(d=>{
-
-
-players[i].team.push({
-
-name:name,
-
-img:d.sprites.front_default,
-
-type:d.types[0].type.name
-
-})
-
-
-save()
-
-update()
-
-})
-
-
-}
-
-
-
-function renderTeam(p){
-
-html=""
-
-
-p.team.forEach((pk,i)=>{
-
-
-html+=`
-
-<div class="pokemonCard">
-
-<img src="${pk.img}">
-
-${pk.name}
-
-${pk.type}
-
-<button onclick="kill(${i})">
-
-X
+Completar
 
 </button>
 
@@ -493,135 +442,52 @@ X
 })
 
 
-return html
-
 }
 
 
 
-function kill(i){
+/* MISION */
 
-p=players[selectedPlayer]
+function completeMission(i){
 
-dead=p.team.splice(i,1)[0]
+coins+=missions[i].reward
 
-p.dead.push(dead)
-
-p.deaths++
-
-p.log.push(
-
-dead.name+" murio"
-
-)
+updateCoins()
 
 save()
 
-openProfile(selectedPlayer)
+}
+
+
+
+/* COINS */
+
+function updateCoins(){
+
+document
+
+.getElementById("coins")
+
+.innerText=coins
 
 }
 
 
 
-/* DEAD */
+/* TRADE */
 
-function renderDead(p){
+function tradeCoins(){
 
-html=""
+if(coins>=50){
 
+coins-=50
 
-p.dead.forEach(pk=>{
+updateCoins()
 
+save()
 
-html+=`
-
-<div>
-
-☠
-
-<img src="${pk.img}" width=40>
-
-${pk.name}
-
-</div>
-
-`
-
-})
-
-
-return html
+alert("Trade hecho")
 
 }
-
-
-
-/* PROGRESS */
-
-function renderProgress(p){
-
-return`
-
-G1 ${p.progress.g1}
-
-G2 ${p.progress.g2}
-
-Liga ${p.progress.liga}
-
-`
-
-}
-
-
-
-/* LOG */
-
-function renderLog(p){
-
-html=""
-
-p.log.forEach(l=>{
-
-
-html+=`
-
-<div>
-
-${l}
-
-</div>
-
-`
-
-})
-
-
-return html
-
-}
-
-
-
-/* HELPERS */
-
-function playerOptions(){
-
-html=""
-
-players.forEach((p,i)=>{
-
-
-html+=`
-
-<option value=${i}>
-${p.name}
-</option>
-
-`
-
-
-})
-
-return html
 
 }

@@ -288,3 +288,16 @@ color:#00f7ff;
 display:none;
 
 }
+.avatar{
+
+width:70px;
+border-radius:50%;
+
+}
+
+.avatarBig{
+
+width:150px;
+border-radius:50%;
+
+}

@@ -85,6 +85,8 @@ function abrirPerfil(i){
 
 function cerrarPerfil(){
  panelPerfil.classList.remove("open");
+ jugadorActual=null;
+ render()
 }
 
 function stat(tipo,val){

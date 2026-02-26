@@ -1,117 +1,132 @@
+/* ===== BASE ===== */
 body{
- background:#070712;
- color:white;
- font-family:Segoe UI;
+ background:#0f1220;
+ color:#e6e9ff;
+ font-family:Inter,Segoe UI,Arial;
  margin:0;
- padding:20px;
+ padding:30px;
 }
 
-.titulo{
+h1,h2{
+ margin:20px 0 15px;
+ font-weight:600;
+}
+
+h1{
  text-align:center;
- color:#00ffff;
- text-shadow:0 0 20px cyan;
+ color:#7c9cff;
 }
 
-.sinocoinsBox{
- text-align:center;
- margin-bottom:20px;
- font-size:20px;
+/* ===== CONTENEDORES ===== */
+section{
+ margin-bottom:35px;
 }
 
-#participantes{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
- gap:20px;
-}
-
-.playerCard{
- background:#111;
- border-radius:15px;
- padding:15px;
- text-align:center;
- position:relative;
- transition:.3s;
- border:2px solid cyan;
-}
-
-.playerCard:hover{
- transform:translateY(-5px);
- box-shadow:0 0 25px cyan;
-}
-
-.playerCard.active{
- outline:3px solid yellow;
-}
-
-.playerImg{
- width:70px;
- height:70px;
- border-radius:50%;
- object-fit:cover;
-}
-
-.hoverActions{
- position:absolute;
- bottom:0;
- left:0;
- width:100%;
- background:black;
- transform:translateY(100%);
- transition:.3s;
- padding:10px;
-}
-
-.playerCard:hover .hoverActions{
- transform:translateY(0);
+input,select{
+ background:#1a1f35;
+ border:1px solid #2c355c;
+ color:white;
+ padding:8px;
+ border-radius:8px;
+ margin:4px;
 }
 
 button{
- background:black;
- color:cyan;
- border:1px solid cyan;
- padding:5px 10px;
- margin:3px;
+ background:#6c8cff;
+ border:none;
+ color:white;
+ padding:7px 14px;
+ border-radius:8px;
  cursor:pointer;
+ font-weight:500;
 }
 
 button:hover{
- box-shadow:0 0 10px cyan;
+ background:#89a2ff;
 }
 
-/* PANEL PERFIL */
+/* ===== GRID JUGADORES ===== */
+#participantes{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:20px;
+}
+
+/* ===== CARD JUGADOR ===== */
+.playerCard{
+ background:#1a1f35;
+ border-radius:16px;
+ padding:18px;
+ text-align:center;
+ transition:.25s;
+ border:1px solid #2a335a;
+ position:relative;
+}
+
+.playerCard:hover{
+ transform:translateY(-4px);
+ border-color:#6c8cff;
+}
+
+.playerCard.active{
+ outline:2px solid #ffd166;
+}
+
+.playerImg{
+ width:75px;
+ height:75px;
+ border-radius:50%;
+ object-fit:cover;
+ margin-bottom:8px;
+}
+
+/* ===== HOVER ACCIONES ===== */
+.hoverActions{
+ opacity:0;
+ margin-top:10px;
+ transition:.25s;
+}
+
+.playerCard:hover .hoverActions{
+ opacity:1;
+}
+
+/* ===== PANEL PERFIL ===== */
 .panelPerfil{
  position:fixed;
  top:0;
- right:-350px;
+ right:-360px;
  width:320px;
  height:100%;
- background:#0b0b1a;
- border-left:2px solid cyan;
- padding:20px;
- transition:.4s;
+ background:#151a30;
+ border-left:1px solid #2c355c;
+ padding:25px;
+ transition:.35s;
  overflow:auto;
- z-index:999;
 }
 
 .panelPerfil.open{
  right:0;
 }
 
-/* EQUIPO */
+.panelPerfil h2{
+ margin-top:0;
+}
+
+/* ===== EQUIPO ===== */
 #equipo{
  display:flex;
  flex-wrap:wrap;
  gap:15px;
- margin-bottom:30px;
 }
 
 .pokemonCard{
- width:130px;
- background:#111;
- border-radius:15px;
- border:2px solid magenta;
+ width:140px;
+ background:#1a1f35;
+ border-radius:14px;
+ padding:12px;
  text-align:center;
- padding:10px;
+ border:1px solid #2a335a;
 }
 
 .pokemonCard img{
@@ -120,13 +135,31 @@ button:hover{
  object-fit:contain;
 }
 
-/* MISIONES */
+/* ===== MISIONES ===== */
 .mision{
- background:#111;
- border:1px solid lime;
- margin:6px 0;
- padding:8px;
- border-radius:10px;
+ background:#1a1f35;
+ border:1px solid #2a335a;
+ padding:10px 15px;
+ border-radius:12px;
+ margin-bottom:8px;
  display:flex;
  justify-content:space-between;
+ align-items:center;
+}
+
+/* ===== INVENTARIO ===== */
+#inventario{
+ background:#1a1f35;
+ padding:15px;
+ border-radius:12px;
+ border:1px solid #2a335a;
+ min-height:40px;
+}
+
+/* ===== SINOCOINS ===== */
+.sinocoinsBox{
+ text-align:center;
+ font-size:18px;
+ margin-bottom:15px;
+ color:#ffd166;
 }

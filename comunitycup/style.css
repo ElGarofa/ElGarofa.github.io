@@ -1,15 +1,10 @@
 body{
 
-background:linear-gradient(
-45deg,
-#050510,
-#080820,
-#050510
-);
+background:
+radial-gradient(circle at 20% 20%,#001020,#000),
+radial-gradient(circle at 80% 80%,#200020,#000);
 
-background-size:400% 400%;
-
-animation:fondo 10s infinite;
+animation:fondo 8s infinite alternate;
 
 color:white;
 
@@ -18,17 +13,12 @@ font-family:Arial;
 }
 
 
-
 @keyframes fondo{
 
-0%{background-position:0%}
-
-50%{background-position:100%}
-
-100%{background-position:0%}
+from{filter:hue-rotate(0deg)}
+to{filter:hue-rotate(40deg)}
 
 }
-
 
 
 
@@ -42,7 +32,6 @@ text-shadow:
 0 0 20px #00f7ff;
 
 }
-
 
 
 
@@ -60,21 +49,7 @@ box-shadow:
 
 0 0 10px #00f7ff;
 
-transition:.3s;
-
 }
-
-
-
-.neon-card:hover{
-
-box-shadow:
-
-0 0 20px #00f7ff,
-0 0 40px #00f7ff;
-
-}
-
 
 
 
@@ -82,36 +57,9 @@ box-shadow:
 
 background:#00f7ff;
 
-color:black;
-
 font-weight:bold;
 
 }
-
-
-
-
-.smallText{
-
-color:#bbbbbb;
-
-}
-
-
-
-
-.sinocoins{
-
-color:#00ff9c;
-
-font-size:22px;
-
-text-shadow:
-
-0 0 10px #00ff9c;
-
-}
-
 
 
 
@@ -132,7 +80,6 @@ transition:.3s;
 }
 
 
-
 .playerCard:hover{
 
 box-shadow:
@@ -140,7 +87,6 @@ box-shadow:
 0 0 20px #00f7ff;
 
 }
-
 
 
 
@@ -160,17 +106,6 @@ box-shadow:
 
 
 
-
-.avatar{
-
-width:60px;
-
-border-radius:50%;
-
-}
-
-
-
 .avatarBig{
 
 width:150px;
@@ -178,7 +113,6 @@ width:150px;
 border-radius:50%;
 
 }
-
 
 
 
@@ -208,6 +142,17 @@ border:1px solid #00f7ff;
 
 text-align:center;
 
+transition:.3s;
+
+}
+
+
+.pokemonCard:hover{
+
+box-shadow:
+
+0 0 20px #00f7ff;
+
 }
 
 
@@ -220,23 +165,45 @@ width:110px;
 
 
 
+.purpleTitle{
+
+color:#ff00ff;
+
+text-shadow:
+
+0 0 10px #ff00ff;
+
+}
+
+
+
+.greenTitle{
+
+color:#00ff9c;
+
+text-shadow:
+
+0 0 10px #00ff9c;
+
+}
+
+
 
 .mission{
 
-border:1px solid #ff00ff;
+background:#140014;
+
+border-radius:10px;
 
 padding:10px;
 
 margin:10px;
 
-border-radius:10px;
-
-background:#140014;
+border-left:4px solid #ff00ff;
 
 transition:.3s;
 
 }
-
 
 
 .mission:hover{
@@ -245,30 +212,90 @@ box-shadow:
 
 0 0 20px #ff00ff;
 
-}
+transform:scale(1.02);
 
+}
 
 
 
 .shopItem{
 
-border:1px solid #00ff9c;
-
-padding:8px;
-
-margin:8px;
-
-border-radius:8px;
-
 background:#001a12;
+
+border-radius:10px;
+
+padding:10px;
+
+margin:10px;
+
+border-left:4px solid #00ff9c;
+
+display:flex;
+
+justify-content:space-between;
 
 }
 
+
+.shopItem:hover{
+
+box-shadow:
+
+0 0 20px #00ff9c;
+
+}
+
+
+
+.randomBox{
+
+text-align:center;
+
+padding:20px;
+
+border:2px solid #00f7ff;
+
+border-radius:15px;
+
+animation:glow 1s infinite alternate;
+
+}
+
+
+@keyframes glow{
+
+from{
+
+box-shadow:0 0 10px #00f7ff
+
+}
+
+to{
+
+box-shadow:0 0 30px #00f7ff
+
+}
+
+}
 
 
 
 .hidden{
 
 display:none;
+
+}
+
+
+
+.sinocoins{
+
+color:#00ff9c;
+
+font-size:22px;
+
+text-shadow:
+
+0 0 10px #00ff9c;
 
 }

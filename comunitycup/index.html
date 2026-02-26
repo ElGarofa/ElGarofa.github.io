@@ -25,7 +25,6 @@
 TORNEO LOCKE
 </h2>
 
-
 <div class="sinocoins">
 
 💰 Sinocoins:
@@ -50,7 +49,6 @@ TORNEO LOCKE
 <div class="col-md-4">
 
 
-
 <div class="neon-card">
 
 <h3>Crear Participante</h3>
@@ -59,11 +57,9 @@ TORNEO LOCKE
 class="form-control mb-2"
 placeholder="Nombre">
 
-
 <input id="fotoInput"
 class="form-control mb-2"
 placeholder="URL Foto">
-
 
 <select id="tierInput"
 class="form-control mb-2">
@@ -74,7 +70,6 @@ class="form-control mb-2">
 <option>Elite</option>
 
 </select>
-
 
 
 <button onclick="crearJugador()"
@@ -89,10 +84,11 @@ Crear
 
 
 
-
 <div class="neon-card mt-4">
 
-<h3>Misiones</h3>
+<h3 class="purpleTitle">
+Misiones
+</h3>
 
 <div id="missions"></div>
 
@@ -101,58 +97,17 @@ Crear
 
 
 
+
 <div class="neon-card mt-4">
 
-<h3>Tienda</h3>
+<h3 class="greenTitle">
+Tienda
+</h3>
 
-<div class="shopItem">
-
-Cambio habilidad - 80
-
-<button onclick="comprar(80)">
-Comprar
-</button>
+<div id="shop"></div>
 
 </div>
 
-
-
-<div class="shopItem">
-
-Captura extra - 100
-
-<button onclick="comprar(100)">
-Comprar
-</button>
-
-</div>
-
-
-
-<div class="shopItem">
-
-Cambio naturaleza - 120
-
-<button onclick="comprar(120)">
-Comprar
-</button>
-
-</div>
-
-
-
-<div class="shopItem">
-
-Segunda oportunidad - 200
-
-<button onclick="comprar(200)">
-Comprar
-</button>
-
-</div>
-
-
-</div>
 
 
 
@@ -169,11 +124,10 @@ Comprar
 
 <h3>Participantes</h3>
 
-<div id="listaJugadores">
+<div id="listaJugadores"></div>
 
 </div>
 
-</div>
 
 
 
@@ -195,16 +149,11 @@ class="avatarBig">
 
 Victorias
 
-<button onclick="modificarEstadistica('wins',1)">
-+
-</button>
+<button onclick="modificarEstadistica('wins',1)">+</button>
 
 <span id="wins">0</span>
 
-
-<button onclick="modificarEstadistica('wins',-1)">
--
-</button>
+<button onclick="modificarEstadistica('wins',-1)">-</button>
 
 
 
@@ -214,16 +163,11 @@ Victorias
 
 Derrotas
 
-<button onclick="modificarEstadistica('loses',1)">
-+
-</button>
+<button onclick="modificarEstadistica('loses',1)">+</button>
 
 <span id="loses">0</span>
 
-
-<button onclick="modificarEstadistica('loses',-1)">
--
-</button>
+<button onclick="modificarEstadistica('loses',-1)">-</button>
 
 
 
@@ -233,16 +177,11 @@ Derrotas
 
 Muertes
 
-<button onclick="modificarEstadistica('draws',1)">
-+
-</button>
+<button onclick="modificarEstadistica('draws',1)">+</button>
 
 <span id="draws">0</span>
 
-
-<button onclick="modificarEstadistica('draws',-1)">
--
-</button>
+<button onclick="modificarEstadistica('draws',-1)">-</button>
 
 
 
@@ -252,20 +191,17 @@ Muertes
 <h4>Equipo</h4>
 
 
-<div id="team"
-class="team">
-
-</div>
+<div id="team" class="team"></div>
 
 
 
 <br>
 
 
-<button onclick="randomPokemon()"
+<button onclick="randomPokemonAnimado()"
 class="btn btn-neon">
 
-Pokémon Random
+🎲 Pokémon Random
 
 </button>
 
@@ -280,6 +216,21 @@ Agregar Manual
 
 
 <br><br>
+
+
+
+<div id="randomBox"
+class="randomBox hidden">
+
+<img id="randomImg">
+
+<div id="randomName"></div>
+
+</div>
+
+
+
+<br>
 
 
 <button onclick="cerrarPerfil()"
@@ -309,7 +260,5 @@ Cerrar
 
 <script src="script.js"></script>
 
-
 </body>
-
 </html>

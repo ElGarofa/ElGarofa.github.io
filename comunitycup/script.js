@@ -6,38 +6,41 @@ jugadorActual=null
 missions=[
 
 {name:"Starter",reward:20},
-
 {name:"Gimnasio 1",reward:30},
-
 {name:"Gimnasio 2",reward:40},
-
 {name:"Gimnasio 3",reward:50},
-
 {name:"Liga",reward:200}
 
 ]
 
 
+shop=[
+
+{name:"Cambio habilidad",price:80},
+
+{name:"Captura extra",price:100},
+
+{name:"Cambio naturaleza",price:120},
+
+{name:"Segunda oportunidad",price:200}
+
+]
+
+
 actualizarMisiones()
+actualizarShop()
 
 
 
 function crearJugador(){
 
-nombre=document.getElementById("nombreInput").value
-
-foto=document.getElementById("fotoInput").value
-
-tier=document.getElementById("tierInput").value
-
-
 players.push({
 
-nombre,
+nombre:nombreInput.value,
 
-foto,
+foto:fotoInput.value,
 
-tier,
+tier:tierInput.value,
 
 wins:0,
 
@@ -49,7 +52,6 @@ team:[]
 
 })
 
-
 actualizarLista()
 
 }
@@ -58,21 +60,19 @@ actualizarLista()
 
 function actualizarLista(){
 
-div=document.getElementById("listaJugadores")
-
-div.innerHTML=""
+listaJugadores.innerHTML=""
 
 
 players.forEach((p,i)=>{
 
 
-div.innerHTML+=`
+listaJugadores.innerHTML+=`
 
 <div class="playerCard"
 
 onclick="abrirPerfil(${i})">
 
-<img src="${p.foto}" class="avatar">
+<img src="${p.foto}" width=50>
 
 ${p.nombre}
 
@@ -97,21 +97,17 @@ jugadorActual=i
 
 p=players[i]
 
+perfil.classList.remove("hidden")
 
-document.getElementById("perfil").classList.remove("hidden")
+nombrePerfil.innerText=p.nombre
 
+fotoPerfil.src=p.foto
 
-document.getElementById("nombrePerfil").innerText=p.nombre
+wins.innerText=p.wins
 
-document.getElementById("fotoPerfil").src=p.foto
+loses.innerText=p.loses
 
-
-document.getElementById("wins").innerText=p.wins
-
-document.getElementById("loses").innerText=p.loses
-
-document.getElementById("draws").innerText=p.draws
-
+draws.innerText=p.draws
 
 mostrarTeam()
 
@@ -121,7 +117,7 @@ mostrarTeam()
 
 function cerrarPerfil(){
 
-document.getElementById("perfil").classList.add("hidden")
+perfil.classList.add("hidden")
 
 }
 
@@ -143,10 +139,7 @@ abrirPerfil(jugadorActual)
 
 function mostrarTeam(){
 
-div=document.getElementById("team")
-
-div.innerHTML=""
-
+team.innerHTML=""
 
 p=players[jugadorActual]
 
@@ -154,7 +147,7 @@ p=players[jugadorActual]
 p.team.forEach(pk=>{
 
 
-div.innerHTML+=`
+team.innerHTML+=`
 
 <div class="pokemonCard">
 
@@ -168,7 +161,6 @@ ${pk.nombre}
 
 `
 
-
 })
 
 
@@ -176,8 +168,17 @@ ${pk.nombre}
 
 
 
+function randomPokemonAnimado(){
 
-function randomPokemon(){
+randomBox.classList.remove("hidden")
+
+speed=50
+
+loops=0
+
+
+interval=setInterval(()=>{
+
 
 id=Math.floor(Math.random()*898)+1
 
@@ -189,6 +190,15 @@ fetch("https://pokeapi.co/api/v2/pokemon/"+id)
 .then(data=>{
 
 
+randomImg.src=data.sprites.front_default
+
+randomName.innerText=data.name
+
+
+if(loops>20){
+
+clearInterval(interval)
+
 players[jugadorActual].team.push({
 
 nombre:data.name,
@@ -197,10 +207,18 @@ img:data.sprites.front_default
 
 })
 
-
 mostrarTeam()
 
+}
+
+loops++
+
+
 })
+
+
+},speed)
+
 
 }
 
@@ -235,15 +253,12 @@ mostrarTeam()
 
 
 
-
 function actualizarMisiones(){
-
-div=document.getElementById("missions")
 
 missions.forEach((m,i)=>{
 
 
-div.innerHTML+=`
+missionsDiv.innerHTML+=`
 
 <div class="mission">
 
@@ -277,7 +292,38 @@ function completar(i){
 
 coins+=missions[i].reward
 
-document.getElementById("coins").innerText=coins
+coins.innerText=coins
+
+}
+
+
+
+function actualizarShop(){
+
+shop.forEach(s=>{
+
+
+shop.innerHTML+=`
+
+<div class="shopItem">
+
+${s.name}
+
+${s.price}
+
+<button onclick="comprar(${s.price})">
+
+Comprar
+
+</button>
+
+</div>
+
+`
+
+
+})
+
 
 }
 
@@ -289,7 +335,7 @@ if(coins>=precio){
 
 coins-=precio
 
-document.getElementById("coins").innerText=coins
+coins.innerText=coins
 
 alert("Comprado")
 

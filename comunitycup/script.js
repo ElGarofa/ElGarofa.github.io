@@ -41,10 +41,19 @@ function guardar(){
 function crearParticipante(){
   const nombre = document.getElementById("nombreJugadorInput").value;
   const tier = document.getElementById("tierJugadorInput").value;
+  const imgInput = document.getElementById("imgJugadorInput").value;
+
   if(!nombre) return;
-  const img = "https://via.placeholder.com/80";
+
+  // Si no pone URL, usar imagen por defecto
+  const img = imgInput || "https://via.placeholder.com/80";
+
   jugadores.push({nombre,tier,img,wins:0,loss:0,muertes:0,equipo:[]});
+
+  // Limpiar inputs
   document.getElementById("nombreJugadorInput").value = "";
+  document.getElementById("imgJugadorInput").value = "";
+
   guardar();
   actualizarPantalla();
 }

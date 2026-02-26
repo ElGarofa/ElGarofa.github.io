@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="es">
 <head>
 
 <meta charset="UTF-8">
-
-<title>Torneo Locke</title>
+<title>Torneo Pokémon Locke</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -15,93 +13,50 @@
 
 <body>
 
-
-
-<nav class="navbar">
-
+<nav class="navbar navbar-dark bg-dark">
 <div class="container">
 
-<h3>
+<h2 class="neon-blue">
+TORNEO LOCKE
+</h2>
 
-🏆 TORNEO LOCKE
+<div>
 
-</h3>
+<span class="sinocoins">
+💰 Sinocoins:
+<span id="coins">0</span>
+</span>
 
 </div>
 
+</div>
 </nav>
 
 
-
-<!-- HERO -->
-
-<section class="hero text-center">
-
-<h1>
-
-TORNEO LOCKE
-
-</h1>
-
-<p class="subtitle">
-
-Modo supervivencia
-
-</p>
-
-</section>
-
-
-
-<!-- CAMPEON -->
-
-<section class="container mt-4">
-
-<h2>
-
-Campeón
-
-</h2>
-
-<div id="campeon"></div>
-
-</section>
-
-
-
-<!-- JUGADORES -->
-
-<section class="container mt-5">
-
-<h2>
-
-Jugadores
-
-</h2>
-
+<div class="container mt-4">
 
 <div class="row">
 
+
 <div class="col-md-4">
 
-<input
+<div class="card neon-card">
 
-id="nombre"
+<h3>Agregar Participante</h3>
 
-class="form-control"
+<input id="name" class="form-control mb-2" placeholder="Nombre">
 
-placeholder="Jugador">
+<select id="tier" class="form-control mb-2">
 
-</div>
+<option>Bronce</option>
+<option>Plata</option>
+<option>Oro</option>
+<option>Elite</option>
 
+</select>
 
-<div class="col-md-2">
-
-<button
-
-onclick="agregar()"
-
-class="btn btn-success">
+<button class="btn btn-neon w-100"
+onclick="addPlayer()">
 
 Agregar
 
@@ -110,88 +65,96 @@ Agregar
 </div>
 
 
-<div class="col-md-2">
 
-<button
+<div class="card neon-card mt-4">
 
-onclick="resetear()"
+<h3>Agregar Pokémon</h3>
 
-class="btn btn-danger">
+<select id="playerSelect"
+class="form-control mb-2">
 
-Reset
+</select>
+
+<input id="pokemon"
+class="form-control mb-2"
+placeholder="Nombre Pokemon">
+
+<button class="btn btn-neon w-100"
+onclick="addPokemon()">
+
+Agregar
+
+</button>
+
+</div>
+
+
+
+
+<div class="card neon-card mt-4">
+
+<h3>Intercambio</h3>
+
+<select id="player1"
+class="form-control mb-2">
+
+</select>
+
+<select id="player2"
+class="form-control mb-2">
+
+</select>
+
+<button class="btn btn-purple w-100"
+onclick="tradeCoins()">
+
+Intercambiar 50 Sinocoins
 
 </button>
 
 </div>
 
+
+
 </div>
 
 
 
-<hr>
+<div class="col-md-8">
 
+<div class="card neon-card">
 
-<div id="lista"
+<h3>Participantes</h3>
 
-class="row">
-
-</div>
-
-</section>
-
-
-
-<!-- TORNEO -->
-
-<section class="container mt-5">
-
-<h2>
-
-Torneo
-
-</h2>
-
-
-<button
-
-onclick="generarBracket()"
-
-class="btn btn-primary">
-
-Generar
-
-</button>
-
-
-
-<hr>
-
-<div id="bracket">
+<div id="players">
 
 </div>
 
-</section>
+</div>
 
 
 
-<!-- STATS -->
+<div class="card neon-card mt-4">
 
-<section class="container mt-5 mb-5">
+<h3>Misiones</h3>
 
-<h2>
+<div id="missions">
 
-Estadísticas
+</div>
 
-</h2>
+</div>
 
-<div id="stats"></div>
 
-</section>
 
+</div>
+
+
+</div>
+
+</div>
 
 
 <script src="script.js"></script>
 
 </body>
-
 </html>

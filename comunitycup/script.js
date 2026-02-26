@@ -1,185 +1,204 @@
-// ===== DATOS =====
+players=[]
 
-let jugadores =
-JSON.parse(localStorage.getItem("jugadores")) || []
-
-let datos =
-JSON.parse(localStorage.getItem("datos")) || {}
+coins=0
 
 
 
-// ===== GUARDAR =====
+missions=[
 
-function guardar(){
+{name:"Capturar starter",
+reward:20},
 
-localStorage.setItem(
-"jugadores",
-JSON.stringify(jugadores)
-)
+{name:"Vencer gimnasio 1",
+reward:30},
 
-localStorage.setItem(
-"datos",
-JSON.stringify(datos)
-)
+{name:"Vencer gimnasio 2",
+reward:40},
+
+{name:"Vencer gimnasio 3",
+reward:50},
+
+{name:"Capturar legendario",
+reward:150},
+
+{name:"Sin muertes",
+reward:200},
+
+{name:"Vencer liga",
+reward:300},
+
+{name:"Capturar shiny",
+reward:250},
+
+{name:"Equipo completo",
+reward:100},
+
+{name:"Intercambio",
+reward:80}
+
+]
+
+
+
+updateMissions()
+
+
+
+function addPlayer(){
+
+name=document.getElementById("name").value
+
+tier=document.getElementById("tier").value
+
+
+player={
+
+name:name,
+
+tier:tier,
+
+team:[]
+
+}
+
+
+players.push(player)
+
+update()
 
 }
 
 
 
-// ===== AGREGAR JUGADOR =====
-
-function agregar(){
-
-let nombre =
-document.getElementById("nombre").value
-
-if(!nombre) return
-
-if(jugadores.includes(nombre)) return
+function update(){
 
 
-jugadores.push(nombre)
+playersDiv=document.getElementById("players")
 
-datos[nombre]={
-
-wins:0,
-loss:0,
-muertes:0,
-trofeos:0,
-equipo:[]
-
-}
+playersDiv.innerHTML=""
 
 
-guardar()
+select=document.getElementById("playerSelect")
+select.innerHTML=""
 
-mostrar()
+p1=document.getElementById("player1")
+p1.innerHTML=""
 
-}
+p2=document.getElementById("player2")
+p2.innerHTML=""
 
 
 
-// ===== MOSTRAR =====
-
-function mostrar(){
-
-let lista =
-document.getElementById("lista")
-
-if(!lista) return
+players.forEach((p,i)=>{
 
 
-lista.innerHTML=""
+playersDiv.innerHTML+=`
 
+<div class="playerCard">
 
-jugadores.forEach(j=>{
+<h4>${p.name}</h4>
 
-let d = datos[j]
+<div class="smallText">
 
-let muerto =
-d.muertes>=6 ? "dead":""
-
-
-
-lista.innerHTML+=`
-
-<div class="player ${muerto}">
-
-<h5>${j}</h5>
-
-Wins: ${d.wins}<br>
-Loss: ${d.loss}<br>
-Muertes: ${d.muertes}<br>
-Trofeos: ${d.trofeos}
-
-<br><br>
-
-
-<input
-placeholder="Pokemon"
-id="poke${j}">
-
-
-<button
-onclick="agregarPokemon('${j}')"
-class="btn btn-warning btn-sm">
-
-Agregar
-
-</button>
-
-
-<div class="team">
-
-${dibujarEquipo(j)}
+Tier ${p.tier}
 
 </div>
 
 
-<br>
+<div>
 
+${renderTeam(p)}
 
-<button
-onclick="muerte('${j}')"
-class="btn btn-danger btn-sm">
-
-+ muerte
-
-</button>
-
-
-<button
-onclick="trofeo('${j}')"
-class="btn btn-success btn-sm">
-
-+ trofeo
-
-</button>
-
+</div>
 
 </div>
 
 `
 
+
+
+select.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
+p1.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
+p2.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
 })
-
-
-campeon()
-
-stats()
-
-mvp()
 
 }
 
 
 
-// ===== DIBUJAR EQUIPO =====
+function addPokemon(){
 
-function dibujarEquipo(j){
+i=document.getElementById("playerSelect").value
 
-let html=""
+pokemon=document.getElementById("pokemon").value.toLowerCase()
 
-datos[j].equipo.forEach(p=>{
+
+fetch(
+
+"https://pokeapi.co/api/v2/pokemon/"+pokemon
+
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+
+img=data.sprites.front_default
+
+
+players[i].team.push({
+
+name:pokemon,
+
+img:img
+
+})
+
+
+update()
+
+})
+
+}
+
+
+
+function renderTeam(player){
+
+html=""
+
+player.team.forEach(p=>{
 
 html+=`
 
-<div class="pokeCard">
+<div class="pokemonCard">
 
 <img src="${p.img}">
 
-<br>
+<div>
 
-${p.nombre}
+${p.name}
 
-<br>
-
-<button
-onclick="borrarPokemon('${j}','${p.nombre}')">
-
-X
-
-</button>
+</div>
 
 </div>
 
@@ -193,165 +212,42 @@ return html
 
 
 
-// ===== AGREGAR POKEMON =====
 
-function agregarPokemon(j){
+function updateMissions(){
 
-let nombre =
-document.getElementById(
-"poke"+j
-).value.toLowerCase()
+div=document.getElementById("missions")
 
-if(!nombre) return
-
-
-if(datos[j].equipo.length>=6){
-
-alert("Equipo lleno")
-
-return
-
-}
-
-
-
-fetch(
-"https://pokeapi.co/api/v2/pokemon/"+nombre
-)
-
-.then(r=>r.json())
-
-.then(data=>{
-
-let img =
-data.sprites.front_default
-
-
-datos[j].equipo.push({
-
-nombre:nombre,
-img:img
-
-})
-
-
-guardar()
-
-mostrar()
-
-})
-
-
-.catch(()=>{
-
-alert("Pokemon no encontrado")
-
-})
-
-}
-
-
-
-// ===== BORRAR POKEMON =====
-
-function borrarPokemon(j,poke){
-
-datos[j].equipo=
-datos[j].equipo.filter(
-
-x=>x.nombre!=poke
-
-)
-
-guardar()
-
-mostrar()
-
-}
-
-
-
-// ===== MUERTES =====
-
-function muerte(j){
-
-datos[j].muertes++
-
-guardar()
-
-mostrar()
-
-}
-
-
-
-// ===== TROFEOS =====
-
-function trofeo(j){
-
-datos[j].trofeos++
-
-guardar()
-
-mostrar()
-
-}
-
-
-
-// ===== BRACKET =====
-
-function generarBracket(){
-
-let div =
-document.getElementById("bracket")
-
-if(!div) return
-
+if(!div)return
 
 div.innerHTML=""
 
 
-let vivos =
-jugadores.filter(j=>
-datos[j].muertes<6
-)
 
-
-
-for(let i=0;i<vivos.length;i+=2){
-
-let a=vivos[i]
-let b=vivos[i+1]
-
-if(!b) continue
+missions.forEach((m,i)=>{
 
 
 div.innerHTML+=`
 
-<div class="card m-2">
+<div class="mission">
 
-<h4>
+<h5>
 
-${a} ⚔️ ${b}
+${m.name}
 
-</h4>
+</h5>
 
+<div>
 
-<button
-onclick="ganar('${a}','${b}')"
-class="btn btn-success">
+Recompensa:
 
-${a}
+${m.reward}
 
-</button>
+</div>
 
+<button onclick="completeMission(${i})"
+class="btn btn-neon">
 
-<button
-onclick="ganar('${b}','${a}')"
-class="btn btn-success">
-
-${b}
+Completar
 
 </button>
 
@@ -359,182 +255,40 @@ ${b}
 
 `
 
-}
-
-}
-
-
-
-// ===== GANADOR =====
-
-function ganar(a,b){
-
-datos[a].wins++
-
-datos[b].loss++
-
-guardar()
-
-mostrar()
-
-}
-
-
-
-// ===== CAMPEON =====
-
-function campeon(){
-
-let div=
-document.getElementById("campeon")
-
-if(!div) return
-
-
-let vivos=
-
-jugadores.filter(j=>
-datos[j].muertes<6
-)
-
-
-if(vivos.length==1){
-
-div.innerHTML=`
-
-<div class="champion">
-
-🏆 ${vivos[0]}
-
-</div>
-
-`
-
-}
-
-else{
-
-div.innerHTML="Torneo en progreso"
-
-}
-
-}
-
-
-
-// ===== STATS =====
-
-function stats(){
-
-let div=
-document.getElementById("stats")
-
-if(!div) return
-
-
-div.innerHTML=""
-
-
-jugadores.forEach(j=>{
-
-let d=datos[j]
-
-
-let progreso=
-
-(6-d.muertes)/6*100
-
-
-div.innerHTML+=`
-
-<div class="card m-2">
-
-<h4>${j}</h4>
-
-Victorias:
-
-${d.wins}
-
-<br>
-
-Muertes:
-
-${d.muertes}
-
-<br>
-
-
-<div class="progress">
-
-<div
-class="progress-bar"
-style="width:${progreso}%">
-
-</div>
-
-</div>
-
-
-</div>
-
-`
 
 })
 
-}
-
-
-
-// ===== MVP =====
-
-function mvp(){
-
-let mejor=null
-let max=-1
-
-
-jugadores.forEach(j=>{
-
-if(datos[j].wins>max){
-
-max=datos[j].wins
-mejor=j
-
-}
-
-})
-
-
-let div=
-document.getElementById("mvp")
-
-if(!div) return
-
-
-div.innerHTML=`
-
-⭐ MVP:
-
-${mejor}
-
-`
 
 }
 
 
 
-// ===== RESET =====
 
-function resetear(){
+function completeMission(i){
 
-localStorage.clear()
+coins+=missions[i].reward
 
-location.reload()
+document.getElementById("coins").innerText=coins
 
 }
 
 
 
-// ===== INICIO =====
 
-mostrar()
+function tradeCoins(){
+
+p1=document.getElementById("player1").value
+p2=document.getElementById("player2").value
+
+
+if(coins>=50){
+
+coins-=50
+
+document.getElementById("coins").innerText=coins
+
+alert("Intercambio hecho")
+
+}
+
+}

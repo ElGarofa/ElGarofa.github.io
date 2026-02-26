@@ -301,3 +301,28 @@ width:150px;
 border-radius:50%;
 
 }
+/* TIENDA COMPACTA */
+
+.shopItem{
+
+font-size:14px;
+
+padding:6px;
+
+border-bottom:1px solid #00f7ff;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+
+
+.shopItem button{
+
+margin-left:10px;
+
+}

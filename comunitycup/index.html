@@ -16,6 +16,8 @@
 <body>
 
 
+<!-- NAVBAR -->
+
 <nav class="navbar navbar-dark bg-dark">
 
 <div class="container">
@@ -32,7 +34,11 @@ TORNEO LOCKE
 
 💰 Sinocoins:
 
-<span id="coins">0</span>
+<span id="coins">
+
+0
+
+</span>
 
 </span>
 
@@ -44,23 +50,58 @@ TORNEO LOCKE
 
 
 
+
 <div class="container mt-4">
 
 <div class="row">
 
 
+
+<!-- PANEL IZQUIERDO -->
+
 <div class="col-md-4">
 
 
+<!-- AGREGAR JUGADOR -->
+
 <div class="neon-card">
 
-<h3>Agregar Jugador</h3>
+<h3>
 
-<input id="name" class="form-control mb-2" placeholder="Nombre">
+Agregar Jugador
 
-<input id="image" class="form-control mb-2" placeholder="URL Imagen">
+</h3>
 
-<select id="tier" class="form-control mb-2">
+
+<input
+
+id="name"
+
+class="form-control mb-2"
+
+placeholder="Nombre"
+
+>
+
+
+<input
+
+id="image"
+
+class="form-control mb-2"
+
+placeholder="URL Imagen"
+
+>
+
+
+<select
+
+id="tier"
+
+class="form-control mb-2"
+
+>
 
 <option>Bronce</option>
 <option>Plata</option>
@@ -69,8 +110,14 @@ TORNEO LOCKE
 
 </select>
 
-<button class="btn btn-neon w-100"
-onclick="addPlayer()">
+
+<button
+
+class="btn btn-neon w-100"
+
+onclick="addPlayer()"
+
+>
 
 Agregar
 
@@ -80,21 +127,46 @@ Agregar
 
 
 
+<!-- AGREGAR POKEMON -->
+
 <div class="neon-card">
 
-<h3>Agregar Pokemon</h3>
+<h3>
 
-<select id="playerSelect"
-class="form-control mb-2">
+Agregar Pokémon
+
+</h3>
+
+
+<select
+
+id="playerSelect"
+
+class="form-control mb-2"
+
+>
 
 </select>
 
-<input id="pokemon"
-class="form-control mb-2"
-placeholder="Pokemon">
 
-<button class="btn btn-neon w-100"
-onclick="addPokemon()">
+<input
+
+id="pokemon"
+
+class="form-control mb-2"
+
+placeholder="Nombre Pokemon"
+
+>
+
+
+<button
+
+class="btn btn-neon w-100"
+
+onclick="addPokemon()"
+
+>
 
 Agregar
 
@@ -104,47 +176,104 @@ Agregar
 
 
 
+<!-- TIENDA -->
+
 <div class="neon-card">
 
-<h3>Tienda Sinocoins</h3>
+<h3>
 
-<div id="shop"></div>
+Tienda Sinocoins
+
+</h3>
+
+
+<div id="shop">
+
+</div>
 
 </div>
 
 
+
 </div>
 
 
+
+
+
+<!-- PANEL DERECHO -->
 
 <div class="col-md-8">
 
 
-<div id="profile"
-class="profile hidden">
+<!-- PERFIL -->
+
+<div
+
+id="profile"
+
+class="profile hidden"
+
+>
 
 </div>
 
 
+
+
+<!-- PARTICIPANTES -->
 
 <div class="neon-card">
 
-<h3>Participantes</h3>
+<h3>
 
-<div id="players"></div>
+Participantes
+
+</h3>
+
+
+<div id="players">
+
+</div>
 
 </div>
 
 
+
+
+<!-- MISIONES -->
+
+<div class="neon-card">
+
+<h3>
+
+Misiones y Recompensas
+
+</h3>
+
+
+<div id="missions">
+
+</div>
+
 </div>
 
 
+
+</div>
+
+
+
 </div>
 
 </div>
+
+
 
 
 <script src="script.js"></script>
 
+
 </body>
+
 </html>

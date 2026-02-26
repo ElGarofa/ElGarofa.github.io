@@ -1,9 +1,9 @@
 players=[]
 coins=0
-
 selectedPlayer=null
 
 
+/* TIENDA */
 
 shop=[
 
@@ -31,9 +31,39 @@ shop=[
 
 
 
+/* MISIONES */
+
+missions=[
+
+{name:"Capturar Starter",reward:20},
+
+{name:"Gimnasio 1",reward:30},
+
+{name:"Gimnasio 2",reward:40},
+
+{name:"Gimnasio 3",reward:50},
+
+{name:"Gimnasio 4",reward:60},
+
+{name:"Capturar Legendario",reward:150},
+
+{name:"Equipo completo",reward:100},
+
+{name:"Sin muertes",reward:200},
+
+{name:"Liga Pokemon",reward:300},
+
+{name:"Capturar Shiny",reward:250}
+
+]
+
+
+
 load()
 
 
+
+/* GUARDAR */
 
 function save(){
 
@@ -54,6 +84,8 @@ coins:coins
 }
 
 
+
+/* CARGAR */
 
 function load(){
 
@@ -81,24 +113,21 @@ updateCoins()
 
 updateShop()
 
+updateMissions()
+
 }
 
 
 
+/* JUGADORES */
 
 function addPlayer(){
 
-name=
+name=document.getElementById("name").value
 
-document.getElementById("name").value
+img=document.getElementById("image").value
 
-img=
-
-document.getElementById("image").value
-
-tier=
-
-document.getElementById("tier").value
+tier=document.getElementById("tier").value
 
 
 players.push({
@@ -130,22 +159,20 @@ update()
 
 
 
+/* UPDATE GENERAL */
 
 function update(){
 
-
-div=
-
-document.getElementById("players")
+div=document.getElementById("players")
 
 div.innerHTML=""
 
 
-select=
 
-document.getElementById("playerSelect")
+select=document.getElementById("playerSelect")
 
 select.innerHTML=""
+
 
 
 players.forEach((p,i)=>{
@@ -197,9 +224,7 @@ selectedPlayer=i
 p=players[i]
 
 
-profile=
-
-document.getElementById("profile")
+profile=document.getElementById("profile")
 
 
 profile.innerHTML=`
@@ -258,7 +283,9 @@ ${renderDead(p)}
 
 
 <button
+
 class="btn btn-neon mt-3"
+
 onclick="closeProfile()">
 
 Volver
@@ -274,7 +301,6 @@ profile.classList.remove("hidden")
 
 
 
-
 function closeProfile(){
 
 document
@@ -287,7 +313,7 @@ document
 
 
 
-/* STATS */
+/* ESTADISTICAS */
 
 function win(){
 
@@ -300,7 +326,6 @@ openProfile(selectedPlayer)
 }
 
 
-
 function lose(){
 
 players[selectedPlayer].loss++
@@ -310,7 +335,6 @@ save()
 openProfile(selectedPlayer)
 
 }
-
 
 
 function death(){
@@ -329,24 +353,9 @@ openProfile(selectedPlayer)
 
 function addPokemon(){
 
-i=
+i=document.getElementById("playerSelect").value
 
-document.getElementById(
-
-"playerSelect"
-
-).value
-
-
-pokemon=
-
-document.getElementById(
-
-"pokemon"
-
-).value
-
-.toLowerCase()
+pokemon=document.getElementById("pokemon").value.toLowerCase()
 
 
 if(players[i].team.length>=6){
@@ -369,11 +378,7 @@ fetch(
 .then(data=>{
 
 
-img=
-
-data.sprites
-
-.front_default
+img=data.sprites.front_default
 
 
 players[i].team.push({
@@ -395,7 +400,7 @@ update()
 
 
 
-/* RENDER */
+/* EQUIPO */
 
 function renderTeam(player){
 
@@ -426,8 +431,8 @@ ${p.name}
 
 `
 
-})
 
+})
 
 return html
 
@@ -435,11 +440,11 @@ return html
 
 
 
+/* CEMENTERIO */
 
 function renderDead(player){
 
 html=""
-
 
 player.dead.forEach(p=>{
 
@@ -457,11 +462,9 @@ html+=`
 
 })
 
-
 return html
 
 }
-
 
 
 
@@ -483,8 +486,7 @@ openProfile(selectedPlayer)
 
 
 
-
-/* SHOP */
+/* TIENDA */
 
 function updateShop(){
 
@@ -498,7 +500,7 @@ shop.forEach((s,i)=>{
 
 div.innerHTML+=`
 
-<div class="mission">
+<div class="shopItem">
 
 ${s.name}
 
@@ -506,12 +508,11 @@ ${s.name}
 
 ${s.price}
 
-
 <button
 
 onclick="buy(${i})"
 
-class="btn btn-neon">
+class="btn btn-neon btn-sm">
 
 Comprar
 
@@ -521,9 +522,7 @@ Comprar
 
 `
 
-
 })
-
 
 }
 
@@ -542,6 +541,68 @@ save()
 alert("Comprado")
 
 }
+
+}
+
+
+
+/* MISIONES */
+
+function updateMissions(){
+
+div=document.getElementById("missions")
+
+div.innerHTML=""
+
+
+missions.forEach((m,i)=>{
+
+
+div.innerHTML+=`
+
+<div class="mission">
+
+<h5>
+
+${m.name}
+
+</h5>
+
+<div>
+
+${m.reward}
+
+Sinocoins
+
+</div>
+
+<button
+
+onclick="completeMission(${i})"
+
+class="btn btn-neon">
+
+Completar
+
+</button>
+
+</div>
+
+`
+
+})
+
+}
+
+
+
+function completeMission(i){
+
+coins+=missions[i].reward
+
+updateCoins()
+
+save()
 
 }
 

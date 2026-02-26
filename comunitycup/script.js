@@ -1,57 +1,103 @@
 players=[]
-
 coins=0
-
+selectedPlayer=null
 
 
 missions=[
 
-{name:"Capturar starter",
-reward:20},
+{name:"Capturar starter",reward:20},
 
-{name:"Vencer gimnasio 1",
-reward:30},
+{name:"Gimnasio 1",reward:30},
 
-{name:"Vencer gimnasio 2",
-reward:40},
+{name:"Gimnasio 2",reward:40},
 
-{name:"Vencer gimnasio 3",
-reward:50},
+{name:"Gimnasio 3",reward:50},
 
-{name:"Capturar legendario",
-reward:150},
+{name:"Gimnasio 4",reward:60},
 
-{name:"Sin muertes",
-reward:200},
+{name:"Legendario",reward:150},
 
-{name:"Vencer liga",
-reward:300},
+{name:"Sin muertes",reward:200},
 
-{name:"Capturar shiny",
-reward:250},
+{name:"Liga",reward:300},
 
-{name:"Equipo completo",
-reward:100},
+{name:"Shiny",reward:250},
 
-{name:"Intercambio",
-reward:80}
+{name:"Equipo completo",reward:100}
 
 ]
 
 
 
+/* GUARDADO */
+
+load()
+
+
+function save(){
+
+localStorage.setItem(
+
+"torneo",
+
+JSON.stringify({
+
+players:players,
+
+coins:coins
+
+})
+
+)
+
+}
+
+
+
+function load(){
+
+data=
+
+JSON.parse(
+
+localStorage.getItem("torneo")
+
+)
+
+
+if(data){
+
+players=data.players
+
+coins=data.coins
+
+}
+
+
+update()
+
+updateCoins()
+
 updateMissions()
 
+}
 
+
+
+/* PARTICIPANTES */
 
 function addPlayer(){
 
-name=document.getElementById("name").value
+name=
 
-tier=document.getElementById("tier").value
+document.getElementById("name").value
+
+tier=
+
+document.getElementById("tier").value
 
 
-player={
+players.push({
 
 name:name,
 
@@ -59,10 +105,10 @@ tier:tier,
 
 team:[]
 
-}
+})
 
 
-players.push(player)
+save()
 
 update()
 
@@ -70,31 +116,47 @@ update()
 
 
 
+/* UPDATE GENERAL */
+
 function update(){
 
 
-playersDiv=document.getElementById("players")
+div=
 
-playersDiv.innerHTML=""
+document.getElementById("players")
+
+div.innerHTML=""
 
 
-select=document.getElementById("playerSelect")
+select=
+
+document.getElementById("playerSelect")
+
 select.innerHTML=""
 
-p1=document.getElementById("player1")
+
+p1=
+
+document.getElementById("player1")
+
 p1.innerHTML=""
 
-p2=document.getElementById("player2")
-p2.innerHTML=""
 
+p2=
+
+document.getElementById("player2")
+
+p2.innerHTML=""
 
 
 players.forEach((p,i)=>{
 
 
-playersDiv.innerHTML+=`
+div.innerHTML+=`
 
-<div class="playerCard">
+<div class="playerCard"
+
+onclick="openProfile(${i})">
 
 <h4>${p.name}</h4>
 
@@ -104,8 +166,7 @@ Tier ${p.tier}
 
 </div>
 
-
-<div>
+<div class="team">
 
 ${renderTeam(p)}
 
@@ -114,7 +175,6 @@ ${renderTeam(p)}
 </div>
 
 `
-
 
 
 select.innerHTML+=
@@ -140,15 +200,114 @@ ${p.name}
 
 })
 
+
+save()
+
 }
 
 
 
+/* PERFIL */
+
+function openProfile(i){
+
+selectedPlayer=i
+
+p=players[i]
+
+
+profile=
+
+document.getElementById("profile")
+
+
+profile.innerHTML=`
+
+<h2>${p.name}</h2>
+
+<div class="smallText">
+
+Tier ${p.tier}
+
+</div>
+
+
+<h3>Equipo</h3>
+
+
+<div class="team">
+
+${renderTeam(p)}
+
+</div>
+
+
+<button
+
+class="btn btn-neon mt-3"
+
+onclick="closeProfile()">
+
+Volver
+
+</button>
+
+`
+
+
+profile.classList.remove("hidden")
+
+}
+
+
+
+function closeProfile(){
+
+document
+
+.getElementById("profile")
+
+.classList.add("hidden")
+
+}
+
+
+
+/* POKEMON */
+
 function addPokemon(){
 
-i=document.getElementById("playerSelect").value
+i=
 
-pokemon=document.getElementById("pokemon").value.toLowerCase()
+document
+
+.getElementById(
+
+"playerSelect"
+
+).value
+
+
+pokemon=
+
+document
+
+.getElementById(
+
+"pokemon"
+
+).value
+
+.toLowerCase()
+
+
+if(players[i].team.length>=6){
+
+alert("Maximo 6")
+
+return
+
+}
 
 
 fetch(
@@ -162,7 +321,11 @@ fetch(
 .then(data=>{
 
 
-img=data.sprites.front_default
+img=
+
+data.sprites
+
+.front_default
 
 
 players[i].team.push({
@@ -174,6 +337,8 @@ img:img
 })
 
 
+save()
+
 update()
 
 })
@@ -182,11 +347,14 @@ update()
 
 
 
+/* RENDER TEAM */
+
 function renderTeam(player){
 
 html=""
 
 player.team.forEach(p=>{
+
 
 html+=`
 
@@ -204,7 +372,9 @@ ${p.name}
 
 `
 
+
 })
+
 
 return html
 
@@ -212,15 +382,23 @@ return html
 
 
 
+/* MISIONES */
 
 function updateMissions(){
 
-div=document.getElementById("missions")
+div=
+
+document.getElementById(
+
+"missions"
+
+)
+
 
 if(!div)return
 
-div.innerHTML=""
 
+div.innerHTML=""
 
 
 missions.forEach((m,i)=>{
@@ -236,16 +414,21 @@ ${m.name}
 
 </h5>
 
-<div>
 
-Recompensa:
+<div>
 
 ${m.reward}
 
+Sinocoins
+
 </div>
 
-<button onclick="completeMission(${i})"
-class="btn btn-neon">
+
+<button
+
+class="btn btn-neon"
+
+onclick="completeMission(${i})">
 
 Completar
 
@@ -263,31 +446,47 @@ Completar
 
 
 
+/* MISION */
 
 function completeMission(i){
 
 coins+=missions[i].reward
 
-document.getElementById("coins").innerText=coins
+updateCoins()
+
+save()
 
 }
 
 
 
+/* COINS */
+
+function updateCoins(){
+
+document
+
+.getElementById("coins")
+
+.innerText=coins
+
+}
+
+
+
+/* TRADE */
 
 function tradeCoins(){
-
-p1=document.getElementById("player1").value
-p2=document.getElementById("player2").value
-
 
 if(coins>=50){
 
 coins-=50
 
-document.getElementById("coins").innerText=coins
+updateCoins()
 
-alert("Intercambio hecho")
+save()
+
+alert("Trade hecho")
 
 }
 

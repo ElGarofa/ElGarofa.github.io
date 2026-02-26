@@ -1,6 +1,6 @@
 body{
 
-background:#050510;
+background:#04040a;
 color:white;
 
 font-family:Arial;
@@ -8,133 +8,283 @@ font-family:Arial;
 }
 
 
+/* NAV */
 
 .neon-blue{
 
-color:#00eaff;
+color:#00f7ff;
 
 text-shadow:
-0 0 10px #00eaff,
-0 0 20px #00eaff;
+0 0 5px #00f7ff,
+0 0 15px #00f7ff,
+0 0 30px #00f7ff;
+
+animation:glowBlue 2s infinite alternate;
 
 }
 
 
+
+@keyframes glowBlue{
+
+from{
+
+text-shadow:
+0 0 5px #00f7ff,
+0 0 15px #00f7ff;
+
+}
+
+to{
+
+text-shadow:
+0 0 20px #00f7ff,
+0 0 40px #00f7ff;
+
+}
+
+}
+
+
+
+/* CARDS */
 
 .neon-card{
 
-background:#0d0d20;
+background:#0c0c1a;
 
 padding:20px;
 
-margin-bottom:15px;
-
 border-radius:15px;
+
+margin-bottom:20px;
 
 box-shadow:
 
-0 0 10px #00eaff;
+0 0 10px #00f7ff;
+
+transition:0.4s;
+
+}
+
+
+.neon-card:hover{
+
+box-shadow:
+
+0 0 20px #00f7ff,
+
+0 0 40px #00f7ff;
 
 }
 
 
 
+/* BOTONES */
+
 .btn-neon{
 
-background:#00eaff;
+background:#00f7ff;
 
-color:black;
+border:none;
 
 font-weight:bold;
 
 }
 
 
+.btn-neon:hover{
 
-.btn-purple{
+box-shadow:
 
-background:#ff00ff;
+0 0 10px #00f7ff,
 
-color:white;
+0 0 30px #00f7ff;
 
 }
 
 
+
+/* TEXTO */
 
 .smallText{
 
-color:#cccccc;
+color:#aaaaaa;
+
+font-size:14px;
 
 }
 
 
+
+/* SIN O COINS */
 
 .sinocoins{
 
-color:#00ff9c;
+color:#00ff88;
 
-font-size:20px;
+font-size:22px;
+
+text-shadow:
+
+0 0 10px #00ff88;
+
+animation:glowCoins 1.5s infinite alternate;
 
 }
 
 
+@keyframes glowCoins{
+
+from{
+
+text-shadow:0 0 5px #00ff88;
+
+}
+
+to{
+
+text-shadow:
+
+0 0 20px #00ff88,
+
+0 0 40px #00ff88;
+
+}
+
+}
+
+
+
+/* PLAYER */
 
 .playerCard{
 
-border:
+border:1px solid #00f7ff;
 
-1px solid #00eaff;
+padding:15px;
 
-padding:10px;
+margin-top:15px;
 
-margin-top:10px;
+border-radius:12px;
 
-border-radius:10px;
+transition:0.3s;
+
+cursor:pointer;
 
 }
 
+
+.playerCard:hover{
+
+transform:scale(1.02);
+
+box-shadow:
+
+0 0 20px #00f7ff;
+
+}
+
+
+
+/* TEAM */
+
+.team{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(3,1fr);
+
+gap:10px;
+
+margin-top:10px;
+
+}
 
 
 .pokemonCard{
 
-display:inline-block;
-
-text-align:center;
-
-margin:5px;
-
-}
-
-
-
-img{
-
-width:80px;
-
-}
-
-
-
-.mission{
-
-border:
-
-1px solid #ff00ff;
-
-padding:10px;
-
-margin:5px;
+background:#111125;
 
 border-radius:10px;
 
+padding:10px;
+
+text-align:center;
+
+border:1px solid #00f7ff;
+
+}
+
+
+.pokemonCard img{
+
+width:110px;
+
 }
 
 
 
-button:hover{
+/* MISIONES */
 
-transform:scale(1.05);
+.mission{
+
+border:1px solid #ff00ff;
+
+padding:15px;
+
+margin:10px;
+
+border-radius:10px;
+
+background:#140014;
 
 transition:0.3s;
+
+}
+
+
+.mission:hover{
+
+box-shadow:
+
+0 0 20px #ff00ff;
+
+}
+
+
+
+/* PERFIL */
+
+.profile{
+
+background:#000010;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:
+
+0 0 20px #00f7ff;
+
+margin-bottom:20px;
+
+}
+
+
+.profile h2{
+
+color:#00f7ff;
+
+}
+
+
+
+.hidden{
+
+display:none;
 
 }

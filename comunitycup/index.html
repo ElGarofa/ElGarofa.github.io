@@ -1,150 +1,253 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 
 <meta charset="UTF-8">
-
 <title>Torneo Locke</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
 
 
-<nav class="navbar navbar-dark bg-dark">
-
 <div class="container">
 
-<h2 class="neon-blue">
+
+<h1 class="titulo text-center">
 
 TORNEO LOCKE
 
-</h2>
+</h1>
 
-<div>
 
-<span class="sinocoins">
 
-💰 Sinocoins:
+<!-- SINOGUIA -->
 
-<span id="coins">0</span>
+<div class="sinocoinsBox">
+
+Sinocoins Totales:
+
+<span id="sinocoins">
+
+0
 
 </span>
 
 </div>
 
+
+<hr>
+
+
+
+<!-- PARTICIPANTES -->
+
+<h2>Participantes</h2>
+
+
+<div id="participantes">
+
 </div>
 
-</nav>
 
 
+<button class="btn btn-neon"
 
-<div class="container mt-4">
+onclick="crearParticipante()">
 
-<div class="row">
-
-
-<div class="col-md-4">
-
-
-<div class="neon-card">
-
-<h3>Agregar Jugador</h3>
-
-<input id="name" class="form-control mb-2" placeholder="Nombre">
-
-<input id="image" class="form-control mb-2" placeholder="URL Imagen">
-
-<select id="tier" class="form-control mb-2">
-
-<option>Bronce</option>
-<option>Plata</option>
-<option>Oro</option>
-<option>Elite</option>
-
-</select>
-
-<button class="btn btn-neon w-100"
-onclick="addPlayer()">
-
-Agregar
+Agregar Participante
 
 </button>
 
+
+
+<hr>
+
+
+
+<!-- PERFIL -->
+
+<h2>Perfil</h2>
+
+<div id="perfil">
+
+Selecciona jugador
+
 </div>
 
 
 
-<div class="neon-card">
+<hr>
 
-<h3>Agregar Pokemon</h3>
 
-<select id="playerSelect"
-class="form-control mb-2">
 
-</select>
+<!-- EQUIPO -->
 
-<input id="pokemon"
-class="form-control mb-2"
-placeholder="Pokemon">
+<h2>Equipo Pokémon</h2>
 
-<button class="btn btn-neon w-100"
-onclick="addPokemon()">
 
-Agregar
+<input id="pokemonInput"
+
+placeholder="Nombre Pokemon">
+
+
+<button class="btn btn-neon"
+
+onclick="agregarPokemon()">
+
+Agregar Pokemon
 
 </button>
 
-</div>
 
 
-
-<div class="neon-card">
-
-<h3>Tienda Sinocoins</h3>
-
-<div id="shop"></div>
-
-</div>
-
+<div id="equipo">
 
 </div>
 
 
 
-<div class="col-md-8">
-
-
-<div id="profile"
-class="profile hidden">
-
-</div>
+<hr>
 
 
 
-<div class="neon-card">
+<!-- MISIONES -->
 
-<h3>Participantes</h3>
+<h2>Misiones</h2>
 
-<div id="players"></div>
 
-</div>
+<div id="misiones">
 
 
 </div>
 
 
-</div>
+
+<hr>
+
+
+
+<!-- TIENDA -->
+
+<h2>Tienda</h2>
+
+
+<div id="tienda">
+
+
+<button onclick="comprar('habilidad',40)"
+
+class="shopItem">
+
+Cambio de habilidad - 40
+
+</button>
+
+
+<button onclick="comprar('naturaleza',40)"
+
+class="shopItem">
+
+Cambio naturaleza - 40
+
+</button>
+
+
+
+<button onclick="comprar('captura',60)"
+
+class="shopItem">
+
+Captura extra - 60
+
+</button>
+
+
+
+<button onclick="comprar('segunda',80)"
+
+class="shopItem">
+
+Segunda oportunidad - 80
+
+</button>
+
+
+
+<button onclick="comprar('revivir',100)"
+
+class="shopItem">
+
+Revivir Pokémon - 100
+
+</button>
+
+
+
+<button onclick="comprar('objeto',30)"
+
+class="shopItem">
+
+Objeto gratis - 30
+
+</button>
+
+
+
+<button onclick="comprar('reroll',50)"
+
+class="shopItem">
+
+Re-roll encuentro - 50
+
+</button>
+
+
+
+<button onclick="comprar('shiny',200)"
+
+class="shopItem">
+
+Intento Shiny - 200
+
+</button>
+
+
 
 </div>
 
 
-<script src="script.js"></script>
+
+<hr>
+
+
+
+<!-- RECOMPENSAS -->
+
+<h2>Recompensas Compradas</h2>
+
+
+<div id="inventario">
+
+
+</div>
+
+
+
+</div>
+
+
+
+<script src="script.js">
+
+</script>
+
+
 
 </body>
 </html>

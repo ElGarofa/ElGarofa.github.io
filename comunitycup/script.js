@@ -3,18 +3,24 @@ coins=0
 jugadorActual=null
 
 
+
 missions=[
 
 {name:"Starter",reward:20},
+
 {name:"Gimnasio 1",reward:30},
+
 {name:"Gimnasio 2",reward:40},
+
 {name:"Gimnasio 3",reward:50},
+
 {name:"Liga",reward:200}
 
 ]
 
 
-shop=[
+
+shopItems=[
 
 {name:"Cambio habilidad",price:80},
 
@@ -27,8 +33,18 @@ shop=[
 ]
 
 
+
+iniciar()
+
+
+
+function iniciar(){
+
 actualizarMisiones()
+
 actualizarShop()
+
+}
 
 
 
@@ -36,11 +52,11 @@ function crearJugador(){
 
 players.push({
 
-nombre:nombreInput.value,
+nombre:document.getElementById("nombreInput").value,
 
-foto:fotoInput.value,
+foto:document.getElementById("fotoInput").value,
 
-tier:tierInput.value,
+tier:document.getElementById("tierInput").value,
 
 wins:0,
 
@@ -60,13 +76,15 @@ actualizarLista()
 
 function actualizarLista(){
 
-listaJugadores.innerHTML=""
+lista=document.getElementById("listaJugadores")
+
+lista.innerHTML=""
+
 
 
 players.forEach((p,i)=>{
 
-
-listaJugadores.innerHTML+=`
+lista.innerHTML+=`
 
 <div class="playerCard"
 
@@ -86,7 +104,6 @@ Tier ${p.tier}
 
 })
 
-
 }
 
 
@@ -97,17 +114,30 @@ jugadorActual=i
 
 p=players[i]
 
-perfil.classList.remove("hidden")
 
-nombrePerfil.innerText=p.nombre
+document.getElementById("perfil")
+.classList.remove("hidden")
 
-fotoPerfil.src=p.foto
 
-wins.innerText=p.wins
+document.getElementById("nombrePerfil")
+.innerText=p.nombre
 
-loses.innerText=p.loses
 
-draws.innerText=p.draws
+document.getElementById("fotoPerfil")
+.src=p.foto
+
+
+document.getElementById("wins")
+.innerText=p.wins
+
+
+document.getElementById("loses")
+.innerText=p.loses
+
+
+document.getElementById("draws")
+.innerText=p.draws
+
 
 mostrarTeam()
 
@@ -117,7 +147,8 @@ mostrarTeam()
 
 function cerrarPerfil(){
 
-perfil.classList.add("hidden")
+document.getElementById("perfil")
+.classList.add("hidden")
 
 }
 
@@ -139,7 +170,10 @@ abrirPerfil(jugadorActual)
 
 function mostrarTeam(){
 
-team.innerHTML=""
+div=document.getElementById("team")
+
+div.innerHTML=""
+
 
 p=players[jugadorActual]
 
@@ -147,7 +181,7 @@ p=players[jugadorActual]
 p.team.forEach(pk=>{
 
 
-team.innerHTML+=`
+div.innerHTML+=`
 
 <div class="pokemonCard">
 
@@ -163,16 +197,19 @@ ${pk.nombre}
 
 })
 
-
 }
 
 
 
+
+// RANDOM ANIMADO
+
 function randomPokemonAnimado(){
 
-randomBox.classList.remove("hidden")
+box=document.getElementById("randomBox")
 
-speed=50
+box.classList.remove("hidden")
+
 
 loops=0
 
@@ -190,14 +227,19 @@ fetch("https://pokeapi.co/api/v2/pokemon/"+id)
 .then(data=>{
 
 
-randomImg.src=data.sprites.front_default
+document.getElementById("randomImg")
+.src=data.sprites.front_default
 
-randomName.innerText=data.name
+
+document.getElementById("randomName")
+.innerText=data.name
+
 
 
 if(loops>20){
 
 clearInterval(interval)
+
 
 players[jugadorActual].team.push({
 
@@ -207,20 +249,20 @@ img:data.sprites.front_default
 
 })
 
+
 mostrarTeam()
 
 }
 
 loops++
 
-
 })
 
 
-},speed)
-
+},80)
 
 }
+
 
 
 
@@ -253,12 +295,21 @@ mostrarTeam()
 
 
 
+
+
+// MISIONES
+
 function actualizarMisiones(){
+
+div=document.getElementById("missions")
+
+div.innerHTML=""
+
 
 missions.forEach((m,i)=>{
 
 
-missionsDiv.innerHTML+=`
+div.innerHTML+=`
 
 <div class="mission">
 
@@ -266,11 +317,12 @@ ${m.name}
 
 <br>
 
-${m.reward}
+💰 ${m.reward}
 
 <br>
 
-<button onclick="completar(${i})">
+<button onclick="completar(${i})"
+class="btn btn-neon">
 
 Completar
 
@@ -280,7 +332,6 @@ Completar
 
 `
 
-
 })
 
 
@@ -288,30 +339,44 @@ Completar
 
 
 
+
 function completar(i){
 
 coins+=missions[i].reward
 
-coins.innerText=coins
+
+document.getElementById("coins")
+.innerText=coins
 
 }
 
 
 
+
+
+// TIENDA
+
 function actualizarShop(){
 
-shop.forEach(s=>{
+div=document.getElementById("shop")
+
+div.innerHTML=""
 
 
-shop.innerHTML+=`
+shopItems.forEach(s=>{
+
+
+div.innerHTML+=`
 
 <div class="shopItem">
 
 ${s.name}
 
-${s.price}
+💰 ${s.price}
 
-<button onclick="comprar(${s.price})">
+
+<button onclick="comprar(${s.price})"
+class="btn btn-neon">
 
 Comprar
 
@@ -321,11 +386,11 @@ Comprar
 
 `
 
-
 })
 
 
 }
+
 
 
 
@@ -335,7 +400,8 @@ if(coins>=precio){
 
 coins-=precio
 
-coins.innerText=coins
+document.getElementById("coins")
+.innerText=coins
 
 alert("Comprado")
 

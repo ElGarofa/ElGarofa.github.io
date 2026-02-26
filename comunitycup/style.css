@@ -122,9 +122,13 @@ display:grid;
 
 grid-template-columns:
 
-repeat(3,1fr);
+repeat(3,120px);
 
-gap:10px;
+gap:8px;
+
+margin-top:10px;
+
+justify-content: start;
 
 }
 
@@ -134,7 +138,11 @@ gap:10px;
 
 background:#111125;
 
-padding:10px;
+width:120px;
+
+height:120px;
+
+padding:6px;
 
 border-radius:10px;
 
@@ -151,7 +159,9 @@ transition:.3s;
 
 box-shadow:
 
-0 0 20px #00f7ff;
+0 5px #00f7ff;
+
+
 
 }
 
@@ -159,7 +169,11 @@ box-shadow:
 
 .pokemonCard img{
 
-width:110px;
+width:80px;
+
+height:80px;
+
+object-fit:contain;
 
 }
 

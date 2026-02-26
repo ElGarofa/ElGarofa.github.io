@@ -326,3 +326,64 @@ align-items:center;
 margin-left:10px;
 
 }
+/* TIERS */
+
+.tierBronce{
+
+border:2px solid #aa6600;
+
+}
+
+.tierPlata{
+
+border:2px solid #bbbbbb;
+
+}
+
+.tierOro{
+
+border:2px solid gold;
+
+}
+
+.tierElite{
+
+border:2px solid red;
+
+box-shadow:0 0 20px red;
+
+}
+
+
+
+/* RANKING */
+
+#rankDiv{
+
+background:black;
+
+padding:10px;
+
+border:1px solid cyan;
+
+}
+
+
+
+/* LOG */
+
+.log{
+
+font-size:12px;
+
+}
+
+
+
+/* DEAD */
+
+.dead img{
+
+width:40px;
+
+}

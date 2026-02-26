@@ -1,6 +1,29 @@
 players=[]
-coins=0
 selectedPlayer=null
+
+
+/* MISIONES REALES */
+
+missions=[
+
+{name:"Lider Rocavelo",reward:50},
+{name:"Lider Corazon",reward:50},
+{name:"Lider Canal",reward:60},
+{name:"Lider Pradera",reward:60},
+{name:"Lider Puntaneva",reward:70},
+{name:"Lider Marina",reward:70},
+{name:"Lider Pirita",reward:80},
+{name:"Lider Liga",reward:200},
+
+{name:"Rival batalla 1",reward:30},
+{name:"Rival batalla 2",reward:40},
+{name:"Rival batalla final",reward:100},
+
+{name:"Equipo villano base",reward:50},
+{name:"Equipo villano jefe",reward:120}
+
+]
+
 
 
 /* TIENDA */
@@ -21,39 +44,7 @@ shop=[
 
 {name:"Objeto equipado",price:40},
 
-{name:"Repetir ruta",price:150},
-
-{name:"Cambiar muerto",price:180},
-
-{name:"Info rival",price:50}
-
-]
-
-
-
-/* MISIONES */
-
-missions=[
-
-{name:"Capturar Starter",reward:20},
-
-{name:"Gimnasio 1",reward:30},
-
-{name:"Gimnasio 2",reward:40},
-
-{name:"Gimnasio 3",reward:50},
-
-{name:"Gimnasio 4",reward:60},
-
-{name:"Capturar Legendario",reward:150},
-
-{name:"Equipo completo",reward:100},
-
-{name:"Sin muertes",reward:200},
-
-{name:"Liga Pokemon",reward:300},
-
-{name:"Capturar Shiny",reward:250}
+{name:"Repetir ruta",price:150}
 
 ]
 
@@ -63,29 +54,19 @@ load()
 
 
 
-/* GUARDAR */
-
 function save(){
 
 localStorage.setItem(
 
 "torneo",
 
-JSON.stringify({
-
-players:players,
-
-coins:coins
-
-})
+JSON.stringify(players)
 
 )
 
 }
 
 
-
-/* CARGAR */
 
 function load(){
 
@@ -100,43 +81,36 @@ localStorage.getItem("torneo")
 
 if(data){
 
-players=data.players
-
-coins=data.coins
+players=data
 
 }
 
 
 update()
 
-updateCoins()
+updateMissions()
 
 updateShop()
 
-updateMissions()
+updateRanking()
 
 }
 
 
 
-/* JUGADORES */
+/* JUGADOR */
 
 function addPlayer(){
 
-name=document.getElementById("name").value
-
-img=document.getElementById("image").value
-
-tier=document.getElementById("tier").value
-
-
 players.push({
 
-name:name,
+name:name.value,
 
-img:img,
+img:image.value,
 
-tier:tier,
+tier:tier.value,
+
+coins:0,
 
 wins:0,
 
@@ -146,10 +120,25 @@ deaths:0,
 
 team:[],
 
-dead:[]
+dead:[],
+
+log:[],
+
+progress:{
+
+g1:false,
+g2:false,
+g3:false,
+g4:false,
+g5:false,
+g6:false,
+g7:false,
+g8:false,
+liga:false
+
+}
 
 })
-
 
 save()
 
@@ -159,20 +148,15 @@ update()
 
 
 
-/* UPDATE GENERAL */
+/* UPDATE */
 
 function update(){
 
-div=document.getElementById("players")
+div=playersDiv
 
 div.innerHTML=""
 
-
-
-select=document.getElementById("playerSelect")
-
 select.innerHTML=""
-
 
 
 players.forEach((p,i)=>{
@@ -180,7 +164,7 @@ players.forEach((p,i)=>{
 
 div.innerHTML+=`
 
-<div class="playerCard"
+<div class="playerCard tier${p.tier}"
 
 onclick="openProfile(${i})">
 
@@ -188,11 +172,9 @@ onclick="openProfile(${i})">
 
 <h4>${p.name}</h4>
 
-<div class="smallText">
+Coins ${p.coins}
 
-Tier ${p.tier}
-
-</div>
+Wins ${p.wins}
 
 </div>
 
@@ -209,6 +191,8 @@ ${p.name}
 })
 
 
+updateRanking()
+
 save()
 
 }
@@ -224,57 +208,35 @@ selectedPlayer=i
 p=players[i]
 
 
-profile=document.getElementById("profile")
-
-
 profile.innerHTML=`
 
 <img src="${p.img}" class="avatarBig">
 
 <h2>${p.name}</h2>
 
-<div>Tier ${p.tier}</div>
+Tier ${p.tier}
 
 
-<h4>
+<h3>
+
+Coins ${p.coins}
+
+</h3>
+
 
 Victorias ${p.wins}
-
-</h4>
 
 <button onclick="win()">+</button>
 
 
-<h4>
-
 Derrotas ${p.loss}
-
-</h4>
 
 <button onclick="lose()">+</button>
 
 
-<h4>
-
-Muertes ${p.deaths}
-
-</h4>
-
-
-<button onclick="death()">
-
-+ muerte
-
-</button>
-
-
 <h3>Equipo</h3>
 
-<div class="team">
-
 ${renderTeam(p)}
-
-</div>
 
 
 <h3>Cementerio</h3>
@@ -282,18 +244,22 @@ ${renderTeam(p)}
 ${renderDead(p)}
 
 
-<button
+<h3>Progreso</h3>
 
-class="btn btn-neon mt-3"
+${renderProgress(p)}
 
-onclick="closeProfile()">
+
+<h3>Historial</h3>
+
+${renderLog(p)}
+
+<button onclick="closeProfile()">
 
 Volver
 
 </button>
 
 `
-
 
 profile.classList.remove("hidden")
 
@@ -303,89 +269,190 @@ profile.classList.remove("hidden")
 
 function closeProfile(){
 
-document
-
-.getElementById("profile")
-
-.classList.add("hidden")
+profile.classList.add("hidden")
 
 }
 
 
 
-/* ESTADISTICAS */
+/* RANKING */
 
-function win(){
+function updateRanking(){
 
-players[selectedPlayer].wins++
+rankDiv.innerHTML=""
+
+
+sorted=
+
+[...players]
+
+.sort((a,b)=>b.wins-a.wins)
+
+
+sorted.forEach(p=>{
+
+
+rankDiv.innerHTML+=`
+
+<div>
+
+${p.name}
+
+${p.wins}
+
+</div>
+
+`
+
+
+})
+
+}
+
+
+
+/* MISIONES */
+
+function updateMissions(){
+
+missionsDiv.innerHTML=""
+
+
+missions.forEach((m,i)=>{
+
+
+missionsDiv.innerHTML+=`
+
+<div class="mission">
+
+${m.name}
+
+${m.reward}
+
+<select onchange="missionPlayer(${i},this.value)">
+
+${playerOptions()}
+
+</select>
+
+</div>
+
+`
+
+
+})
+
+}
+
+
+
+function missionPlayer(m,i){
+
+p=players[i]
+
+p.coins+=missions[m].reward
+
+p.log.push(
+
+"Completo "+missions[m].name
+
+)
 
 save()
 
-openProfile(selectedPlayer)
+update()
 
 }
 
 
-function lose(){
 
-players[selectedPlayer].loss++
+/* SHOP */
+
+function updateShop(){
+
+shopDiv.innerHTML=""
+
+
+shop.forEach((s,i)=>{
+
+
+shopDiv.innerHTML+=`
+
+<div class="shopItem">
+
+${s.name}
+
+${s.price}
+
+<select onchange="buy(${i},this.value)">
+
+${playerOptions()}
+
+</select>
+
+</div>
+
+`
+
+
+})
+
+}
+
+
+
+function buy(i,p){
+
+pl=players[p]
+
+
+if(pl.coins>=shop[i].price){
+
+pl.coins-=shop[i].price
+
+pl.log.push(
+
+"Compro "+shop[i].name
+
+)
 
 save()
 
-openProfile(selectedPlayer)
+update()
 
 }
-
-
-function death(){
-
-players[selectedPlayer].deaths++
-
-save()
-
-openProfile(selectedPlayer)
 
 }
 
 
 
-/* POKEMON */
+/* TEAM */
 
 function addPokemon(){
 
-i=document.getElementById("playerSelect").value
+i=select.value
 
-pokemon=document.getElementById("pokemon").value.toLowerCase()
-
-
-if(players[i].team.length>=6){
-
-alert("Maximo 6")
-
-return
-
-}
+name=pokemon.value
 
 
 fetch(
 
-"https://pokeapi.co/api/v2/pokemon/"+pokemon
+"https://pokeapi.co/api/v2/pokemon/"+name
 
 )
 
 .then(r=>r.json())
 
-.then(data=>{
-
-
-img=data.sprites.front_default
+.then(d=>{
 
 
 players[i].team.push({
 
-name:pokemon,
+name:name,
 
-img:img
+img:d.sprites.front_default,
+
+type:d.types[0].type.name
 
 })
 
@@ -396,34 +463,32 @@ update()
 
 })
 
+
 }
 
 
 
-/* EQUIPO */
-
-function renderTeam(player){
+function renderTeam(p){
 
 html=""
 
-player.team.forEach((p,i)=>{
+
+p.team.forEach((pk,i)=>{
 
 
 html+=`
 
 <div class="pokemonCard">
 
-<img src="${p.img}">
+<img src="${pk.img}">
 
-<div>
+${pk.name}
 
-${p.name}
-
-</div>
+${pk.type}
 
 <button onclick="kill(${i})">
 
-☠
+X
 
 </button>
 
@@ -434,33 +499,6 @@ ${p.name}
 
 })
 
-return html
-
-}
-
-
-
-/* CEMENTERIO */
-
-function renderDead(player){
-
-html=""
-
-player.dead.forEach(p=>{
-
-
-html+=`
-
-<div>
-
-☠ ${p.name}
-
-</div>
-
-`
-
-
-})
 
 return html
 
@@ -478,6 +516,12 @@ p.dead.push(dead)
 
 p.deaths++
 
+p.log.push(
+
+dead.name+" murio"
+
+)
+
 save()
 
 openProfile(selectedPlayer)
@@ -486,105 +530,25 @@ openProfile(selectedPlayer)
 
 
 
-/* TIENDA */
+/* DEAD */
 
-function updateShop(){
+function renderDead(p){
 
-div=document.getElementById("shop")
-
-div.innerHTML=""
+html=""
 
 
-shop.forEach((s,i)=>{
+p.dead.forEach(pk=>{
 
 
-div.innerHTML+=`
-
-<div class="shopItem">
-
-${s.name}
-
--
-
-${s.price}
-
-<button
-
-onclick="buy(${i})"
-
-class="btn btn-neon btn-sm">
-
-Comprar
-
-</button>
-
-</div>
-
-`
-
-})
-
-}
-
-
-
-function buy(i){
-
-if(coins>=shop[i].price){
-
-coins-=shop[i].price
-
-updateCoins()
-
-save()
-
-alert("Comprado")
-
-}
-
-}
-
-
-
-/* MISIONES */
-
-function updateMissions(){
-
-div=document.getElementById("missions")
-
-div.innerHTML=""
-
-
-missions.forEach((m,i)=>{
-
-
-div.innerHTML+=`
-
-<div class="mission">
-
-<h5>
-
-${m.name}
-
-</h5>
+html+=`
 
 <div>
 
-${m.reward}
+☠
 
-Sinocoins
+<img src="${pk.img}" width=40>
 
-</div>
-
-<button
-
-onclick="completeMission(${i})"
-
-class="btn btn-neon">
-
-Completar
-
-</button>
+${pk.name}
 
 </div>
 
@@ -592,30 +556,79 @@ Completar
 
 })
 
-}
 
-
-
-function completeMission(i){
-
-coins+=missions[i].reward
-
-updateCoins()
-
-save()
+return html
 
 }
 
 
 
-/* COINS */
+/* PROGRESS */
 
-function updateCoins(){
+function renderProgress(p){
 
-document
+return`
 
-.getElementById("coins")
+G1 ${p.progress.g1}
 
-.innerText=coins
+G2 ${p.progress.g2}
+
+Liga ${p.progress.liga}
+
+`
+
+}
+
+
+
+/* LOG */
+
+function renderLog(p){
+
+html=""
+
+p.log.forEach(l=>{
+
+
+html+=`
+
+<div>
+
+${l}
+
+</div>
+
+`
+
+})
+
+
+return html
+
+}
+
+
+
+/* HELPERS */
+
+function playerOptions(){
+
+html=""
+
+players.forEach((p,i)=>{
+
+
+html+=`
+
+<option value=${i}>
+${p.name}
+</option>
+
+`
+
+
+})
+
+return html
 
 }

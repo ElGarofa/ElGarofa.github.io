@@ -1,279 +1,253 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 
 <meta charset="UTF-8">
-
 <title>Torneo Locke</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
 
 
-<!-- NAVBAR -->
-
-<nav class="navbar navbar-dark bg-dark">
-
 <div class="container">
 
-<h2 class="neon-blue">
+
+<h1 class="titulo text-center">
 
 TORNEO LOCKE
 
-</h2>
+</h1>
 
-<div>
 
-<span class="sinocoins">
 
-💰 Sinocoins:
+<!-- SINOGUIA -->
 
-<span id="coins">
+<div class="sinocoinsBox">
+
+Sinocoins Totales:
+
+<span id="sinocoins">
 
 0
 
 </span>
 
-</span>
-
-</div>
-
-</div>
-
-</nav>
-
-
-
-
-<div class="container mt-4">
-
-<div class="row">
-
-
-
-<!-- PANEL IZQUIERDO -->
-
-<div class="col-md-4">
-
-
-<!-- AGREGAR JUGADOR -->
-
-<div class="neon-card">
-
-<h3>
-
-Agregar Jugador
-
-</h3>
-
-
-<input
-
-id="name"
-
-class="form-control mb-2"
-
-placeholder="Nombre"
-
->
-
-
-<input
-
-id="image"
-
-class="form-control mb-2"
-
-placeholder="URL Imagen"
-
->
-
-
-<select
-
-id="tier"
-
-class="form-control mb-2"
-
->
-
-<option>Bronce</option>
-<option>Plata</option>
-<option>Oro</option>
-<option>Elite</option>
-
-</select>
-
-
-<button
-
-class="btn btn-neon w-100"
-
-onclick="addPlayer()"
-
->
-
-Agregar
-
-</button>
-
 </div>
 
 
-
-<!-- AGREGAR POKEMON -->
-
-<div class="neon-card">
-
-<h3>
-
-Agregar Pokémon
-
-</h3>
-
-
-<select
-
-id="playerSelect"
-
-class="form-control mb-2"
-
->
-
-</select>
-
-
-<input
-
-id="pokemon"
-
-class="form-control mb-2"
-
-placeholder="Nombre Pokemon"
-
->
-
-
-<button
-
-class="btn btn-neon w-100"
-
-onclick="addPokemon()"
-
->
-
-Agregar
-
-</button>
-
-</div>
-
-
-
-<!-- TIENDA -->
-
-<div class="neon-card">
-
-<h3>
-
-Tienda Sinocoins
-
-</h3>
-
-
-<div id="shop">
-
-</div>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<!-- PANEL DERECHO -->
-
-<div class="col-md-8">
-
-
-<!-- PERFIL -->
-
-<div
-
-id="profile"
-
-class="profile hidden"
-
->
-
-</div>
-
+<hr>
 
 
 
 <!-- PARTICIPANTES -->
 
-<div class="neon-card">
-
-<h3>
-
-Participantes
-
-</h3>
+<h2>Participantes</h2>
 
 
-<div id="players">
+<div id="participantes">
 
 </div>
 
+
+
+<button class="btn btn-neon"
+
+onclick="crearParticipante()">
+
+Agregar Participante
+
+</button>
+
+
+
+<hr>
+
+
+
+<!-- PERFIL -->
+
+<h2>Perfil</h2>
+
+<div id="perfil">
+
+Selecciona jugador
+
 </div>
 
+
+
+<hr>
+
+
+
+<!-- EQUIPO -->
+
+<h2>Equipo Pokémon</h2>
+
+
+<input id="pokemonInput"
+
+placeholder="Nombre Pokemon">
+
+
+<button class="btn btn-neon"
+
+onclick="agregarPokemon()">
+
+Agregar Pokemon
+
+</button>
+
+
+
+<div id="equipo">
+
+</div>
+
+
+
+<hr>
 
 
 
 <!-- MISIONES -->
 
-<div class="neon-card">
-
-<h3>
-
-Misiones y Recompensas
-
-</h3>
+<h2>Misiones</h2>
 
 
-<div id="missions">
-
-</div>
-
-</div>
-
+<div id="misiones">
 
 
 </div>
 
 
 
-</div>
+<hr>
+
+
+
+<!-- TIENDA -->
+
+<h2>Tienda</h2>
+
+
+<div id="tienda">
+
+
+<button onclick="comprar('habilidad',40)"
+
+class="shopItem">
+
+Cambio de habilidad - 40
+
+</button>
+
+
+<button onclick="comprar('naturaleza',40)"
+
+class="shopItem">
+
+Cambio naturaleza - 40
+
+</button>
+
+
+
+<button onclick="comprar('captura',60)"
+
+class="shopItem">
+
+Captura extra - 60
+
+</button>
+
+
+
+<button onclick="comprar('segunda',80)"
+
+class="shopItem">
+
+Segunda oportunidad - 80
+
+</button>
+
+
+
+<button onclick="comprar('revivir',100)"
+
+class="shopItem">
+
+Revivir Pokémon - 100
+
+</button>
+
+
+
+<button onclick="comprar('objeto',30)"
+
+class="shopItem">
+
+Objeto gratis - 30
+
+</button>
+
+
+
+<button onclick="comprar('reroll',50)"
+
+class="shopItem">
+
+Re-roll encuentro - 50
+
+</button>
+
+
+
+<button onclick="comprar('shiny',200)"
+
+class="shopItem">
+
+Intento Shiny - 200
+
+</button>
+
+
 
 </div>
 
 
 
+<hr>
 
-<script src="script.js"></script>
+
+
+<!-- RECOMPENSAS -->
+
+<h2>Recompensas Compradas</h2>
+
+
+<div id="inventario">
+
+
+</div>
+
+
+
+</div>
+
+
+
+<script src="script.js">
+
+</script>
+
 
 
 </body>
-
 </html>

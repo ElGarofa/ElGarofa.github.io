@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Torneo Locke</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+
+<nav class="navbar">
+
+<div class="container">
+
+<h3>
+
+🏆 TORNEO LOCKE
+
+</h3>
+
+</div>
+
+</nav>
+
+
+
+<!-- HERO -->
+
+<section class="hero text-center">
+
+<h1>
+
+TORNEO LOCKE
+
+</h1>
+
+<p class="subtitle">
+
+Modo supervivencia
+
+</p>
+
+</section>
+
+
+
+<!-- CAMPEON -->
+
+<section class="container mt-4">
+
+<h2>
+
+Campeón
+
+</h2>
+
+<div id="campeon"></div>
+
+</section>
+
+
+
+<!-- JUGADORES -->
+
+<section class="container mt-5">
+
+<h2>
+
+Jugadores
+
+</h2>
+
+
+<div class="row">
+
+<div class="col-md-4">
+
+<input
+
+id="nombre"
+
+class="form-control"
+
+placeholder="Jugador">
+
+</div>
+
+
+<div class="col-md-2">
+
+<button
+
+onclick="agregar()"
+
+class="btn btn-success">
+
+Agregar
+
+</button>
+
+</div>
+
+
+<div class="col-md-2">
+
+<button
+
+onclick="resetear()"
+
+class="btn btn-danger">
+
+Reset
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<hr>
+
+
+<div id="lista"
+
+class="row">
+
+</div>
+
+</section>
+
+
+
+<!-- TORNEO -->
+
+<section class="container mt-5">
+
+<h2>
+
+Torneo
+
+</h2>
+
+
+<button
+
+onclick="generarBracket()"
+
+class="btn btn-primary">
+
+Generar
+
+</button>
+
+
+
+<hr>
+
+<div id="bracket">
+
+</div>
+
+</section>
+
+
+
+<!-- STATS -->
+
+<section class="container mt-5 mb-5">
+
+<h2>
+
+Estadísticas
+
+</h2>
+
+<div id="stats"></div>
+
+</section>
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

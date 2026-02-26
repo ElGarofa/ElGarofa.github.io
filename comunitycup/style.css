@@ -1,71 +1,69 @@
 body{
 
-background:#04040a;
+background:linear-gradient(
+45deg,
+#050510,
+#080820,
+#050510
+);
+
+background-size:400% 400%;
+
+animation:fondo 10s infinite;
+
 color:white;
+
 font-family:Arial;
-padding:20px;
 
 }
 
 
-/* NAV */
+
+@keyframes fondo{
+
+0%{background-position:0%}
+
+50%{background-position:100%}
+
+100%{background-position:0%}
+
+}
+
+
+
 
 .neon-blue{
 
 color:#00f7ff;
 
 text-shadow:
-0 0 5px #00f7ff,
-0 0 15px #00f7ff,
-0 0 30px #00f7ff;
 
-animation:glowBlue 2s infinite alternate;
+0 0 10px #00f7ff,
+0 0 20px #00f7ff;
 
 }
 
 
 
-@keyframes glowBlue{
-
-from{
-
-text-shadow:
-0 0 5px #00f7ff,
-0 0 15px #00f7ff;
-
-}
-
-to{
-
-text-shadow:
-0 0 20px #00f7ff,
-0 0 40px #00f7ff;
-
-}
-
-}
-
-
-
-/* CARDS */
 
 .neon-card{
 
-background:#0c0c1a;
+background:#0d0d20;
 
 padding:20px;
 
-border-radius:15px;
+margin-bottom:15px;
 
-margin-bottom:20px;
+border-radius:15px;
 
 box-shadow:
 
 0 0 10px #00f7ff;
 
-transition:0.4s;
+transition:.3s;
 
 }
+
 
 
 .neon-card:hover{
@@ -73,78 +71,69 @@ transition:0.4s;
 box-shadow:
 
 0 0 20px #00f7ff,
-
 0 0 40px #00f7ff;
 
 }
 
 
 
-/* BOTONES */
 
 .btn-neon{
 
 background:#00f7ff;
 
-border:none;
+color:black;
 
 font-weight:bold;
-padding:10px;
-cursor:pointer;
-
-}
-
-
-.btn-neon:hover{
-
-box-shadow:
-
-0 0 10px #00f7ff,
-
-0 0 30px #00f7ff;
 
 }
 
 
 
-/* TEXTO */
 
 .smallText{
 
-color:#aaaaaa;
-
-font-size:14px;
+color:#bbbbbb;
 
 }
 
 
 
-/* PLAYER */
+
+.sinocoins{
+
+color:#00ff9c;
+
+font-size:22px;
+
+text-shadow:
+
+0 0 10px #00ff9c;
+
+}
+
+
+
 
 .playerCard{
 
 border:1px solid #00f7ff;
 
-padding:15px;
+padding:10px;
 
-margin-top:15px;
+margin-top:10px;
 
-border-radius:12px;
-
-transition:0.3s;
+border-radius:10px;
 
 cursor:pointer;
 
-display:flex;
-align-items:center;
-gap:10px;
+transition:.3s;
 
 }
 
 
-.playerCard:hover{
 
-transform:scale(1.02);
+.playerCard:hover{
 
 box-shadow:
 
@@ -154,7 +143,44 @@ box-shadow:
 
 
 
-/* TEAM */
+
+.profile{
+
+background:#000020;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:
+
+0 0 20px #00f7ff;
+
+}
+
+
+
+
+.avatar{
+
+width:60px;
+
+border-radius:50%;
+
+}
+
+
+
+.avatarBig{
+
+width:150px;
+
+border-radius:50%;
+
+}
+
+
+
 
 .team{
 
@@ -166,24 +192,24 @@ repeat(3,1fr);
 
 gap:10px;
 
-margin-top:10px;
-
 }
+
 
 
 .pokemonCard{
 
 background:#111125;
 
-border-radius:10px;
-
 padding:10px;
 
-text-align:center;
+border-radius:10px;
 
 border:1px solid #00f7ff;
 
+text-align:center;
+
 }
+
 
 
 .pokemonCard img{
@@ -194,53 +220,55 @@ width:110px;
 
 
 
-/* PERFIL */
 
-.profile{
+.mission{
 
-background:#000010;
+border:1px solid #ff00ff;
 
-padding:20px;
+padding:10px;
 
-border-radius:15px;
+margin:10px;
+
+border-radius:10px;
+
+background:#140014;
+
+transition:.3s;
+
+}
+
+
+
+.mission:hover{
 
 box-shadow:
 
-0 0 20px #00f7ff;
-
-margin-bottom:20px;
+0 0 20px #ff00ff;
 
 }
 
 
-.profile h2{
 
-color:#00f7ff;
+
+.shopItem{
+
+border:1px solid #00ff9c;
+
+padding:8px;
+
+margin:8px;
+
+border-radius:8px;
+
+background:#001a12;
 
 }
+
 
 
 
 .hidden{
 
 display:none;
-
-}
-
-
-
-.avatar{
-
-width:70px;
-border-radius:50%;
-
-}
-
-
-
-.avatarBig{
-
-width:150px;
-border-radius:50%;
 
 }

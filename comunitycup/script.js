@@ -1,366 +1,244 @@
-players = []
-coins = 0
-currentPlayer = null
+players=[]
+coins=0
+jugadorActual=null
 
 
 missions=[
 
-{name:"Vencer Gimnasio 1",reward:30},
-{name:"Vencer Gimnasio 2",reward:40},
-{name:"Vencer Gimnasio 3",reward:50},
-{name:"Vencer Gimnasio 4",reward:60},
-{name:"Vencer Rival",reward:40},
-{name:"Vencer Equipo Galaxia",reward:50},
-{name:"Capturar Shiny",reward:200},
-{name:"Equipo Completo",reward:100},
-{name:"Sin muertes",reward:150},
-{name:"Vencer Liga",reward:300}
+{name:"Starter",reward:20},
+
+{name:"Gimnasio 1",reward:30},
+
+{name:"Gimnasio 2",reward:40},
+
+{name:"Gimnasio 3",reward:50},
+
+{name:"Liga",reward:200}
 
 ]
 
 
-updateMissions()
+actualizarMisiones()
 
 
-// CREAR JUGADOR
 
-function addPlayer(){
+function crearJugador(){
 
-name=document.getElementById("name").value
-tier=document.getElementById("tier").value
+nombre=document.getElementById("nombreInput").value
 
-img=prompt("URL imagen jugador (opcional)")
+foto=document.getElementById("fotoInput").value
 
-if(!img)
-img="https://via.placeholder.com/100"
+tier=document.getElementById("tierInput").value
 
 
-player={
+players.push({
 
-name:name,
-tier:tier,
-img:img,
+nombre,
+
+foto,
+
+tier,
 
 wins:0,
-loss:0,
-deaths:0,
+
+loses:0,
+
+draws:0,
 
 team:[]
 
+})
+
+
+actualizarLista()
+
 }
 
-players.push(player)
-
-update()
-
-}
 
 
+function actualizarLista(){
 
-// ACTUALIZAR
+div=document.getElementById("listaJugadores")
 
-function update(){
-
-playersDiv=document.getElementById("players")
-playersDiv.innerHTML=""
-
-select=document.getElementById("playerSelect")
-select.innerHTML=""
-
-p1=document.getElementById("player1")
-p1.innerHTML=""
-
-p2=document.getElementById("player2")
-p2.innerHTML=""
-
+div.innerHTML=""
 
 
 players.forEach((p,i)=>{
 
 
-playersDiv.innerHTML+=`
+div.innerHTML+=`
 
-<div class="playerCard">
+<div class="playerCard"
 
-<img src="${p.img}" class="avatar">
+onclick="abrirPerfil(${i})">
 
-<h4>${p.name}</h4>
+<img src="${p.foto}" class="avatar">
 
-<div class="smallText">
+${p.nombre}
+
+<br>
 
 Tier ${p.tier}
 
 </div>
 
-<div>
+`
 
-Wins ${p.wins}
-<button onclick="stat(${i},'wins',1)">+</button>
-<button onclick="stat(${i},'wins',-1)">-</button>
+})
+
+
+}
+
+
+
+function abrirPerfil(i){
+
+jugadorActual=i
+
+p=players[i]
+
+
+document.getElementById("perfil").classList.remove("hidden")
+
+
+document.getElementById("nombrePerfil").innerText=p.nombre
+
+document.getElementById("fotoPerfil").src=p.foto
+
+
+document.getElementById("wins").innerText=p.wins
+
+document.getElementById("loses").innerText=p.loses
+
+document.getElementById("draws").innerText=p.draws
+
+
+mostrarTeam()
+
+}
+
+
+
+function cerrarPerfil(){
+
+document.getElementById("perfil").classList.add("hidden")
+
+}
+
+
+
+function modificarEstadistica(tipo,v){
+
+p=players[jugadorActual]
+
+p[tipo]+=v
+
+if(p[tipo]<0)p[tipo]=0
+
+abrirPerfil(jugadorActual)
+
+}
+
+
+
+function mostrarTeam(){
+
+div=document.getElementById("team")
+
+div.innerHTML=""
+
+
+p=players[jugadorActual]
+
+
+p.team.forEach(pk=>{
+
+
+div.innerHTML+=`
+
+<div class="pokemonCard">
+
+<img src="${pk.img}">
 
 <br>
 
-Loss ${p.loss}
-<button onclick="stat(${i},'loss',1)">+</button>
-<button onclick="stat(${i},'loss',-1)">-</button>
-
-<br>
-
-Muertes ${p.deaths}
-<button onclick="stat(${i},'deaths',1)">+</button>
-<button onclick="stat(${i},'deaths',-1)">-</button>
-
-</div>
-
-<div class="team">
-
-${renderTeam(p)}
-
-</div>
-
-<button
-class="btn btn-neon w-100 mt-2"
-onclick="randomPokemon(${i})">
-
-Pokemon Random (50)
-
-</button>
+${pk.nombre}
 
 </div>
 
 `
 
 
-select.innerHTML+=
-
-`<option value=${i}>
-${p.name}
-</option>`
-
-
-p1.innerHTML+=
-
-`<option value=${i}>
-${p.name}
-</option>`
-
-
-p2.innerHTML+=
-
-`<option value=${i}>
-${p.name}
-</option>`
-
-
 })
 
 
-
-document.getElementById("coins").innerText=coins
-
-}
-
-
-
-// STATS
-
-function stat(i,type,value){
-
-players[i][type]+=value
-
-if(players[i][type]<0)
-players[i][type]=0
-
-update()
-
 }
 
 
 
 
-// AGREGAR POKEMON NORMAL
+function randomPokemon(){
 
-function addPokemon(){
-
-i=document.getElementById("playerSelect").value
-
-pokemon=document.getElementById("pokemon").value.toLowerCase()
-
-if(players[i].team.length>=6){
-
-alert("Equipo lleno")
-
-return
-
-}
+id=Math.floor(Math.random()*898)+1
 
 
-
-fetch(
-
-"https://pokeapi.co/api/v2/pokemon/"+pokemon
-
-)
+fetch("https://pokeapi.co/api/v2/pokemon/"+id)
 
 .then(r=>r.json())
 
 .then(data=>{
 
 
-img=data.sprites.front_default
+players[jugadorActual].team.push({
 
+nombre:data.name,
 
-players[i].team.push({
-
-name:pokemon,
-img:img
-
-})
-
-
-update()
-
-})
-
-}
-
-
-
-
-// RANDOM POKEMON
-
-async function randomPokemon(i){
-
-if(coins<50){
-
-alert("No tienes coins")
-
-return
-
-}
-
-
-if(players[i].team.length>=6){
-
-alert("Equipo lleno")
-
-return
-
-}
-
-
-coins-=50
-
-update()
-
-
-card=document.querySelectorAll(".playerCard")[i]
-
-
-ruleta=document.createElement("div")
-
-card.appendChild(ruleta)
-
-
-
-delay=30
-
-
-for(x=0;x<20;x++){
-
-id=Math.floor(Math.random()*493)+1
-
-
-res=await fetch(
-
-"https://pokeapi.co/api/v2/pokemon/"+id
-
-)
-
-data=await res.json()
-
-
-ruleta.innerHTML=`
-
-<div class="pokemonCard">
-
-<img src="${data.sprites.front_default}">
-
-${data.name}
-
-</div>
-
-`
-
-
-await new Promise(r=>setTimeout(r,delay))
-
-delay+=20
-
-}
-
-
-
-players[i].team.push({
-
-name:data.name,
 img:data.sprites.front_default
 
 })
 
 
-update()
-
-}
-
-
-
-
-// RENDER TEAM
-
-function renderTeam(player){
-
-html=""
-
-player.team.forEach(p=>{
-
-html+=`
-
-<div class="pokemonCard">
-
-<img src="${p.img}">
-
-<div>
-
-${p.name}
-
-</div>
-
-</div>
-
-`
+mostrarTeam()
 
 })
 
-return html
+}
+
+
+
+function agregarPokemonManual(){
+
+nombre=prompt("Pokemon")
+
+
+fetch("https://pokeapi.co/api/v2/pokemon/"+nombre)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+
+players[jugadorActual].team.push({
+
+nombre:data.name,
+
+img:data.sprites.front_default
+
+})
+
+
+mostrarTeam()
+
+})
 
 }
 
 
 
 
-
-// MISIONES
-
-function updateMissions(){
+function actualizarMisiones(){
 
 div=document.getElementById("missions")
-
-if(!div)return
-
-div.innerHTML=""
-
-
 
 missions.forEach((m,i)=>{
 
@@ -369,22 +247,15 @@ div.innerHTML+=`
 
 <div class="mission">
 
-<h5>
-
 ${m.name}
 
-</h5>
-
-<div>
-
-Recompensa:
+<br>
 
 ${m.reward}
 
-</div>
+<br>
 
-<button onclick="completeMission(${i})"
-class="btn btn-neon">
+<button onclick="completar(${i})">
 
 Completar
 
@@ -402,34 +273,25 @@ Completar
 
 
 
-// COMPLETAR MISION
-
-function completeMission(i){
+function completar(i){
 
 coins+=missions[i].reward
 
-update()
+document.getElementById("coins").innerText=coins
 
 }
 
 
 
+function comprar(precio){
 
-// INTERCAMBIO
+if(coins>=precio){
 
-function tradeCoins(){
+coins-=precio
 
-p1=document.getElementById("player1").value
-p2=document.getElementById("player2").value
+document.getElementById("coins").innerText=coins
 
-
-if(coins>=50){
-
-coins-=50
-
-update()
-
-alert("Intercambio hecho")
+alert("Comprado")
 
 }
 

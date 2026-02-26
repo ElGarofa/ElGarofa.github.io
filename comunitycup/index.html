@@ -1,41 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
-<title>Community Cup</title>
+<title>Torneo Locke</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
 
 
-<!-- TITULO -->
 
-<h1 class="neon-blue">
-Community Cup
-</h1>
+<nav class="navbar navbar-dark bg-dark">
+
+<div class="container">
+
+<h2 class="neon-blue">
+TORNEO LOCKE
+</h2>
+
+
+<div class="sinocoins">
+
+💰 Sinocoins:
+
+<span id="coins">0</span>
+
+</div>
+
+</div>
+
+</nav>
 
 
 
-<!-- CREAR JUGADOR -->
+
+<div class="container mt-4">
+
+<div class="row">
+
+
+
+<div class="col-md-4">
+
+
 
 <div class="neon-card">
 
-<h2>Crear Participante</h2>
+<h3>Crear Participante</h3>
 
-<input id="nombreInput" placeholder="Nombre">
+<input id="nombreInput"
+class="form-control mb-2"
+placeholder="Nombre">
 
-<br><br>
 
-<input id="fotoInput" placeholder="URL Foto">
+<input id="fotoInput"
+class="form-control mb-2"
+placeholder="URL Foto">
 
-<br><br>
 
-<button class="btn-neon" onclick="crearJugador()">
+<select id="tierInput"
+class="form-control mb-2">
+
+<option>Bronce</option>
+<option>Plata</option>
+<option>Oro</option>
+<option>Elite</option>
+
+</select>
+
+
+
+<button onclick="crearJugador()"
+class="btn btn-neon w-100">
+
 Crear
+
 </button>
 
 </div>
@@ -43,87 +89,218 @@ Crear
 
 
 
-<!-- LISTA -->
 
-<div class="neon-card">
+<div class="neon-card mt-4">
 
-<h2>Participantes</h2>
+<h3>Misiones</h3>
 
-<div id="listaJugadores"></div>
+<div id="missions"></div>
 
 </div>
 
 
 
 
+<div class="neon-card mt-4">
 
-<!-- PERFIL -->
+<h3>Tienda</h3>
 
-<div id="perfil" class="profile hidden">
+<div class="shopItem">
+
+Cambio habilidad - 80
+
+<button onclick="comprar(80)">
+Comprar
+</button>
+
+</div>
+
+
+
+<div class="shopItem">
+
+Captura extra - 100
+
+<button onclick="comprar(100)">
+Comprar
+</button>
+
+</div>
+
+
+
+<div class="shopItem">
+
+Cambio naturaleza - 120
+
+<button onclick="comprar(120)">
+Comprar
+</button>
+
+</div>
+
+
+
+<div class="shopItem">
+
+Segunda oportunidad - 200
+
+<button onclick="comprar(200)">
+Comprar
+</button>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="col-md-8">
+
+
+
+<div class="neon-card">
+
+<h3>Participantes</h3>
+
+<div id="listaJugadores">
+
+</div>
+
+</div>
+
+
+
+
+<div id="perfil"
+class="profile hidden mt-4">
+
+
 
 <h2 id="nombrePerfil"></h2>
 
-<img id="fotoPerfil" class="avatarBig">
+<img id="fotoPerfil"
+class="avatarBig">
+
 
 
 <br><br>
 
-Victorias:
 
-<span id="wins"></span>
+Victorias
 
-<br>
+<button onclick="modificarEstadistica('wins',1)">
++
+</button>
 
-Derrotas:
+<span id="wins">0</span>
 
-<span id="loses"></span>
 
-<br>
+<button onclick="modificarEstadistica('wins',-1)">
+-
+</button>
 
-Empates:
 
-<span id="draws"></span>
 
 <br><br>
 
 
-<button class="btn-neon" onclick="modificarEstadistica('wins',1)">
-+ Win
+
+Derrotas
+
+<button onclick="modificarEstadistica('loses',1)">
++
 </button>
 
-<button class="btn-neon" onclick="modificarEstadistica('loses',1)">
-+ Lose
+<span id="loses">0</span>
+
+
+<button onclick="modificarEstadistica('loses',-1)">
+-
 </button>
 
-<button class="btn-neon" onclick="modificarEstadistica('draws',1)">
-+ Draw
-</button>
 
 
 <br><br>
 
-<button class="btn-neon" onclick="randomPokemon()">
-Pokemon Random
+
+
+Muertes
+
+<button onclick="modificarEstadistica('draws',1)">
++
 </button>
 
-<button class="btn-neon" onclick="agregarPokemonManual()">
-Agregar Pokemon
+<span id="draws">0</span>
+
+
+<button onclick="modificarEstadistica('draws',-1)">
+-
 </button>
 
 
 
-<h3>Equipo</h3>
+<br><br>
 
-<div id="team" class="team">
+
+<h4>Equipo</h4>
+
+
+<div id="team"
+class="team">
 
 </div>
 
 
+
 <br>
 
-<button onclick="cerrarPerfil()">
-Cerrar
+
+<button onclick="randomPokemon()"
+class="btn btn-neon">
+
+Pokémon Random
+
 </button>
+
+
+<button onclick="agregarPokemonManual()"
+class="btn btn-neon">
+
+Agregar Manual
+
+</button>
+
+
+
+<br><br>
+
+
+<button onclick="cerrarPerfil()"
+class="btn btn-danger">
+
+Cerrar
+
+</button>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
 
 
 </div>
@@ -132,5 +309,7 @@ Cerrar
 
 <script src="script.js"></script>
 
+
 </body>
+
 </html>

@@ -37,7 +37,7 @@ function guardar(){
   localStorage.setItem("inventario",JSON.stringify(inventario));
 }
 
-// Crear participante simplificado
+// Crear participante simplificado + foto
 function crearParticipante(){
   const nombre = document.getElementById("nombreJugadorInput").value;
   const tier = document.getElementById("tierJugadorInput").value;
@@ -45,12 +45,10 @@ function crearParticipante(){
 
   if(!nombre) return;
 
-  // Si no pone URL, usar imagen por defecto
   const img = imgInput || "https://via.placeholder.com/80";
 
   jugadores.push({nombre,tier,img,wins:0,loss:0,muertes:0,equipo:[]});
 
-  // Limpiar inputs
   document.getElementById("nombreJugadorInput").value = "";
   document.getElementById("imgJugadorInput").value = "";
 
@@ -81,27 +79,48 @@ function actualizarPantalla(){
 
 // Ver perfil
 function verJugador(i){
-  jugadorActual=i;
-  let j=jugadores[i];
-  document.getElementById("perfil").innerHTML=`
+  jugadorActual = i;
+  let j = jugadores[i];
+
+  // Perfil con edición stats
+  document.getElementById("perfil").innerHTML = `
     <h3>${j.nombre}</h3>
-    Tier:${j.tier}<br>
-    Wins:${j.wins}<br>
-    Loss:${j.loss}<br>
-    Muertes:${j.muertes}<br>
+    <img src="${j.img}" class="playerImg"><br>
+    Tier: ${j.tier}<br>
+    Wins: ${j.wins} <button onclick="modificarEstadistica('wins',1)">+</button> <button onclick="modificarEstadistica('wins',-1)">-</button><br>
+    Loss: ${j.loss} <button onclick="modificarEstadistica('loss',1)">+</button> <button onclick="modificarEstadistica('loss',-1)">-</button><br>
+    Muertes: ${j.muertes} <button onclick="modificarEstadistica('muertes',1)">+</button> <button onclick="modificarEstadistica('muertes',-1)">-</button><br>
   `;
+
+  // Agregar Pokémon
+  document.getElementById("perfilEdicion").innerHTML = `
+    <input id="pokemonInputPerfil" placeholder="Nombre Pokémon">
+    <button class="btn-neon" onclick="agregarPokemonPerfil()">Agregar Pokémon</button>
+  `;
+
   mostrarEquipo();
 }
 
-// Agregar Pokémon manual
-function agregarPokemon(){
+// Modificar estadísticas
+function modificarEstadistica(tipo,valor){
   if(jugadorActual===null) return;
-  let nombre=document.getElementById("pokemonInput").value;
+  let j = jugadores[jugadorActual];
+  j[tipo] = Math.max(0,j[tipo]+valor);
+  guardar();
+  verJugador(jugadorActual);
+  actualizarPantalla();
+}
+
+// Agregar Pokémon al participante
+function agregarPokemonPerfil(){
+  if(jugadorActual===null) return;
+  let nombre = document.getElementById("pokemonInputPerfil").value;
   if(!nombre) return;
-  let j=jugadores[jugadorActual];
-  if(j.equipo.length>=6){ alert("Equipo lleno"); return; }
-  let img=`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${nombre.toLowerCase()}.png`;
+  let j = jugadores[jugadorActual];
+  if(j.equipo.length >= 6){ alert("Equipo lleno"); return; }
+  let img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${nombre.toLowerCase()}.png`;
   j.equipo.push({nombre,img});
+  document.getElementById("pokemonInputPerfil").value = "";
   guardar();
   mostrarEquipo();
   actualizarPantalla();
@@ -144,20 +163,18 @@ function completarMision(i){
 // Comprar tienda
 function comprar(nombre,costo){
   if(sinocoins<costo){ alert("No alcanza"); return; }
-  sinocoins-=costo;
+  sinocoins -= costo;
   inventario.push(nombre);
   guardar();
   actualizarPantalla();
 }
 
-// RANDOM POKEMON CON ANIMACION RUEDA
+// RANDOM POKEMON RUEDA
 async function randomPokemon(){
   if(jugadorActual===null){ alert("Selecciona un jugador"); return; }
   if(sinocoins<50){ alert("Necesitas 50 coins"); return; }
-
   const j = jugadores[jugadorActual];
   if(j.equipo.length>=6){ alert("Equipo lleno"); return; }
-
   sinocoins -= 50;
   guardar();
   actualizarPantalla();
@@ -165,8 +182,8 @@ async function randomPokemon(){
   const ruletaDiv = document.getElementById("pokemonRuleta");
   ruletaDiv.innerHTML = "";
 
-  const totalGiros = 20;
-  let delay = 50;
+  const totalGiros = 25;
+  let delay = 20; // más rápido
   let finalPokemon = null;
 
   for(let i=0;i<totalGiros;i++){
@@ -179,7 +196,7 @@ async function randomPokemon(){
       ruletaDiv.innerHTML = `<div class="pokemonCard"><img src="${img}"><p>${nombre}</p></div>`;
       if(i===totalGiros-1) finalPokemon = {nombre,img};
       await new Promise(r => setTimeout(r, delay));
-      delay = Math.min(delay+50,500);
+      delay = Math.min(delay + 30, 350); // frenado progresivo
     }catch(e){ console.error(e); }
   }
 

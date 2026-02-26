@@ -102,15 +102,22 @@ updateRanking()
 
 function addPlayer(){
 
+const nombre = document.getElementById("nombreJugadorInput").value;
+  const tier = document.getElementById("tierJugadorInput").value;
+  const imgInput = document.getElementById("imgJugadorInput").value;
+
+  if(!nombre) return;
+
+  const img = imgInput || "https://via.placeholder.com/80";
+
+
 players.push({
 
-name:name.value,
+name:name,
 
-img:image.value,
+img:img,
 
-tier:tier.value,
-
-coins:0,
+tier:tier,
 
 wins:0,
 
@@ -120,31 +127,17 @@ deaths:0,
 
 team:[],
 
-dead:[],
-
-log:[],
-
-progress:{
-
-g1:false,
-g2:false,
-g3:false,
-g4:false,
-g5:false,
-g6:false,
-g7:false,
-g8:false,
-liga:false
-
-}
+dead:[]
 
 })
+
 
 save()
 
 update()
 
 }
+
 
 
 

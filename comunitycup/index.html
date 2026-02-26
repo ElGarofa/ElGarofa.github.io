@@ -1,238 +1,244 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
-<title>Torneo Locke</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Torneo Pokémon Locke</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
 
+
 <body>
 
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-dark bg-dark">
 
 <div class="container">
 
 
-<h1 class="titulo text-center">
+<h2 class="neon-blue">
 
 TORNEO LOCKE
 
-</h1>
+</h2>
 
 
 
-<!-- SINOGUIA -->
+<div>
 
-<div class="sinocoinsBox">
+<span class="sinocoins">
 
-Sinocoins Totales:
+💰 Sinocoins:
 
-<span id="sinocoins">
+<span id="coins">
 
 0
+
+</span>
 
 </span>
 
 </div>
 
 
+</div>
+
+</nav>
+
+
+
+<!-- CONTENIDO -->
+
+<div class="container mt-4">
+
+<div class="row">
+
+
+
+<!-- PANEL IZQUIERDO -->
+
+<div class="col-md-4">
+
+
+
+<!-- AGREGAR JUGADOR -->
+
+<h2>Participantes</h2>
+<div class="agregarJugador">
+  <input id="nombreJugadorInput" placeholder="Nombre jugador">
+  <select id="tierJugadorInput">
+    <option>Beginner</option>
+    <option>Veterano</option>
+    <option>Pro</option>
+  </select>
+  <input id="imgJugadorInput" placeholder="URL Imagen (opcional)">
+  <button class="btn-neon" onclick="crearParticipante()">Agregar</button>
+</div>
+<div id="participantes"></div>
+
+
 <hr>
+
+<!-- Perfil Jugador -->
+<h2>Perfil Jugador</h2>
+<div id="perfil">Selecciona un jugador</div>
+
+<hr>
+
+
+
+
+<!-- Equipo Pokémon -->
+<h2>Equipo Pokémon</h2>
+<input id="pokemonInput" placeholder="Nombre Pokémon">
+<button class="btn-neon" onclick="agregarPokemon()">Agregar Pokémon</button>
+<div id="equipo"></div>
+
+<hr>
+
+<!-- Pokémon Random -->
+<h2>Pokémon Random</h2>
+<p>Obtén un Pokémon random por 50 Sinocoins</p>
+<button class="btn-neon" onclick="randomPokemon()">Pokémon Random (50)</button>
+<div id="pokemonRuleta"></div>
+
+
+
+
+<!-- INTERCAMBIO -->
+
+<div class="neon-card">
+
+
+<h3>
+
+Intercambio
+
+</h3>
+
+
+
+<select
+
+id="player1"
+
+class="form-control mb-2"
+
+>
+
+</select>
+
+
+
+<select
+
+id="player2"
+
+class="form-control mb-2"
+
+>
+
+</select>
+
+
+
+<button
+
+class="btn btn-neon w-100"
+
+onclick="tradeCoins()"
+
+>
+
+Intercambiar 50 Sinocoins
+
+</button>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+<!-- PANEL DERECHO -->
+
+<div class="col-md-8">
+
+
+
+<!-- PERFIL JUGADOR -->
+
+<div
+
+id="profile"
+
+class="profile hidden"
+
+>
+
+</div>
 
 
 
 <!-- PARTICIPANTES -->
 
-<h2>Participantes</h2>
+<div class="neon-card">
 
 
-<div id="participantes">
+<h3>
 
-</div>
+Participantes
 
-
-
-<button class="btn btn-neon"
-
-onclick="crearParticipante()">
-
-Agregar Participante
-
-</button>
+</h3>
 
 
 
-<hr>
-
-
-
-<!-- PERFIL -->
-
-<h2>Perfil</h2>
-
-<div id="perfil">
-
-Selecciona jugador
+<div id="players">
 
 </div>
 
 
-
-<hr>
-
-
-
-<!-- EQUIPO -->
-
-<h2>Equipo Pokémon</h2>
-
-
-<input id="pokemonInput"
-
-placeholder="Nombre Pokemon">
-
-
-<button class="btn btn-neon"
-
-onclick="agregarPokemon()">
-
-Agregar Pokemon
-
-</button>
-
-
-
-<div id="equipo">
-
 </div>
 
-
-
-<hr>
 
 
 
 <!-- MISIONES -->
 
-<h2>Misiones</h2>
+<div class="neon-card">
 
 
-<div id="misiones">
+<h3>
+
+Misiones
+
+</h3>
+
+
+<div id="missions">
+
+</div>
 
 
 </div>
 
 
-
-<hr>
-
-
-
-<!-- TIENDA -->
-
-<h2>Tienda</h2>
-
-
-<div id="tienda">
-
-
-<button onclick="comprar('habilidad',40)"
-
-class="shopItem">
-
-Cambio de habilidad - 40
-
-</button>
-
-
-<button onclick="comprar('naturaleza',40)"
-
-class="shopItem">
-
-Cambio naturaleza - 40
-
-</button>
-
-
-
-<button onclick="comprar('captura',60)"
-
-class="shopItem">
-
-Captura extra - 60
-
-</button>
-
-
-
-<button onclick="comprar('segunda',80)"
-
-class="shopItem">
-
-Segunda oportunidad - 80
-
-</button>
-
-
-
-<button onclick="comprar('revivir',100)"
-
-class="shopItem">
-
-Revivir Pokémon - 100
-
-</button>
-
-
-
-<button onclick="comprar('objeto',30)"
-
-class="shopItem">
-
-Objeto gratis - 30
-
-</button>
-
-
-
-<button onclick="comprar('reroll',50)"
-
-class="shopItem">
-
-Re-roll encuentro - 50
-
-</button>
-
-
-
-<button onclick="comprar('shiny',200)"
-
-class="shopItem">
-
-Intento Shiny - 200
-
-</button>
-
-
-
-</div>
-
-
-
-<hr>
-
-
-
-<!-- RECOMPENSAS -->
-
-<h2>Recompensas Compradas</h2>
-
-
-<div id="inventario">
 
 
 </div>
@@ -241,13 +247,15 @@ Intento Shiny - 200
 
 </div>
 
+</div>
 
 
-<script src="script.js">
 
-</script>
+
+<script src="script.js"></script>
 
 
 
 </body>
+
 </html>

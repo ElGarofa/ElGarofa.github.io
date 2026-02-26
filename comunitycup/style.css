@@ -3,141 +3,141 @@ body{
   color:white;
   font-family:Arial;
   overflow-x:hidden;
-  position:relative;
 }
 
-/* FONDO CYBERPUNK VISTOSO */
 body::before{
   content:"";
   position:fixed;
   width:100%;
   height:100%;
-  background:linear-gradient(45deg,#ff00ff44,#00ffff44,#ff00ff44,#00ff0044,#ffff0044);
+  background:linear-gradient(45deg,#ff00ff44,#00ffff44,#00ff0044);
   background-size:400% 400%;
-  animation:fondo 15s linear infinite;
+  animation:fondo 18s linear infinite;
   z-index:-1;
 }
+
 @keyframes fondo{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+  0%{background-position:0%}
+  100%{background-position:400%}
 }
 
-/* TITULO NEON */
 .titulo{
   color:#00ffff;
-  text-shadow:0 0 5px #00ffff,0 0 20px #00ffff;
-  animation:neon 2s infinite alternate;
-  margin-top:20px;
-  margin-bottom:20px;
-}
-@keyframes neon{
-  from{text-shadow:0 0 5px #00ffff,0 0 10px #00ffff;}
-  to{text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;}
+  text-shadow:0 0 15px #00ffff;
 }
 
-/* PARTICIPANTES */
+#participantes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+}
+
 .playerCard{
-  border:2px solid #00ffff;
-  margin:10px;
-  padding:10px;
-  border-radius:10px;
-  animation:borde 3s infinite;
-  background:#111;
+  position:relative;
+  width:200px;
+  padding:15px;
+  border-radius:20px;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(6px);
+  transition:.4s;
+  overflow:hidden;
 }
-@keyframes borde{
-  0%{box-shadow:0 0 5px #00ffff;}
-  50%{box-shadow:0 0 20px #ff00ff;}
-  100%{box-shadow:0 0 5px #00ffff;}
+
+.playerCard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.2),transparent);
+  animation:holo 3s linear infinite;
 }
+
+@keyframes holo{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(100%)}
+}
+
+.playerCard:hover{
+  transform:translateY(-6px) scale(1.04);
+  box-shadow:0 0 30px #00ffff;
+}
+
+.Beginner{border:2px solid #00ff00;}
+.Veterano{border:2px solid #00aaff;}
+.Pro{border:2px solid #ff0033;}
+
 .playerImg{
   width:80px;
-  height:80px;
   border-radius:50%;
-  border:2px solid #00ffff;
-  margin-bottom:10px;
+  border:2px solid cyan;
 }
 
-/* BOTONES NEON */
-.btn-neon{
-  border:1px solid #00ffff;
+.hoverActions{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
   background:black;
-  color:#00ffff;
-  margin:5px;
-  padding:6px 12px;
-  transition:0.3s;
-}
-.btn-neon:hover{
-  box-shadow:0 0 10px #00ffff,0 0 20px #00ffff;
-  transform:scale(1.05);
+  transform:translateY(100%);
+  transition:.4s;
+  text-align:center;
+  padding:10px;
 }
 
-/* EQUIPO */
-#equipo{display:flex;flex-wrap:wrap;gap:10px;}
+.playerCard:hover .hoverActions{
+  transform:translateY(0%);
+}
+
+.btn-neon{
+  border:1px solid cyan;
+  background:black;
+  color:cyan;
+  margin:3px;
+  padding:6px 12px;
+}
+
+.btn-neon:hover{
+  box-shadow:0 0 15px cyan;
+}
+
+#equipo{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
 .pokemonCard{
   width:140px;
-  height:140px;
-  border:2px solid #ff00ff;
-  margin:5px;
-  border-radius:10px;
+  height:170px;
+  border:2px solid magenta;
+  border-radius:15px;
   text-align:center;
-  transition:0.3s;
   background:#111;
+  transition:.3s;
 }
+
 .pokemonCard:hover{
   transform:scale(1.1);
-  box-shadow:0 0 20px #ff00ff,0 0 40px #ff00ff;
-}
-.pokemonCard img{
-  width:110px;
 }
 
-/* RULETA RANDOM */
-#pokemonRuleta{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:160px;
-  margin-top:10px;
-}
-
-/* MISIONES */
-.mision{
-  border:1px solid #00ff00;
-  margin:5px;
-  padding:5px;
-  border-radius:8px;
-  background:#111;
-}
-
-/* TIENDA */
 .shopItem{
   width:100%;
-  margin:3px 0;
+  margin:5px 0;
+  padding:8px;
+  border:1px solid cyan;
   background:black;
-  border:1px solid #00ffff;
-  color:#00ffff;
-  padding:6px;
-  transition:0.3s;
-}
-.shopItem:hover{
-  background:#00ffff;
-  color:black;
-  box-shadow:0 0 10px #00ffff;
+  color:cyan;
+  transition:.3s;
 }
 
-/* PERFIL */
-#perfil{
-  border:1px solid #00ffcc;
-  padding:10px;
-  border-radius:10px;
+.shopItem:active{
+  transform:scale(.95);
+  box-shadow:0 0 20px cyan;
 }
 
-/* INPUT Y SELECT */
-input,select{
-  padding:6px;
+.mision{
+  border:1px solid lime;
+  padding:8px;
   margin:5px;
-  border:1px solid #00ffff;
-  background:#111;
-  color:white;
+  border-radius:10px;
 }

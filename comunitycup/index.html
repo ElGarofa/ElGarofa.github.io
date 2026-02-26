@@ -12,12 +12,15 @@
 
 <h1 class="titulo text-center">TORNEO LOCKE</h1>
 
-<!-- Sinocoins -->
 <div class="sinocoinsBox">Sinocoins: <span id="sinocoins">0</span></div>
 
 <hr>
 
-<!-- Participantes -->
+<h2>Ranking</h2>
+<div id="ranking"></div>
+
+<hr>
+
 <h2>Participantes</h2>
 <div class="agregarJugador">
   <input id="nombreJugadorInput" placeholder="Nombre jugador">
@@ -33,50 +36,34 @@
 
 <hr>
 
-<!-- Perfil Jugador -->
 <h2>Perfil Jugador</h2>
 <div id="perfil">Selecciona un jugador</div>
-<div id="perfilEdicion" style="margin-top:10px;"></div>
+<div id="perfilEdicion"></div>
 
 <hr>
 
-<!-- Equipo Pokémon -->
 <h2>Equipo Pokémon</h2>
 <div id="equipo"></div>
 
 <hr>
 
-<!-- Pokémon Random -->
 <h2>Pokémon Random</h2>
-<p>Obtén un Pokémon random por 50 Sinocoins</p>
-<button class="btn-neon" onclick="randomPokemon()">Pokémon Random (50)</button>
+<button class="btn-neon" onclick="randomPokemon()">Random (50)</button>
 <div id="pokemonRuleta"></div>
 
 <hr>
 
-<!-- Misiones -->
 <h2>Misiones</h2>
 <div id="misiones"></div>
 
 <hr>
 
-<!-- Tienda -->
 <h2>Tienda</h2>
-<div id="tienda">
-<button class="shopItem" onclick="comprar('Cambio habilidad',40)">Cambio habilidad - 40</button>
-<button class="shopItem" onclick="comprar('Cambio naturaleza',40)">Cambio naturaleza - 40</button>
-<button class="shopItem" onclick="comprar('Captura extra',60)">Captura extra - 60</button>
-<button class="shopItem" onclick="comprar('Segunda oportunidad',80)">Segunda oportunidad - 80</button>
-<button class="shopItem" onclick="comprar('Revivir Pokémon',100)">Revivir Pokémon - 100</button>
-<button class="shopItem" onclick="comprar('Objeto gratis',30)">Objeto gratis - 30</button>
-<button class="shopItem" onclick="comprar('Re-roll encuentro',50)">Re-roll encuentro - 50</button>
-<button class="shopItem" onclick="comprar('Intento shiny',200)">Intento shiny - 200</button>
-</div>
+<div id="tienda"></div>
 
 <hr>
 
-<!-- Inventario -->
-<h2>Recompensas Compradas</h2>
+<h2>Inventario</h2>
 <div id="inventario"></div>
 
 </div>

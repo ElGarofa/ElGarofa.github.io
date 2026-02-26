@@ -1,309 +1,148 @@
-players=[]
-selectedPlayer=null
+let jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
 
+let jugadorActual = null;
 
-/* MISIONES REALES */
+let sinocoins = Number(localStorage.getItem("sinocoins")) || 0;
 
-missions=[
-
-{name:"Lider Rocavelo",reward:50},
-{name:"Lider Corazon",reward:50},
-{name:"Lider Canal",reward:60},
-{name:"Lider Pradera",reward:60},
-{name:"Lider Puntaneva",reward:70},
-{name:"Lider Marina",reward:70},
-{name:"Lider Pirita",reward:80},
-{name:"Lider Liga",reward:200},
-
-{name:"Rival batalla 1",reward:30},
-{name:"Rival batalla 2",reward:40},
-{name:"Rival batalla final",reward:100},
-
-{name:"Equipo villano base",reward:50},
-{name:"Equipo villano jefe",reward:120}
-
-]
+let inventario = JSON.parse(localStorage.getItem("inventario")) || [];
 
 
 
-/* TIENDA */
+let misiones=[
 
-shop=[
+{nombre:"Derrotar Roark",coins:20,done:false},
 
-{name:"Cambio habilidad",price:80},
+{nombre:"Derrotar Gardenia",coins:20,done:false},
 
-{name:"Captura extra",price:120},
+{nombre:"Derrotar Maylene",coins:20,done:false},
 
-{name:"Cambio naturaleza",price:70},
+{nombre:"Derrotar Wake",coins:20,done:false},
 
-{name:"Segunda oportunidad",price:200},
+{nombre:"Derrotar Fantina",coins:20,done:false},
 
-{name:"Revivir Pokemon",price:250},
+{nombre:"Derrotar Byron",coins:20,done:false},
 
-{name:"MT gratis",price:60},
+{nombre:"Derrotar Candice",coins:20,done:false},
 
-{name:"Objeto equipado",price:40},
+{nombre:"Derrotar Volkner",coins:20,done:false},
 
-{name:"Repetir ruta",price:150}
+{nombre:"Derrotar Rival",coins:15,done:false},
+
+{nombre:"Derrotar Equipo Galaxia",coins:15,done:false}
 
 ]
 
 
 
-load()
+actualizarPantalla()
+
+mostrarMisiones()
 
 
 
-function save(){
+function guardar(){
 
-localStorage.setItem(
+localStorage.setItem("jugadores",JSON.stringify(jugadores))
 
-"torneo",
+localStorage.setItem("sinocoins",sinocoins)
 
-JSON.stringify(players)
-
-)
-
-}
-
-
-
-function load(){
-
-data=
-
-JSON.parse(
-
-localStorage.getItem("torneo")
-
-)
-
-
-if(data){
-
-players=data
-
-}
-
-
-update()
-
-updateMissions()
-
-updateShop()
-
-updateRanking()
+localStorage.setItem("inventario",JSON.stringify(inventario))
 
 }
 
 
 
-/* JUGADOR */
+function crearParticipante(){
 
-function addPlayer(){
+let nombre=prompt("Nombre jugador")
 
-players.push({
+if(!nombre)return
 
-name:name.value,
+let tier=prompt("Tier (Beginner/Veterano/Pro)")
 
-img:image.value,
+let img=prompt("URL imagen jugador")
 
-tier:tier.value,
+jugadores.push({
 
-coins:0,
+nombre,
+
+tier,
+
+img,
 
 wins:0,
 
 loss:0,
 
-deaths:0,
+muertes:0,
 
-team:[],
-
-dead:[],
-
-log:[],
-
-progress:{
-
-g1:false,
-g2:false,
-g3:false,
-g4:false,
-g5:false,
-g6:false,
-g7:false,
-g8:false,
-liga:false
-
-}
+equipo:[]
 
 })
 
-save()
+guardar()
 
-update()
+actualizarPantalla()
 
 }
 
 
 
-/* UPDATE */
+function actualizarPantalla(){
 
-function update(){
+document.getElementById("sinocoins").innerText=sinocoins
 
-div=playersDiv
+let div=document.getElementById("participantes")
 
 div.innerHTML=""
 
-select.innerHTML=""
 
 
-players.forEach((p,i)=>{
-
+jugadores.forEach((j,i)=>{
 
 div.innerHTML+=`
 
-<div class="playerCard tier${p.tier}"
+<div class="playerCard">
 
-onclick="openProfile(${i})">
+<img src="${j.img}" class="playerImg">
 
-<img src="${p.img}" class="avatar">
+<h4>${j.nombre}</h4>
 
-<h4>${p.name}</h4>
+Tier: ${j.tier}
 
-Coins ${p.coins}
+<br>
 
-Wins ${p.wins}
+Wins:${j.wins}
 
-</div>
+Loss:${j.loss}
 
-`
+Muertes:${j.muertes}
 
+<br>
 
-select.innerHTML+=
+<button onclick="verJugador(${i})"
 
-`<option value=${i}>
-${p.name}
-</option>`
+class="btn-neon">
 
-
-})
-
-
-updateRanking()
-
-save()
-
-}
-
-
-
-/* PERFIL */
-
-function openProfile(i){
-
-selectedPlayer=i
-
-p=players[i]
-
-
-profile.innerHTML=`
-
-<img src="${p.img}" class="avatarBig">
-
-<h2>${p.name}</h2>
-
-Tier ${p.tier}
-
-
-<h3>
-
-Coins ${p.coins}
-
-</h3>
-
-
-Victorias ${p.wins}
-
-<button onclick="win()">+</button>
-
-
-Derrotas ${p.loss}
-
-<button onclick="lose()">+</button>
-
-
-<h3>Equipo</h3>
-
-${renderTeam(p)}
-
-
-<h3>Cementerio</h3>
-
-${renderDead(p)}
-
-
-<h3>Progreso</h3>
-
-${renderProgress(p)}
-
-
-<h3>Historial</h3>
-
-${renderLog(p)}
-
-<button onclick="closeProfile()">
-
-Volver
+Ver perfil
 
 </button>
 
-`
-
-profile.classList.remove("hidden")
-
-}
-
-
-
-function closeProfile(){
-
-profile.classList.add("hidden")
-
-}
-
-
-
-/* RANKING */
-
-function updateRanking(){
-
-rankDiv.innerHTML=""
-
-
-sorted=
-
-[...players]
-
-.sort((a,b)=>b.wins-a.wins)
-
-
-sorted.forEach(p=>{
-
-
-rankDiv.innerHTML+=`
-
-<div>
-
-${p.name}
-
-${p.wins}
-
 </div>
 
 `
 
+})
+
+
+
+let inv=document.getElementById("inventario")
+
+inv.innerHTML=""
+
+inventario.forEach(x=>{
+
+inv.innerHTML+=x+"<br>"
 
 })
 
@@ -311,184 +150,143 @@ ${p.wins}
 
 
 
-/* MISIONES */
+function verJugador(i){
 
-function updateMissions(){
+jugadorActual=i
 
-missionsDiv.innerHTML=""
+let j=jugadores[i]
 
+document.getElementById("perfil").innerHTML=`
 
-missions.forEach((m,i)=>{
+<h3>${j.nombre}</h3>
 
+Tier:${j.tier}
 
-missionsDiv.innerHTML+=`
+<br>
 
-<div class="mission">
+Wins:${j.wins}
 
-${m.name}
+<br>
 
-${m.reward}
+Loss:${j.loss}
 
-<select onchange="missionPlayer(${i},this.value)">
+<br>
 
-${playerOptions()}
-
-</select>
-
-</div>
+Muertes:${j.muertes}
 
 `
 
-
-})
-
-}
-
-
-
-function missionPlayer(m,i){
-
-p=players[i]
-
-p.coins+=missions[m].reward
-
-p.log.push(
-
-"Completo "+missions[m].name
-
-)
-
-save()
-
-update()
+mostrarEquipo()
 
 }
 
 
 
-/* SHOP */
+function agregarPokemon(){
 
-function updateShop(){
+if(jugadorActual==null)return
 
-shopDiv.innerHTML=""
+let nombre=document.getElementById("pokemonInput").value
 
+if(!nombre)return
 
-shop.forEach((s,i)=>{
+let j=jugadores[jugadorActual]
 
+if(j.equipo.length>=6){
 
-shopDiv.innerHTML+=`
+alert("Equipo lleno")
 
-<div class="shopItem">
-
-${s.name}
-
-${s.price}
-
-<select onchange="buy(${i},this.value)">
-
-${playerOptions()}
-
-</select>
-
-</div>
-
-`
-
-
-})
+return
 
 }
 
 
 
-function buy(i,p){
+let img=
 
-pl=players[p]
+"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
 
-
-if(pl.coins>=shop[i].price){
-
-pl.coins-=shop[i].price
-
-pl.log.push(
-
-"Compro "+shop[i].name
-
-)
-
-save()
-
-update()
-
-}
-
-}
++nombre.toLowerCase()+".png"
 
 
 
-/* TEAM */
+j.equipo.push({
 
-function addPokemon(){
+nombre,
 
-i=select.value
-
-name=pokemon.value
-
-
-fetch(
-
-"https://pokeapi.co/api/v2/pokemon/"+name
-
-)
-
-.then(r=>r.json())
-
-.then(d=>{
-
-
-players[i].team.push({
-
-name:name,
-
-img:d.sprites.front_default,
-
-type:d.types[0].type.name
+img
 
 })
 
 
-save()
 
-update()
+guardar()
 
-})
-
+mostrarEquipo()
 
 }
 
 
 
-function renderTeam(p){
+function mostrarEquipo(){
 
-html=""
+let div=document.getElementById("equipo")
+
+div.innerHTML=""
 
 
-p.team.forEach((pk,i)=>{
+
+if(jugadorActual==null)return
 
 
-html+=`
+
+jugadores[jugadorActual].equipo.forEach(p=>{
+
+div.innerHTML+=`
 
 <div class="pokemonCard">
 
-<img src="${pk.img}">
+<img src="${p.img}">
 
-${pk.name}
+<p>${p.nombre}</p>
 
-${pk.type}
+</div>
 
-<button onclick="kill(${i})">
+`
 
-X
+})
+
+}
+
+
+
+function mostrarMisiones(){
+
+let div=document.getElementById("misiones")
+
+div.innerHTML=""
+
+
+
+misiones.forEach((m,i)=>{
+
+div.innerHTML+=`
+
+<div class="mision">
+
+${m.nombre}
+
+<br>
+
+${m.coins} coins
+
+<br>
+
+<button onclick="completarMision(${i})"
+
+class="btn-neon">
+
+Completar
 
 </button>
 
@@ -496,139 +294,102 @@ X
 
 `
 
+})
+
+}
+
+
+
+function completarMision(i){
+
+if(misiones[i].done)return
+
+misiones[i].done=true
+
+sinocoins+=misiones[i].coins
+
+guardar()
+
+actualizarPantalla()
+
+}
+
+
+
+function comprar(nombre,costo){
+
+if(sinocoins<costo){
+
+alert("No alcanza")
+
+return
+
+}
+
+
+
+sinocoins-=costo
+
+inventario.push(nombre)
+
+guardar()
+
+actualizarPantalla()
+
+}
+
+
+
+/* RANDOM POKEMON */
+
+function randomPokemon(){
+
+if(sinocoins<50){
+
+alert("Necesitas 50 coins")
+
+return
+
+}
+
+
+
+if(jugadorActual==null)return
+
+
+
+let id=Math.floor(Math.random()*493)+1
+
+
+
+let nombre="Pokemon "+id
+
+
+
+let img=
+
+"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+id+".png"
+
+
+
+jugadores[jugadorActual].equipo.push({
+
+nombre,
+
+img
 
 })
 
 
-return html
 
-}
+sinocoins-=50
 
 
 
-function kill(i){
+guardar()
 
-p=players[selectedPlayer]
+mostrarEquipo()
 
-dead=p.team.splice(i,1)[0]
-
-p.dead.push(dead)
-
-p.deaths++
-
-p.log.push(
-
-dead.name+" murio"
-
-)
-
-save()
-
-openProfile(selectedPlayer)
-
-}
-
-
-
-/* DEAD */
-
-function renderDead(p){
-
-html=""
-
-
-p.dead.forEach(pk=>{
-
-
-html+=`
-
-<div>
-
-☠
-
-<img src="${pk.img}" width=40>
-
-${pk.name}
-
-</div>
-
-`
-
-})
-
-
-return html
-
-}
-
-
-
-/* PROGRESS */
-
-function renderProgress(p){
-
-return`
-
-G1 ${p.progress.g1}
-
-G2 ${p.progress.g2}
-
-Liga ${p.progress.liga}
-
-`
-
-}
-
-
-
-/* LOG */
-
-function renderLog(p){
-
-html=""
-
-p.log.forEach(l=>{
-
-
-html+=`
-
-<div>
-
-${l}
-
-</div>
-
-`
-
-})
-
-
-return html
-
-}
-
-
-
-/* HELPERS */
-
-function playerOptions(){
-
-html=""
-
-players.forEach((p,i)=>{
-
-
-html+=`
-
-<option value=${i}>
-${p.name}
-</option>
-
-`
-
-
-})
-
-return html
+actualizarPantalla()
 
 }

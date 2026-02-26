@@ -1,165 +1,303 @@
-/* ===== BASE ===== */
 body{
- background:#0f1220;
- color:#e6e9ff;
- font-family:Inter,Segoe UI,Arial;
- margin:0;
- padding:30px;
+
+background:#04040a;
+color:white;
+
+font-family:Arial;
+
 }
 
-h1,h2{
- margin:20px 0 15px;
- font-weight:600;
+
+/* NAV */
+
+.neon-blue{
+
+color:#00f7ff;
+
+text-shadow:
+0 0 5px #00f7ff,
+0 0 15px #00f7ff,
+0 0 30px #00f7ff;
+
+animation:glowBlue 2s infinite alternate;
+
 }
 
-h1{
- text-align:center;
- color:#7c9cff;
+
+
+@keyframes glowBlue{
+
+from{
+
+text-shadow:
+0 0 5px #00f7ff,
+0 0 15px #00f7ff;
+
 }
 
-/* ===== CONTENEDORES ===== */
-section{
- margin-bottom:35px;
+to{
+
+text-shadow:
+0 0 20px #00f7ff,
+0 0 40px #00f7ff;
+
 }
 
-input,select{
- background:#1a1f35;
- border:1px solid #2c355c;
- color:white;
- padding:8px;
- border-radius:8px;
- margin:4px;
 }
 
-button{
- background:#6c8cff;
- border:none;
- color:white;
- padding:7px 14px;
- border-radius:8px;
- cursor:pointer;
- font-weight:500;
+
+
+/* CARDS */
+
+.neon-card{
+
+background:#0c0c1a;
+
+padding:20px;
+
+border-radius:15px;
+
+margin-bottom:20px;
+
+box-shadow:
+
+0 0 10px #00f7ff;
+
+transition:0.4s;
+
 }
 
-button:hover{
- background:#89a2ff;
+
+.neon-card:hover{
+
+box-shadow:
+
+0 0 20px #00f7ff,
+
+0 0 40px #00f7ff;
+
 }
 
-/* ===== GRID JUGADORES ===== */
-#participantes{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:20px;
+
+
+/* BOTONES */
+
+.btn-neon{
+
+background:#00f7ff;
+
+border:none;
+
+font-weight:bold;
+
 }
 
-/* ===== CARD JUGADOR ===== */
+
+.btn-neon:hover{
+
+box-shadow:
+
+0 0 10px #00f7ff,
+
+0 0 30px #00f7ff;
+
+}
+
+
+
+/* TEXTO */
+
+.smallText{
+
+color:#aaaaaa;
+
+font-size:14px;
+
+}
+
+
+
+/* SIN O COINS */
+
+.sinocoins{
+
+color:#00ff88;
+
+font-size:22px;
+
+text-shadow:
+
+0 0 10px #00ff88;
+
+animation:glowCoins 1.5s infinite alternate;
+
+}
+
+
+@keyframes glowCoins{
+
+from{
+
+text-shadow:0 0 5px #00ff88;
+
+}
+
+to{
+
+text-shadow:
+
+0 0 20px #00ff88,
+
+0 0 40px #00ff88;
+
+}
+
+}
+
+
+
+/* PLAYER */
+
 .playerCard{
- background:#1a1f35;
- border-radius:16px;
- padding:18px;
- text-align:center;
- transition:.25s;
- border:1px solid #2a335a;
- position:relative;
+
+border:1px solid #00f7ff;
+
+padding:15px;
+
+margin-top:15px;
+
+border-radius:12px;
+
+transition:0.3s;
+
+cursor:pointer;
+
 }
+
 
 .playerCard:hover{
- transform:translateY(-4px);
- border-color:#6c8cff;
+
+transform:scale(1.02);
+
+box-shadow:
+
+0 0 20px #00f7ff;
+
 }
 
-.playerCard.active{
- outline:2px solid #ffd166;
+
+
+/* TEAM */
+
+.team{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(3,1fr);
+
+gap:10px;
+
+margin-top:10px;
+
 }
 
-.playerImg{
- width:75px;
- height:75px;
- border-radius:50%;
- object-fit:cover;
- margin-bottom:8px;
-}
-
-/* ===== HOVER ACCIONES ===== */
-.hoverActions{
- opacity:0;
- margin-top:10px;
- transition:.25s;
-}
-
-.playerCard:hover .hoverActions{
- opacity:1;
-}
-
-/* ===== PANEL PERFIL ===== */
-.panelPerfil{
- position:fixed;
- top:0;
- right:-360px;
- width:320px;
- height:100%;
- background:#151a30;
- border-left:1px solid #2c355c;
- padding:25px;
- transition:.35s;
- overflow:auto;
-}
-
-.panelPerfil.open{
- right:0;
-}
-
-.panelPerfil h2{
- margin-top:0;
-}
-
-/* ===== EQUIPO ===== */
-#equipo{
- display:flex;
- flex-wrap:wrap;
- gap:15px;
-}
 
 .pokemonCard{
- width:140px;
- background:#1a1f35;
- border-radius:14px;
- padding:12px;
- text-align:center;
- border:1px solid #2a335a;
+
+background:#111125;
+
+border-radius:10px;
+
+padding:10px;
+
+text-align:center;
+
+border:1px solid #00f7ff;
+
 }
+
 
 .pokemonCard img{
- width:100px;
- height:100px;
- object-fit:contain;
+
+width:110px;
+
 }
 
-/* ===== MISIONES ===== */
-.mision{
- background:#1a1f35;
- border:1px solid #2a335a;
- padding:10px 15px;
- border-radius:12px;
- margin-bottom:8px;
- display:flex;
- justify-content:space-between;
- align-items:center;
+
+
+/* MISIONES */
+
+.mission{
+
+border:1px solid #ff00ff;
+
+padding:15px;
+
+margin:10px;
+
+border-radius:10px;
+
+background:#140014;
+
+transition:0.3s;
+
 }
 
-/* ===== INVENTARIO ===== */
-#inventario{
- background:#1a1f35;
- padding:15px;
- border-radius:12px;
- border:1px solid #2a335a;
- min-height:40px;
+
+.mission:hover{
+
+box-shadow:
+
+0 0 20px #ff00ff;
+
 }
 
-/* ===== SINOCOINS ===== */
-.sinocoinsBox{
- text-align:center;
- font-size:18px;
- margin-bottom:15px;
- color:#ffd166;
+
+
+/* PERFIL */
+
+.profile{
+
+background:#000010;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:
+
+0 0 20px #00f7ff;
+
+margin-bottom:20px;
+
+}
+
+
+.profile h2{
+
+color:#00f7ff;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+.avatar{
+
+width:70px;
+border-radius:50%;
+
+}
+
+.avatarBig{
+
+width:150px;
+border-radius:50%;
+
 }

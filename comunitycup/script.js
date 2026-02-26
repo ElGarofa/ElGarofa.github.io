@@ -1,160 +1,560 @@
-let jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
-let jugadorActual=null;
-let sinocoins = Number(localStorage.getItem("sinocoins")) || 0;
-let inventario = JSON.parse(localStorage.getItem("inventario")) || [];
+players=[]
+coins=0
 
-let misiones = JSON.parse(localStorage.getItem("misiones")) || [
- {nombre:"Roark",coins:20,done:false},
- {nombre:"Gardenia",coins:20,done:false},
- {nombre:"Maylene",coins:20,done:false},
- {nombre:"Wake",coins:20,done:false}
-];
+selectedPlayer=null
 
-function guardar(){
- localStorage.setItem("jugadores",JSON.stringify(jugadores));
- localStorage.setItem("sinocoins",sinocoins);
- localStorage.setItem("inventario",JSON.stringify(inventario));
- localStorage.setItem("misiones",JSON.stringify(misiones));
+
+
+shop=[
+
+{name:"Cambio habilidad",price:80},
+
+{name:"Captura extra",price:120},
+
+{name:"Cambio naturaleza",price:70},
+
+{name:"Segunda oportunidad",price:200},
+
+{name:"Revivir Pokemon",price:250},
+
+{name:"MT gratis",price:60},
+
+{name:"Objeto equipado",price:40},
+
+{name:"Repetir ruta",price:150},
+
+{name:"Cambiar muerto",price:180},
+
+{name:"Info rival",price:50}
+
+]
+
+
+
+load()
+
+
+
+function save(){
+
+localStorage.setItem(
+
+"torneo",
+
+JSON.stringify({
+
+players:players,
+
+coins:coins
+
+})
+
+)
+
 }
 
-function crearParticipante(){
- let nombre=nombreJugadorInput.value;
- if(!nombre)return;
 
- jugadores.push({
-  nombre,
-  tier:tierJugadorInput.value,
-  img:imgJugadorInput.value||"https://via.placeholder.com/80",
-  wins:0,loss:0,muertes:0,equipo:[]
- });
 
- nombreJugadorInput.value="";
- imgJugadorInput.value="";
- guardar();
- render();
+function load(){
+
+data=
+
+JSON.parse(
+
+localStorage.getItem("torneo")
+
+)
+
+
+if(data){
+
+players=data.players
+
+coins=data.coins
+
 }
 
-function render(){
- sinocoins.innerText=sinocoins;
 
- participantes.innerHTML="";
- jugadores.forEach((j,i)=>{
-  participantes.innerHTML+=`
-  <div class="playerCard ${jugadorActual===i?"active":""}">
-   <img src="${j.img}" class="playerImg"><br>
-   <b>${j.nombre}</b><br>
-   ${j.tier}<br>
-   W:${j.wins} L:${j.loss}
+update()
 
-   <div class="hoverActions">
-    <button onclick="abrirPerfil(${i})">Perfil</button>
-    <button onclick="agregarPokemon(${i})">+ Pokémon</button>
-   </div>
-  </div>`;
- });
+updateCoins()
 
- renderEquipo();
- renderMisiones();
- renderInventario();
+updateShop()
+
 }
 
-function abrirPerfil(i){
- jugadorActual=i;
- let j=jugadores[i];
 
- perfilContenido.innerHTML=`
- <h2>${j.nombre}</h2>
- <img src="${j.img}" class="playerImg"><br><br>
 
- Wins ${j.wins}
- <button onclick="stat('wins',1)">+</button>
- <button onclick="stat('wins',-1)">-</button><br><br>
 
- Loss ${j.loss}
- <button onclick="stat('loss',1)">+</button>
- <button onclick="stat('loss',-1)">-</button><br><br>
+function addPlayer(){
 
- Muertes ${j.muertes}
- <button onclick="stat('muertes',1)">+</button>
- <button onclick="stat('muertes',-1)">-</button>
- `;
+name=
 
- panelPerfil.classList.add("open");
- render();
+document.getElementById("name").value
+
+img=
+
+document.getElementById("image").value
+
+tier=
+
+document.getElementById("tier").value
+
+
+players.push({
+
+name:name,
+
+img:img,
+
+tier:tier,
+
+wins:0,
+
+loss:0,
+
+deaths:0,
+
+team:[],
+
+dead:[]
+
+})
+
+
+save()
+
+update()
+
 }
 
-function cerrarPerfil(){
- panelPerfil.classList.remove("open");
- jugadorActual=null;
- render()
+
+
+
+function update(){
+
+
+div=
+
+document.getElementById("players")
+
+div.innerHTML=""
+
+
+select=
+
+document.getElementById("playerSelect")
+
+select.innerHTML=""
+
+
+players.forEach((p,i)=>{
+
+
+div.innerHTML+=`
+
+<div class="playerCard"
+
+onclick="openProfile(${i})">
+
+<img src="${p.img}" class="avatar">
+
+<h4>${p.name}</h4>
+
+<div class="smallText">
+
+Tier ${p.tier}
+
+</div>
+
+</div>
+
+`
+
+
+select.innerHTML+=
+
+`<option value=${i}>
+${p.name}
+</option>`
+
+
+})
+
+
+save()
+
 }
 
-function stat(tipo,val){
- let j=jugadores[jugadorActual];
- j[tipo]=Math.max(0,j[tipo]+val);
- guardar();
- abrirPerfil(jugadorActual);
+
+
+/* PERFIL */
+
+function openProfile(i){
+
+selectedPlayer=i
+
+p=players[i]
+
+
+profile=
+
+document.getElementById("profile")
+
+
+profile.innerHTML=`
+
+<img src="${p.img}" class="avatarBig">
+
+<h2>${p.name}</h2>
+
+<div>Tier ${p.tier}</div>
+
+
+<h4>
+
+Victorias ${p.wins}
+
+</h4>
+
+<button onclick="win()">+</button>
+
+
+<h4>
+
+Derrotas ${p.loss}
+
+</h4>
+
+<button onclick="lose()">+</button>
+
+
+<h4>
+
+Muertes ${p.deaths}
+
+</h4>
+
+
+<button onclick="death()">
+
++ muerte
+
+</button>
+
+
+<h3>Equipo</h3>
+
+<div class="team">
+
+${renderTeam(p)}
+
+</div>
+
+
+<h3>Cementerio</h3>
+
+${renderDead(p)}
+
+
+<button
+class="btn btn-neon mt-3"
+onclick="closeProfile()">
+
+Volver
+
+</button>
+
+`
+
+
+profile.classList.remove("hidden")
+
 }
 
-function agregarPokemon(i){
- jugadorActual=i;
- let nombre=prompt("Nombre Pokémon");
- if(!nombre)return;
 
- let j=jugadores[i];
- if(j.equipo.length>=6)return alert("Equipo lleno");
 
- let img=`https://img.pokemondb.net/artwork/large/${nombre.toLowerCase()}.jpg`;
 
- j.equipo.push({nombre,img});
- guardar();
- render();
+function closeProfile(){
+
+document
+
+.getElementById("profile")
+
+.classList.add("hidden")
+
 }
 
-function eliminarPokemon(index){
- jugadores[jugadorActual].equipo.splice(index,1);
- guardar();
- render();
+
+
+/* STATS */
+
+function win(){
+
+players[selectedPlayer].wins++
+
+save()
+
+openProfile(selectedPlayer)
+
 }
 
-function renderEquipo(){
- equipo.innerHTML="";
- if(jugadorActual===null)return;
 
- jugadores[jugadorActual].equipo.forEach((p,i)=>{
-  equipo.innerHTML+=`
-  <div class="pokemonCard">
-   <img src="${p.img}">
-   ${p.nombre}<br>
-   <button onclick="eliminarPokemon(${i})">X</button>
-  </div>`;
- });
+
+function lose(){
+
+players[selectedPlayer].loss++
+
+save()
+
+openProfile(selectedPlayer)
+
 }
 
-function renderMisiones(){
- misiones.innerHTML="";
- misiones.forEach((m,i)=>{
-  misiones.innerHTML+=`
-  <div class="mision">
-   ${m.nombre} (${m.coins})
-   <button onclick="completar(${i})">
-   ${m.done?"✔":"OK"}
-   </button>
-  </div>`;
- });
+
+
+function death(){
+
+players[selectedPlayer].deaths++
+
+save()
+
+openProfile(selectedPlayer)
+
 }
 
-function completar(i){
- if(misiones[i].done)return;
- misiones[i].done=true;
- sinocoins+=misiones[i].coins;
- guardar();
- render();
+
+
+/* POKEMON */
+
+function addPokemon(){
+
+i=
+
+document.getElementById(
+
+"playerSelect"
+
+).value
+
+
+pokemon=
+
+document.getElementById(
+
+"pokemon"
+
+).value
+
+.toLowerCase()
+
+
+if(players[i].team.length>=6){
+
+alert("Maximo 6")
+
+return
+
 }
 
-function renderInventario(){
- inventarioDiv.innerHTML="";
- inventario.forEach(x=>inventarioDiv.innerHTML+=x+"<br>");
+
+fetch(
+
+"https://pokeapi.co/api/v2/pokemon/"+pokemon
+
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+
+img=
+
+data.sprites
+
+.front_default
+
+
+players[i].team.push({
+
+name:pokemon,
+
+img:img
+
+})
+
+
+save()
+
+update()
+
+})
+
 }
 
-render();
+
+
+/* RENDER */
+
+function renderTeam(player){
+
+html=""
+
+player.team.forEach((p,i)=>{
+
+
+html+=`
+
+<div class="pokemonCard">
+
+<img src="${p.img}">
+
+<div>
+
+${p.name}
+
+</div>
+
+<button onclick="kill(${i})">
+
+☠
+
+</button>
+
+</div>
+
+`
+
+})
+
+
+return html
+
+}
+
+
+
+
+function renderDead(player){
+
+html=""
+
+
+player.dead.forEach(p=>{
+
+
+html+=`
+
+<div>
+
+☠ ${p.name}
+
+</div>
+
+`
+
+
+})
+
+
+return html
+
+}
+
+
+
+
+function kill(i){
+
+p=players[selectedPlayer]
+
+dead=p.team.splice(i,1)[0]
+
+p.dead.push(dead)
+
+p.deaths++
+
+save()
+
+openProfile(selectedPlayer)
+
+}
+
+
+
+
+/* SHOP */
+
+function updateShop(){
+
+div=document.getElementById("shop")
+
+div.innerHTML=""
+
+
+shop.forEach((s,i)=>{
+
+
+div.innerHTML+=`
+
+<div class="mission">
+
+${s.name}
+
+-
+
+${s.price}
+
+
+<button
+
+onclick="buy(${i})"
+
+class="btn btn-neon">
+
+Comprar
+
+</button>
+
+</div>
+
+`
+
+
+})
+
+
+}
+
+
+
+function buy(i){
+
+if(coins>=shop[i].price){
+
+coins-=shop[i].price
+
+updateCoins()
+
+save()
+
+alert("Comprado")
+
+}
+
+}
+
+
+
+/* COINS */
+
+function updateCoins(){
+
+document
+
+.getElementById("coins")
+
+.innerText=coins
+
+}

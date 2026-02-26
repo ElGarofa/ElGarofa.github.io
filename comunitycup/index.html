@@ -13,16 +13,22 @@
 <h1 class="titulo text-center">TORNEO LOCKE</h1>
 
 <!-- Sinocoins -->
-<div class="sinocoinsBox">
-Sinocoins: <span id="sinocoins">0</span>
-</div>
+<div class="sinocoinsBox">Sinocoins: <span id="sinocoins">0</span></div>
 
 <hr>
 
 <!-- Participantes -->
 <h2>Participantes</h2>
+<div class="agregarJugador">
+  <input id="nombreJugadorInput" placeholder="Nombre jugador">
+  <select id="tierJugadorInput">
+    <option>Beginner</option>
+    <option>Veterano</option>
+    <option>Pro</option>
+  </select>
+  <button class="btn-neon" onclick="crearParticipante()">Agregar</button>
+</div>
 <div id="participantes"></div>
-<button class="btn-neon" onclick="crearParticipante()">Crear Participante</button>
 
 <hr>
 
@@ -44,6 +50,7 @@ Sinocoins: <span id="sinocoins">0</span>
 <h2>Pokémon Random</h2>
 <p>Obtén un Pokémon random por 50 Sinocoins</p>
 <button class="btn-neon" onclick="randomPokemon()">Pokémon Random (50)</button>
+<div id="pokemonRuleta"></div>
 
 <hr>
 

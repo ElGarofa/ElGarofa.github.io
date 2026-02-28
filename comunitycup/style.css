@@ -1,10 +1,17 @@
+
 body{
 
 background:
-radial-gradient(circle at 20% 20%,#001020,#000),
-radial-gradient(circle at 80% 80%,#200020,#000);
 
-animation:fondo 8s infinite alternate;
+radial-gradient(
+circle at 20% 20%,
+#002,
+black),
+
+radial-gradient(
+circle at 80% 80%,
+#022,
+black);
 
 color:white;
 
@@ -13,102 +20,74 @@ font-family:Arial;
 }
 
 
-@keyframes fondo{
 
-from{filter:hue-rotate(0deg)}
-to{filter:hue-rotate(40deg)}
+.title{
 
-}
+text-align:center;
 
+color:cyan;
 
-
-.neon-blue{
-
-color:#00f7ff;
-
-text-shadow:
-
-0 0 10px #00f7ff,
-0 0 20px #00f7ff;
+margin:20px;
 
 }
 
 
 
-.neon-card{
+.box{
 
-background:#0d0d20;
-
-padding:20px;
-
-margin-bottom:15px;
+border:2px solid cyan;
 
 border-radius:15px;
 
-box-shadow:
+padding:15px;
 
-0 0 10px #00f7ff;
+margin:10px;
 
-}
+background:rgba(0,0,0,0.4);
 
-
-
-.btn-neon{
-
-background:#00f7ff;
-
-font-weight:bold;
+box-shadow:0 0 15px cyan;
 
 }
 
 
 
-.playerCard{
+#players{
 
-border:1px solid #00f7ff;
+max-height:250px;
 
-padding:10px;
+overflow-y:auto;
 
-margin-top:10px;
+}
 
-border-radius:10px;
+
+
+.player{
+
+border:1px solid cyan;
+
+padding:5px;
+
+margin:5px;
 
 cursor:pointer;
 
-transition:.3s;
-
-}
-
-
-.playerCard:hover{
-
-box-shadow:
-
-0 0 20px #00f7ff;
-
 }
 
 
 
-.profile{
+#perfil{
 
-background:#000020;
+max-width:700px;
 
-padding:20px;
-
-border-radius:15px;
-
-box-shadow:
-
-0 0 20px #00f7ff;
+margin:auto;
 
 }
 
 
 
-.avatarBig{
+#perfilFoto{
 
-width:150px;
+width:80px;
 
 border-radius:50%;
 
@@ -116,200 +95,72 @@ border-radius:50%;
 
 
 
-.team{
+#team{
 
 display:grid;
 
 grid-template-columns:
 
-repeat(3,120px);
+repeat(3,1fr);
 
-gap:8px;
-
-margin-top:10px;
-
-justify-content: start;
+gap:10px;
 
 }
 
 
 
-.pokemonCard{
+.pokemon{
 
-background:#111125;
+border:2px solid cyan;
 
-width:120px;
+padding:5px;
 
-height:120px;
+text-align:center;
+
+cursor:pointer;
+
+}
+
+
+
+.pokemon img{
+
+width:50px;
+
+}
+
+
+
+button{
+
+margin:3px;
+
+border:none;
+
+border-radius:8px;
 
 padding:6px;
 
-border-radius:10px;
+background:linear-gradient(
 
-border:1px solid #00f7ff;
+45deg,
+cyan,
+purple);
 
-text-align:center;
-
-transition:.3s;
-
-}
-
-
-.pokemonCard:hover{
-
-box-shadow:
-
-0 5px #00f7ff;
-
-
+color:white;
 
 }
 
 
 
-.pokemonCard img{
-
-width:80px;
-
-height:80px;
-
-object-fit:contain;
-
-}
-
-
-
-.purpleTitle{
-
-color:#ff00ff;
-
-text-shadow:
-
-0 0 10px #ff00ff;
-
-}
-
-
-
-.greenTitle{
-
-color:#00ff9c;
-
-text-shadow:
-
-0 0 10px #00ff9c;
-
-}
-
-
-
-.mission{
-
-background:#140014;
-
-border-radius:10px;
-
-padding:10px;
-
-margin:10px;
-
-border-left:4px solid #ff00ff;
-
-transition:.3s;
-
-}
-
-
-.mission:hover{
-
-box-shadow:
-
-0 0 20px #ff00ff;
-
-transform:scale(1.02);
-
-}
-
-
-
-.shopItem{
-
-background:#001a12;
-
-border-radius:10px;
-
-padding:10px;
-
-margin:10px;
-
-border-left:4px solid #00ff9c;
+#bracket{
 
 display:flex;
 
-justify-content:space-between;
+gap:40px;
+
+overflow-x:auto;
 
 }
 
 
-.shopItem:hover{
-
-box-shadow:
-
-0 0 20px #00ff9c;
-
-}
-
-
-
-.randomBox{
-
-text-align:center;
-
-padding:20px;
-
-border:2px solid #00f7ff;
-
-border-radius:15px;
-
-animation:glow 1s infinite alternate;
-
-}
-
-
-@keyframes glow{
-
-from{
-
-box-shadow:0 0 10px #00f7ff
-
-}
-
-to{
-
-box-shadow:0 0 30px #00f7ff
-
-}
-
-}
-
-
-
-.hidden{
-
-display:none;
-
-}
-
-
-
-.sinocoins{
-
-color:#00ff9c;
-
-font-size:22px;
-
-text-shadow:
-
-0 0 10px #00ff9c;
-
-}

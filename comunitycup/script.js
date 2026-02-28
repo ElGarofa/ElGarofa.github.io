@@ -1,106 +1,80 @@
+
 players=[]
+
 coins=0
-jugadorActual=null
+
+selected=null
 
 
 
-missions=[
+misiones=[
 
-{name:"Starter",reward:20},
+["Gym1",30],
 
-{name:"Gimnasio 1",reward:30},
+["Gym2",40],
 
-{name:"Gimnasio 2",reward:40},
+["Gym3",50],
 
-{name:"Gimnasio 3",reward:50},
-
-{name:"Liga",reward:200}
-
-]
-
-
-
-shopItems=[
-
-{name:"Cambio habilidad",price:80},
-
-{name:"Captura extra",price:100},
-
-{name:"Cambio naturaleza",price:120},
-
-{name:"Segunda oportunidad",price:200}
+["Liga",200]
 
 ]
 
 
+shop=[
 
-iniciar()
+["Cambio Naturaleza",50],
 
+["Curar",30],
 
+["Pokemon Random",30]
 
-function iniciar(){
-
-actualizarMisiones()
-
-actualizarShop()
-
-}
+]
 
 
 
 function crearJugador(){
 
-players.push({
+p={
 
-nombre:document.getElementById("nombreInput").value,
+name:name.value,
 
-foto:document.getElementById("fotoInput").value,
-
-tier:document.getElementById("tierInput").value,
+tier:tier.value,
 
 wins:0,
 
-loses:0,
+loss:0,
 
-draws:0,
+dead:0,
 
-team:[]
+team:[],
 
-})
+img:"https://i.imgur.com/4AiXzf8.jpeg"
 
-actualizarLista()
+}
+
+players.push(p)
+
+renderPlayers()
 
 }
 
 
 
-function actualizarLista(){
+function renderPlayers(){
 
-lista=document.getElementById("listaJugadores")
-
-lista.innerHTML=""
-
-
+playersDiv.innerHTML=""
 
 players.forEach((p,i)=>{
 
-lista.innerHTML+=`
+d=document.createElement("div")
 
-<div class="playerCard"
+d.className="player"
 
-onclick="abrirPerfil(${i})">
+d.innerHTML=p.name+"<br>"+p.tier
 
-<img src="${p.foto}" width=50>
+d.onclick=()=>perfil(i)
 
-${p.nombre}
-
-<br>
-
-Tier ${p.tier}
-
-</div>
-
-`
+playersDiv.appendChild(d)
 
 })
 
@@ -108,186 +82,129 @@ Tier ${p.tier}
 
 
 
-function abrirPerfil(i){
+function perfil(i){
 
-jugadorActual=i
+selected=i
 
 p=players[i]
 
+perfilNombre.innerHTML=p.name
 
-document.getElementById("perfil")
-.classList.remove("hidden")
+perfilTier.innerHTML=p.tier
 
+wins.innerHTML=p.wins
 
-document.getElementById("nombrePerfil")
-.innerText=p.nombre
+loss.innerHTML=p.loss
 
+dead.innerHTML=p.dead
 
-document.getElementById("fotoPerfil")
-.src=p.foto
+perfilFoto.src=p.img
 
-
-document.getElementById("wins")
-.innerText=p.wins
-
-
-document.getElementById("loses")
-.innerText=p.loses
-
-
-document.getElementById("draws")
-.innerText=p.draws
-
-
-mostrarTeam()
+renderTeam()
 
 }
 
 
 
-function cerrarPerfil(){
+function renderTeam(){
 
-document.getElementById("perfil")
-.classList.add("hidden")
+team.innerHTML=""
 
-}
+p=players[selected]
 
+p.team.forEach((pk,i)=>{
 
+d=document.createElement("div")
 
-function modificarEstadistica(tipo,v){
+d.className="pokemon"
 
-p=players[jugadorActual]
+d.innerHTML=`
 
-p[tipo]+=v
-
-if(p[tipo]<0)p[tipo]=0
-
-abrirPerfil(jugadorActual)
-
-}
-
-
-
-function mostrarTeam(){
-
-div=document.getElementById("team")
-
-div.innerHTML=""
-
-
-p=players[jugadorActual]
-
-
-p.team.forEach(pk=>{
-
-
-div.innerHTML+=`
-
-<div class="pokemonCard">
-
-<img src="${pk.img}">
-
+<img src=${pk.img}>
 <br>
-
-${pk.nombre}
-
-</div>
-
+${pk.name}
 `
 
+d.onclick=()=>{
+
+p.team.splice(i,1)
+renderTeam()
+
+}
+
+team.appendChild(d)
+
 })
 
 }
 
 
 
+function sumar(tipo){
 
-// RANDOM ANIMADO
+players[selected][tipo]++
 
-function randomPokemonAnimado(){
+perfil(selected)
 
-box=document.getElementById("randomBox")
-
-box.classList.remove("hidden")
-
-
-loops=0
-
-
-interval=setInterval(()=>{
-
-
-id=Math.floor(Math.random()*898)+1
-
-
-fetch("https://pokeapi.co/api/v2/pokemon/"+id)
-
-.then(r=>r.json())
-
-.then(data=>{
-
-
-document.getElementById("randomImg")
-.src=data.sprites.front_default
-
-
-document.getElementById("randomName")
-.innerText=data.name
+}
 
 
 
-if(loops>20){
+function restar(tipo){
 
-clearInterval(interval)
+players[selected][tipo]--
+
+perfil(selected)
+
+}
 
 
-players[jugadorActual].team.push({
 
-nombre:data.name,
+async function randomPokemon(){
+
+if(selected==null)return
+
+p=players[selected]
+
+if(p.team.length>=6)return
+
+
+id=Math.floor(Math.random()*151)+1
+
+r=await fetch(
+
+"https://pokeapi.co/api/v2/pokemon/"+id
+
+)
+
+data=await r.json()
+
+
+p.team.push({
+
+name:data.name,
 
 img:data.sprites.front_default
 
 })
 
-
-mostrarTeam()
-
-}
-
-loops++
-
-})
-
-
-},80)
+renderTeam()
 
 }
 
 
 
+function generarTorneo(){
 
-function agregarPokemonManual(){
+bracket.innerHTML=""
 
-nombre=prompt("Pokemon")
+players.forEach(p=>{
 
+d=document.createElement("div")
 
-fetch("https://pokeapi.co/api/v2/pokemon/"+nombre)
+d.innerHTML=p.name
 
-.then(r=>r.json())
-
-.then(data=>{
-
-
-players[jugadorActual].team.push({
-
-nombre:data.name,
-
-img:data.sprites.front_default
-
-})
-
-
-mostrarTeam()
+bracket.appendChild(d)
 
 })
 
@@ -295,116 +212,90 @@ mostrarTeam()
 
 
 
+function cargarMisiones(){
 
+misiones.forEach(m=>{
 
-// MISIONES
+d=document.createElement("div")
 
-function actualizarMisiones(){
+d.innerHTML=`
 
-div=document.getElementById("missions")
+${m[0]} 🪙${m[1]}
 
-div.innerHTML=""
-
-
-missions.forEach((m,i)=>{
-
-
-div.innerHTML+=`
-
-<div class="mission">
-
-${m.name}
-
-<br>
-
-💰 ${m.reward}
-
-<br>
-
-<button onclick="completar(${i})"
-class="btn btn-neon">
+<button onclick="ganar(${m[1]})">
 
 Completar
 
 </button>
 
-</div>
-
 `
+
+missions.appendChild(d)
 
 })
 
-
 }
 
 
 
+function cargarShop(){
 
-function completar(i){
+shop.forEach(s=>{
 
-coins+=missions[i].reward
+d=document.createElement("div")
 
+d.innerHTML=`
 
-document.getElementById("coins")
-.innerText=coins
+${s[0]} 🪙${s[1]}
 
-}
-
-
-
-
-
-// TIENDA
-
-function actualizarShop(){
-
-div=document.getElementById("shop")
-
-div.innerHTML=""
-
-
-shopItems.forEach(s=>{
-
-
-div.innerHTML+=`
-
-<div class="shopItem">
-
-${s.name}
-
-💰 ${s.price}
-
-
-<button onclick="comprar(${s.price})"
-class="btn btn-neon">
+<button onclick="comprar(${s[1]})">
 
 Comprar
 
 </button>
 
-</div>
-
 `
+
+shopDiv.appendChild(d)
 
 })
 
+}
+
+
+
+function ganar(c){
+
+coins+=c
+
+coinsText()
 
 }
 
 
 
+function comprar(c){
 
-function comprar(precio){
+if(coins<c)return
 
-if(coins>=precio){
+coins-=c
 
-coins-=precio
-
-document.getElementById("coins")
-.innerText=coins
-
-alert("Comprado")
+coinsText()
 
 }
 
+
+
+function coinsText(){
+
+coins.innerHTML="🪙 "+coins
+
 }
+
+
+
+cargarMisiones()
+
+cargarShop()
+
+coinsText()

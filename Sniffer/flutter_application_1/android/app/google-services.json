@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "903015354798",
+    "firebase_url": "https://torneo-dd967-default-rtdb.firebaseio.com",
+    "project_id": "torneo-dd967",
+    "storage_bucket": "torneo-dd967.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903015354798:android:92b6b6a049bceff201f83f",
+        "android_client_info": {
+          "package_name": "com.example.sniffer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH3W_V76xZ_4eeiYASc3czRoRBE6Jbhtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

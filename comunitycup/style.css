@@ -1,73 +1,81 @@
-
 body{
 
-background:
+background:linear-gradient(
+45deg,
+#020210,
+#050530,
+#020210
+);
 
-radial-gradient(
-circle at 20% 20%,
-#002,
-black),
+background-size:400%;
 
-radial-gradient(
-circle at 80% 80%,
-#022,
-black);
+animation:fondo 15s infinite;
 
 color:white;
 
-font-family:Arial;
+}
+
+@keyframes fondo{
+
+0%{background-position:0%}
+100%{background-position:100%}
+
+}
+
+
+.navbar{
+
+background:#000814;
+
+box-shadow:0 0 20px #00f7ff;
 
 }
 
 
 
-.title{
+.neon-blue{
 
-text-align:center;
+color:#00f7ff;
 
-color:cyan;
+text-shadow:
 
-margin:20px;
+0 0 15px #00f7ff;
 
 }
 
 
 
-.box{
+.neon-card{
 
-border:2px solid cyan;
-
-border-radius:15px;
+background:#0c0c1a;
 
 padding:15px;
 
-margin:10px;
+border-radius:15px;
 
-background:rgba(0,0,0,0.4);
+border:1px solid #00f7ff;
 
-box-shadow:0 0 15px cyan;
-
-}
-
-
-
-#players{
-
-max-height:250px;
-
-overflow-y:auto;
+margin-bottom:15px;
 
 }
 
 
 
-.player{
+.playerCard{
 
-border:1px solid cyan;
+background:#111125;
 
-padding:5px;
+padding:8px;
+
+border-radius:10px;
 
 margin:5px;
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
 
 cursor:pointer;
 
@@ -75,19 +83,19 @@ cursor:pointer;
 
 
 
-#perfil{
+.playerCard:hover{
 
-max-width:700px;
-
-margin:auto;
+box-shadow:0 0 15px #00f7ff;
 
 }
 
 
 
-#perfilFoto{
+.playerCard img{
 
-width:80px;
+width:40px;
+
+height:40px;
 
 border-radius:50%;
 
@@ -95,13 +103,23 @@ border-radius:50%;
 
 
 
-#team{
+.avatarBig{
+
+width:120px;
+
+border-radius:50%;
+
+margin-bottom:10px;
+
+}
+
+
+
+.team{
 
 display:grid;
 
-grid-template-columns:
-
-repeat(3,1fr);
+grid-template-columns:repeat(3,70px);
 
 gap:10px;
 
@@ -109,43 +127,41 @@ gap:10px;
 
 
 
-.pokemon{
+.pokemonCard{
 
-border:2px solid cyan;
+background:#111125;
+
+border-radius:10px;
 
 padding:5px;
 
 text-align:center;
 
-cursor:pointer;
+}
+
+
+
+.pokemonCard img{
+
+width:60px;
 
 }
 
 
 
-.pokemon img{
+.btn-neon{
 
-width:50px;
-
-}
-
-
-
-button{
-
-margin:3px;
+background:#00f7ff;
 
 border:none;
 
-border-radius:8px;
+}
 
-padding:6px;
 
-background:linear-gradient(
 
-45deg,
-cyan,
-purple);
+.btn-purple{
+
+background:#ff00ff;
 
 color:white;
 
@@ -153,14 +169,60 @@ color:white;
 
 
 
-#bracket{
+.mission{
 
-display:flex;
+background:#140014;
 
-gap:40px;
+padding:8px;
 
-overflow-x:auto;
+border-radius:10px;
+
+margin:5px;
+
+border:1px solid #ff00ff;
 
 }
 
 
+
+.shopItem{
+
+background:#001a10;
+
+padding:8px;
+
+border-radius:10px;
+
+margin:5px;
+
+border:1px solid #00ff88;
+
+}
+
+
+
+.match{
+
+background:#111125;
+
+padding:10px;
+
+margin:5px;
+
+border-radius:10px;
+
+border:1px solid #00f7ff;
+
+}
+
+
+
+.champion{
+
+color:gold;
+
+font-size:24px;
+
+text-align:center;
+
+}

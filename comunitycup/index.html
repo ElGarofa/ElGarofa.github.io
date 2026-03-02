@@ -1,125 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
 
-<title>Torneo Locke</title>
+<meta charset="UTF-8">
 
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-rel="stylesheet">
+<title>Community Cup</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
 
-<div class="container-fluid">
 
-<h1 class="title">
+<nav class="navbar navbar-dark">
 
-TORNEO LOCKE
+<div class="container">
 
-<span id="coins">
-🪙 0
-</span>
+<h2 class="neon-blue">
 
-</h1>
+COMMUNITY CUP
 
+</h2>
+
+<div>
+
+💰 Sinocoins:
+
+<span id="coins">0</span>
+
+</div>
+
+</div>
+
+</nav>
+
+
+
+<div class="container-fluid mt-3">
 
 <div class="row">
 
+
 <!-- IZQUIERDA -->
 
-<div class="col-md-3">
+<div class="col-lg-3">
 
-<div class="box">
 
-<h4>Crear Participante</h4>
+<div class="neon-card">
 
-<input id="name"
-class="form-control"
+<h4>Crear jugador</h4>
+
+<input id="nombre"
+class="form-control mb-2"
 placeholder="Nombre">
 
-<select id="tier"
-class="form-control">
+<select id="rango"
+class="form-control mb-2">
 
-<option>Bronce</option>
-<option>Plata</option>
-<option>Oro</option>
-<option>Elite</option>
+<option>A</option>
+<option>B</option>
+<option>C</option>
+<option>D</option>
 
 </select>
 
-<button onclick="crearJugador()">
+<input id="foto"
+type="file"
+class="form-control mb-2">
+
+
+<button
+class="btn btn-neon w-100"
+onclick="crearJugador()">
+
 Crear
+
 </button>
 
 </div>
 
 
-<div class="box">
+<div class="neon-card">
 
-<h4>Misiones</h4>
+<h4>Participantes</h4>
 
-<div id="missions"></div>
-
-</div>
-
-
-<div class="box">
-
-<h4>Tienda</h4>
-
-<div id="shop"></div>
+<div id="players">
 
 </div>
 
-
-<div class="box">
-
-<h4>Reglas</h4>
-
-<ul>
-
-<li>Solo 1 Pokemon por ruta</li>
-<li>Si muere queda fuera</li>
-<li>Max 6 Pokemon</li>
-
-</ul>
+</div>
 
 </div>
 
-
-</div>
 
 
 
 <!-- CENTRO -->
 
-<div class="col-md-4">
+<div class="col-lg-5">
 
-<div class="box">
 
-<h4>Participantes</h4>
+<div class="neon-card">
 
-<div id="players"></div>
+<h4>Perfil</h4>
+
+<div id="perfil">
+
+Selecciona jugador
+
+</div>
 
 </div>
 
 
-<div class="box">
+<div class="neon-card">
 
 <h4>Torneo</h4>
 
-<button onclick="generarTorneo()">
+<button
+class="btn btn-purple mb-3"
+onclick="generarTorneo()">
 
-Generar Torneo
+Generar torneo
 
 </button>
 
-<div id="bracket"></div>
+<div id="torneo">
+
+</div>
 
 </div>
 
@@ -129,78 +142,53 @@ Generar Torneo
 
 <!-- DERECHA -->
 
-<div class="col-md-5">
-
-<div class="box"
-id="perfil">
-
-<h3 id="perfilNombre"></h3>
-
-<img id="perfilFoto">
+<div class="col-lg-4">
 
 
-Tier:
+<div class="neon-card">
 
-<span id="perfilTier"></span>
+<h4>Ranking</h4>
 
-<br><br>
-
-
-Victorias
-
-<button onclick="sumar('wins')">+</button>
-
-<span id="wins"></span>
-
-<button onclick="restar('wins')">-</button>
-
-
-<br>
-
-
-Derrotas
-
-<button onclick="sumar('loss')">+</button>
-
-<span id="loss"></span>
-
-<button onclick="restar('loss')">-</button>
-
-
-
-<br>
-
-
-Muertes
-
-<button onclick="sumar('dead')">+</button>
-
-<span id="dead"></span>
-
-<button onclick="restar('dead')">-</button>
-
-
-
-<h4>Equipo</h4>
-
-<div id="team"></div>
-
-
-<button onclick="randomPokemon()">
-
-Pokemon Random
-
-</button>
+<div id="ranking"></div>
 
 </div>
 
 
 
-<div class="box">
+<div class="neon-card">
 
-<h4>Salon de la Fama</h4>
+<h4>Tramo actual</h4>
 
-<div id="hall"></div>
+<select id="tramo"
+class="form-control"
+onchange="cambiarTramo()">
+
+<option value="1">Tramo 1</option>
+<option value="2">Tramo 2</option>
+<option value="3">Tramo 3</option>
+<option value="4">Tramo 4</option>
+
+</select>
+
+</div>
+
+
+
+<div class="neon-card">
+
+<h4>Misiones</h4>
+
+<div id="misiones"></div>
+
+</div>
+
+
+
+<div class="neon-card">
+
+<h4>Tienda</h4>
+
+<div id="tienda"></div>
 
 </div>
 
@@ -211,8 +199,11 @@ Pokemon Random
 </div>
 
 </div>
+
+
 
 <script src="script.js"></script>
+
 
 </body>
 

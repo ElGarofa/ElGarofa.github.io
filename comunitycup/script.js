@@ -1,301 +1,538 @@
+let players=[]
+let coins=0
+let jugadorActual=null
 
-players=[]
+/* ---------------- MISIONS ---------------- */
 
-coins=0
+let misiones=[
 
-selected=null
+{nombre:"Vencer Gimnasio 1",reward:20},
+{nombre:"Vencer Gimnasio 2",reward:30},
+{nombre:"Vencer Rival",reward:25},
+{nombre:"Capturar Pokemon",reward:20},
+{nombre:"Equipo completo",reward:50},
+{nombre:"Sin muertes",reward:100},
+{nombre:"Elite 4",reward:200},
+{nombre:"Campeon",reward:300},
+{nombre:"Captura dificil",reward:60},
+{nombre:"Shiny",reward:150}
 
+]
 
+/* ---------------- TIENDA ---------------- */
 
-misiones=[
+let tienda=[
 
-["Gym1",30],
-
-["Gym2",40],
-
-["Gym3",50],
-
-["Liga",200]
+{nombre:"Pokemon Random",precio:100},
+{nombre:"Cambio Naturaleza",precio:80},
+{nombre:"Captura Extra",precio:50},
+{nombre:"Segunda Vida",precio:150}
 
 ]
 
 
-shop=[
+/* ---------------- INICIO ---------------- */
 
-["Cambio Naturaleza",50],
+window.onload=function(){
 
-["Curar",30],
+actualizarTodo()
 
-["Pokemon Random",30]
-
-]
+}
 
 
+/* ---------------- GENERAL ---------------- */
+
+function actualizarTodo(){
+
+actualizarPlayers()
+cargarMisiones()
+cargarTienda()
+actualizarCoins()
+
+}
+
+
+/* ---------------- CREAR JUGADOR ---------------- */
 
 function crearJugador(){
 
-p={
+let nombre=document.getElementById("nombre").value
+let rango=document.getElementById("rango").value
+let file=document.getElementById("foto").files[0]
 
-name:name.value,
+if(nombre=="") return
 
-tier:tier.value,
 
-wins:0,
+let jugador={
 
-loss:0,
-
-dead:0,
-
+nombre:nombre,
+rango:rango,
+foto:"",
 team:[],
-
-img:"https://i.imgur.com/4AiXzf8.jpeg"
-
-}
-
-players.push(p)
-
-renderPlayers()
+victorias:0,
+derrotas:0,
+muertes:0
 
 }
 
 
+if(file){
 
-function renderPlayers(){
+let reader=new FileReader()
 
-playersDiv.innerHTML=""
+reader.onload=function(){
+
+jugador.foto=reader.result
+
+players.push(jugador)
+
+actualizarPlayers()
+
+}
+
+reader.readAsDataURL(file)
+
+}
+else{
+
+players.push(jugador)
+
+actualizarPlayers()
+
+}
+
+}
+
+
+/* ---------------- LISTA JUGADORES ---------------- */
+
+function actualizarPlayers(){
+
+let div=document.getElementById("players")
+
+if(!div)return
+
+div.innerHTML=""
+
 
 players.forEach((p,i)=>{
 
-d=document.createElement("div")
+div.innerHTML+=`
 
-d.className="player"
+<div class="playerCard">
 
-d.innerHTML=p.name+"<br>"+p.tier
+<b>${p.nombre}</b>
 
-d.onclick=()=>perfil(i)
-
-playersDiv.appendChild(d)
-
-})
-
-}
-
-
-
-function perfil(i){
-
-selected=i
-
-p=players[i]
-
-perfilNombre.innerHTML=p.name
-
-perfilTier.innerHTML=p.tier
-
-wins.innerHTML=p.wins
-
-loss.innerHTML=p.loss
-
-dead.innerHTML=p.dead
-
-perfilFoto.src=p.img
-
-renderTeam()
-
-}
-
-
-
-function renderTeam(){
-
-team.innerHTML=""
-
-p=players[selected]
-
-p.team.forEach((pk,i)=>{
-
-d=document.createElement("div")
-
-d.className="pokemon"
-
-d.innerHTML=`
-
-<img src=${pk.img}>
 <br>
-${pk.name}
+
+${p.rango}
+
+<br>
+
+<button
+class="btn btn-neon mt-2"
+onclick="verPerfil(${i})">
+
+Perfil
+
+</button>
+
+</div>
+
 `
 
-d.onclick=()=>{
-
-p.team.splice(i,1)
-renderTeam()
+})
 
 }
 
-team.appendChild(d)
+
+/* ---------------- PERFIL ---------------- */
+
+function verPerfil(id){
+
+jugadorActual=id
+
+let perfil=document.getElementById("perfil")
+
+perfil.style.display="block"
+
+let p=players[id]
+
+
+perfil.innerHTML=`
+
+<h3>${p.nombre}</h3>
+
+<img class="avatarBig"
+src="${p.foto || ''}">
+
+<br><br>
+
+Victorias: ${p.victorias}
+
+<br>
+
+Derrotas: ${p.derrotas}
+
+<br>
+
+Muertes: ${p.muertes}
+
+<br><br>
+
+
+<h4>Agregar Pokemon</h4>
+
+<input id="pokemonInput">
+
+<button
+class="btn btn-neon"
+onclick="agregarPokemon(${id})">
+
+Agregar
+
+</button>
+
+<br><br>
+
+
+<button
+class="btn btn-purple"
+onclick="pokemonRandomPerfil()">
+
+Pokemon Random
+
+</button>
+
+
+<h4>Equipo</h4>
+
+<div
+class="team"
+id="equipo">
+
+</div>
+
+
+<button
+class="btn btn-danger mt-3"
+onclick="cerrarPerfil()">
+
+Cerrar
+
+</button>
+
+`
+
+mostrarEquipo(id)
+
+}
+
+
+function cerrarPerfil(){
+
+document.getElementById("perfil").style.display="none"
+
+}
+
+
+/* ---------------- EQUIPO ---------------- */
+
+function mostrarEquipo(id){
+
+let div=document.getElementById("equipo")
+
+if(!div)return
+
+div.innerHTML=""
+
+let jugador=players[id]
+
+jugador.team.forEach(p=>{
+
+div.innerHTML+=`
+
+<div class="pokemonCard">
+
+<img src="${p.img}">
+
+<br>
+
+${p.nombre}
+
+</div>
+
+`
 
 })
 
 }
 
 
+/* ---------------- AGREGAR POKEMON ---------------- */
 
-function sumar(tipo){
+function agregarPokemon(id){
 
-players[selected][tipo]++
+let nombre=document
+.getElementById("pokemonInput")
+.value
+.toLowerCase()
 
-perfil(selected)
-
-}
-
-
-
-function restar(tipo){
-
-players[selected][tipo]--
-
-perfil(selected)
-
-}
+if(nombre=="")return
 
 
-
-async function randomPokemon(){
-
-if(selected==null)return
-
-p=players[selected]
-
-if(p.team.length>=6)return
-
-
-id=Math.floor(Math.random()*151)+1
-
-r=await fetch(
-
-"https://pokeapi.co/api/v2/pokemon/"+id
-
+fetch(
+"https://pokeapi.co/api/v2/pokemon/"+nombre
 )
 
-data=await r.json()
+.then(r=>r.json())
 
+.then(data=>{
 
-p.team.push({
+players[id].team.push({
 
-name:data.name,
-
+nombre:nombre,
 img:data.sprites.front_default
 
 })
 
-renderTeam()
-
-}
-
-
-
-function generarTorneo(){
-
-bracket.innerHTML=""
-
-players.forEach(p=>{
-
-d=document.createElement("div")
-
-d.innerHTML=p.name
-
-bracket.appendChild(d)
+verPerfil(id)
 
 })
 
 }
 
 
+/* ---------------- RULETA PERFIL ---------------- */
+
+function pokemonRandomPerfil(){
+
+if(jugadorActual==null)return
+
+
+let lista=[
+
+"pikachu",
+"garchomp",
+"infernape",
+"staraptor",
+"luxray",
+"lucario",
+"gastrodon",
+"togekiss",
+"roselia",
+"floatzel"
+
+]
+
+
+let poke=lista[
+Math.floor(Math.random()*lista.length)
+]
+
+
+fetch(
+"https://pokeapi.co/api/v2/pokemon/"+poke
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+players[jugadorActual].team.push({
+
+nombre:poke,
+img:data.sprites.front_default
+
+})
+
+verPerfil(jugadorActual)
+
+})
+
+}
+
+
+/* ---------------- MISIONES ---------------- */
 
 function cargarMisiones(){
 
+let div=document.getElementById("misiones")
+
+if(!div)return
+
+div.innerHTML=""
+
+
 misiones.forEach(m=>{
 
-d=document.createElement("div")
+div.innerHTML+=`
 
-d.innerHTML=`
+<div class="mission">
 
-${m[0]} 🪙${m[1]}
+<b>${m.nombre}</b>
 
-<button onclick="ganar(${m[1]})">
+<br>
+
+💰 ${m.reward}
+
+<br>
+
+<button
+class="btn btn-neon"
+onclick="ganarCoins(${m.reward})">
 
 Completar
 
 </button>
 
-`
+</div>
 
-missions.appendChild(d)
+`
 
 })
 
 }
 
 
+/* ---------------- TIENDA ---------------- */
 
-function cargarShop(){
+function cargarTienda(){
 
-shop.forEach(s=>{
+let div=document.getElementById("tienda")
 
-d=document.createElement("div")
+if(!div)return
 
-d.innerHTML=`
+div.innerHTML=""
 
-${s[0]} 🪙${s[1]}
+tienda.forEach(t=>{
 
-<button onclick="comprar(${s[1]})">
+div.innerHTML+=`
+
+<div class="shopItem">
+
+<b>${t.nombre}</b>
+
+<br>
+
+💰 ${t.precio}
+
+<br>
+
+<button
+class="btn btn-purple"
+onclick="comprar(${t.precio})">
 
 Comprar
 
 </button>
 
-`
+</div>
 
-shopDiv.appendChild(d)
+`
 
 })
 
 }
 
 
+/* ---------------- COINS ---------------- */
 
-function ganar(c){
+function ganarCoins(n){
 
-coins+=c
+coins+=n
 
-coinsText()
-
-}
-
-
-
-function comprar(c){
-
-if(coins<c)return
-
-coins-=c
-
-coinsText()
+actualizarCoins()
 
 }
 
 
+function actualizarCoins(){
 
-function coinsText(){
+let c=document.getElementById("coins")
 
-coins.innerHTML="🪙 "+coins
+if(c)
+
+c.innerText=coins
 
 }
 
 
+function comprar(p){
 
-cargarMisiones()
+if(coins<p)return
 
-cargarShop()
+coins-=p
 
-coinsText()
+actualizarCoins()
+
+}
+/* -------- TORNEO -------- */
+
+function generarTorneo(){
+
+let div=document.getElementById("torneo")
+
+if(!div)return
+
+div.innerHTML=""
+
+if(players.length<2){
+
+div.innerHTML="Necesitas jugadores"
+
+return
+
+}
+
+
+/* mezclar jugadores */
+
+let lista=[...players]
+
+lista.sort(()=>Math.random()-0.5)
+
+
+div.innerHTML+=`
+
+<h4>Bracket</h4>
+
+<div class="bracket">
+
+`
+
+
+for(let i=0;i<lista.length;i+=2){
+
+if(lista[i+1]){
+
+div.innerHTML+=`
+
+<div class="match">
+
+<div>
+
+${lista[i].nombre}
+
+</div>
+
+VS
+
+<div>
+
+${lista[i+1].nombre}
+
+</div>
+
+</div>
+
+`
+
+}
+
+}
+
+
+div.innerHTML+="</div>"
+
+}

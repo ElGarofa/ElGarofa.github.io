@@ -2,31 +2,84 @@ let players=[]
 let coins=0
 let jugadorActual=null
 
+let tramoActual=1
+
 /* ---------------- MISIONS ---------------- */
 
 let misiones=[
 
-{nombre:"Vencer Gimnasio 1",reward:20},
-{nombre:"Vencer Gimnasio 2",reward:30},
-{nombre:"Vencer Rival",reward:25},
-{nombre:"Capturar Pokemon",reward:20},
-{nombre:"Equipo completo",reward:50},
-{nombre:"Sin muertes",reward:100},
-{nombre:"Elite 4",reward:200},
-{nombre:"Campeon",reward:300},
-{nombre:"Captura dificil",reward:60},
-{nombre:"Shiny",reward:150}
+{
+nombre:"Vencer Gimnasio",
+rewards:{A:5,B:5,C:10,D:15},
+tiers:["A","B","C","D"]
+},
+
+{
+nombre:"Sin muertes en tramo",
+rewards:{A:5,B:5,C:10,D:15},
+tiers:["A","B"]
+},
+
+{
+nombre:"Capturar 5 Pokemon",
+rewards:{A:5,B:5,C:10,D:15},
+tiers:["A","B","C","D"]
+},
+
+{
+nombre:"No usar objetos en boss",
+rewards:{A:5,B:5,C:10,D:15},
+tiers:["A","B"]
+},
+
+{
+nombre:"Equipo full evolucionado",
+rewards:{A:5,B:5,C:10,D:15},
+tiers:["B","C","D"]
+},
+
+{
+nombre:"Completar tramo",
+rewards:{A:5,B:5,C:10,D:15},
+tiers:["A","B","C","D"]
+}
 
 ]
+
 
 /* ---------------- TIENDA ---------------- */
 
 let tienda=[
 
-{nombre:"Pokemon Random",precio:100},
-{nombre:"Cambio Naturaleza",precio:80},
-{nombre:"Captura Extra",precio:50},
-{nombre:"Segunda Vida",precio:150}
+{
+nombre:"Pokemon Random",
+precios:{A:120,B:100,C:80,D:60},
+tiers:["A","B","C","D"]
+},
+
+{
+nombre:"Captura Extra",
+precios:{A:80,B:70,C:60,D:50},
+tiers:["A","B","C","D"]
+},
+
+{
+nombre:"Revive Pokemon",
+precios:{A:0,B:100,C:80,D:60},
+tiers:["B","C","D"]
+},
+
+{
+nombre:"Quitar Muerte",
+precios:{A:200,B:150,C:120,D:100},
+tiers:["A","B","C","D"]
+},
+
+{
+nombre:"Segunda Vida",
+precios:{A:250,B:200,C:150,D:120},
+tiers:["A","B","C","D"]
+}
 
 ]
 
@@ -178,6 +231,22 @@ Derrotas: ${p.derrotas}
 
 Muertes: ${p.muertes}
 
+<button
+class="btn btn-success mt-2"
+onclick="completarTramo()">
+
+Completar Tramo
+
+</button>
+
+<button
+class="btn btn-danger mt-2"
+onclick="sumarMuerte()">
+
+Sumar Muerte
+
+</button>
+
 <br><br>
 
 
@@ -225,6 +294,8 @@ Cerrar
 `
 
 mostrarEquipo(id)
+cargarMisiones()
+cargarTienda()
 
 }
 
@@ -358,13 +429,27 @@ verPerfil(jugadorActual)
 function cargarMisiones(){
 
 let div=document.getElementById("misiones")
-
 if(!div)return
 
 div.innerHTML=""
 
+if(jugadorActual==null){
 
-misiones.forEach(m=>{
+div.innerHTML="Selecciona un jugador"
+return
+
+}
+
+let tierJugador=players[jugadorActual].rango
+
+
+misiones.forEach((m,i)=>{
+
+if(m.tiers.includes(tierJugador)){
+
+let recompensa=m.rewards[tierJugador]
+
+if(recompensa>0){
 
 div.innerHTML+=`
 
@@ -374,13 +459,13 @@ div.innerHTML+=`
 
 <br>
 
-💰 ${m.reward}
+💰 ${recompensa}
 
 <br>
 
 <button
 class="btn btn-neon"
-onclick="ganarCoins(${m.reward})">
+onclick="completarMision(${i})">
 
 Completar
 
@@ -389,6 +474,10 @@ Completar
 </div>
 
 `
+
+}
+
+}
 
 })
 
@@ -400,28 +489,40 @@ Completar
 function cargarTienda(){
 
 let div=document.getElementById("tienda")
-
 if(!div)return
 
 div.innerHTML=""
 
-tienda.forEach(t=>{
+if(jugadorActual==null){
+
+div.innerHTML="Selecciona un jugador"
+return
+
+}
+
+let tier=players[jugadorActual].rango
+
+tienda.forEach((item,i)=>{
+
+if(item.tiers.includes(tier)){
+
+let precio=item.precios[tier]
+
+if(precio>0){
 
 div.innerHTML+=`
 
-<div class="shopItem">
+<div class="shopItem card bg-dark text-light border-info shadow-lg mb-3">
 
-<b>${t.nombre}</b>
+<div class="card-body text-center">
 
-<br>
+<h5 class="text-info">${item.nombre}</h5>
 
-💰 ${t.precio}
-
-<br>
+<p class="text-warning fs-5">💰 ${precio}</p>
 
 <button
-class="btn btn-purple"
-onclick="comprar(${t.precio})">
+class="btn btn-outline-info w-100"
+onclick="comprarItem(${i})">
 
 Comprar
 
@@ -429,7 +530,13 @@ Comprar
 
 </div>
 
+</div>
+
 `
+
+}
+
+}
 
 })
 
@@ -458,15 +565,28 @@ c.innerText=coins
 }
 
 
-function comprar(p){
+function comprarItem(i){
 
-if(coins<p)return
+if(jugadorActual==null)return
 
-coins-=p
+let tier=players[jugadorActual].rango
 
-actualizarCoins()
+let precio=tienda[i].precios[tier]
+
+if(coins<precio){
+
+alert("No tienes suficientes monedas")
+
+return
 
 }
+
+coins-=precio
+actualizarCoins()
+
+aplicarItem(i)
+
+} 
 /* -------- TORNEO -------- */
 
 function generarTorneo(){
@@ -534,5 +654,111 @@ ${lista[i+1].nombre}
 
 
 div.innerHTML+="</div>"
+
+}
+
+
+function monedasPorTramo(tier){
+
+if(tier=="A" || tier=="B") return 5
+
+if(tier=="C") return 10
+
+if(tier=="D") return 15
+
+return 0
+
+}
+
+
+function completarTramo(){
+
+if(jugadorActual==null)return
+
+let jugador=players[jugadorActual]
+
+let base=monedasPorTramo(jugador.rango)
+
+let resultado=base - jugador.muertes
+
+if(resultado<0) resultado=0
+
+coins+=resultado
+
+jugador.muertes=0
+
+actualizarCoins()
+
+alert("Ganaste "+resultado+" monedas en el tramo "+tramoActual)
+
+}
+
+function sumarMuerte(){
+
+if(jugadorActual==null)return
+
+players[jugadorActual].muertes++
+
+verPerfil(jugadorActual)
+
+}
+
+
+function completarMision(i){
+
+if(jugadorActual==null)return
+
+let tier=players[jugadorActual].rango
+
+let recompensa=misiones[i].rewards[tier]
+
+if(!recompensa)return
+
+coins+=recompensa
+
+actualizarCoins()
+
+}
+
+function aplicarItem(i){
+
+let jugador=players[jugadorActual]
+let nombre=tienda[i].nombre
+
+if(nombre=="Pokemon Random"){
+
+pokemonRandomPerfil()
+
+}
+
+if(nombre=="Quitar Muerte"){
+
+if(jugador.muertes>0){
+
+jugador.muertes--
+
+verPerfil(jugadorActual)
+
+}
+
+}
+
+if(nombre=="Revive Pokemon"){
+
+alert("Revive manualmente en tu juego")
+
+}
+
+if(nombre=="Captura Extra"){
+
+alert("Tienes una captura extra permitida")
+
+}
+
+if(nombre=="Segunda Vida"){
+
+alert("Tienes una segunda oportunidad activa")
+
+}
 
 }

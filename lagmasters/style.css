@@ -1,0 +1,268 @@
+body{
+
+margin:0;
+font-family:Orbitron, Arial;
+background:#04040f;
+color:white;
+
+}
+
+/* PARTICLES */
+
+#particles-js{
+
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
+
+}
+
+/* HEADER */
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+background:#000;
+
+}
+
+/* NAV */
+
+nav a{
+
+margin:0 15px;
+color:white;
+text-decoration:none;
+
+}
+
+nav a:hover{
+
+color:#c300ff;
+
+}
+
+/* LOGO GLITCH */
+
+.logo{
+
+font-size:40px;
+color:#c300ff;
+position:relative;
+
+text-shadow:
+0 0 10px #c300ff,
+0 0 30px #6a00ff;
+
+}
+
+.glitch::before,
+.glitch::after{
+
+content:attr(data-text);
+position:absolute;
+left:0;
+
+}
+
+.glitch::before{
+
+color:red;
+animation:glitch 2s infinite;
+
+}
+
+.glitch::after{
+
+color:cyan;
+animation:glitch 1.5s infinite;
+
+}
+
+@keyframes glitch{
+
+0%{transform:translate(0)}
+20%{transform:translate(-2px,2px)}
+40%{transform:translate(-2px,-2px)}
+60%{transform:translate(2px,2px)}
+80%{transform:translate(2px,-2px)}
+100%{transform:translate(0)}
+
+}
+
+/* HERO */
+
+#hero{
+
+height:60vh;
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+.heroText{
+
+font-size:35px;
+
+text-shadow:
+0 0 10px #c300ff,
+0 0 30px #6a00ff;
+
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+justify-content:center;
+gap:40px;
+flex-wrap:wrap;
+
+}
+
+.stat{
+
+background:#0a0a2a;
+padding:25px;
+border-radius:10px;
+
+}
+
+.counter{
+
+font-size:45px;
+color:#c300ff;
+
+}
+
+/* PLAYERS */
+
+.players-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:40px;
+
+}
+
+.player-card{
+
+background:#0d0d25;
+padding:20px;
+border-radius:10px;
+text-align:center;
+
+transition:.3s;
+
+}
+
+.player-card:hover{
+
+transform:translateY(-10px);
+box-shadow:0 0 20px #c300ff;
+
+}
+
+/* RANKING */
+
+table{
+
+width:80%;
+margin:auto;
+border-collapse:collapse;
+
+}
+
+td,th{
+
+padding:10px;
+border-bottom:1px solid #333;
+
+}
+
+/* CLIPS */
+
+.clips{
+
+display:flex;
+gap:20px;
+justify-content:center;
+flex-wrap:wrap;
+
+}
+
+iframe{
+
+width:420px;
+height:230px;
+border:none;
+
+}
+
+/* FOOTER */
+
+footer{
+
+margin-top:80px;
+padding:30px;
+text-align:center;
+background:black;
+
+}
+body{
+
+background:
+linear-gradient(#04040f,#04040f),
+repeating-linear-gradient(
+0deg,
+transparent,
+transparent 40px,
+rgba(255,0,255,0.1) 41px
+);
+
+}.boostBtn{
+
+background:#c300ff;
+border:none;
+padding:15px 25px;
+color:white;
+font-size:16px;
+
+box-shadow:0 0 10px #c300ff;
+
+transition:.2s;
+
+}
+
+.boostBtn:hover{
+
+transform:scale(1.1);
+
+box-shadow:
+0 0 20px #c300ff,
+0 0 40px #6a00ff;
+
+}.car{
+
+width:120px;
+
+position:relative;
+
+animation:drive 8s linear infinite;
+
+}
+
+@keyframes drive{
+
+0%{left:-150px}
+
+100%{left:110%}
+
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Lag Masters</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<header>
+
+<h1 class="logo glitch" data-text="LAG MASTERS">LAG MASTERS</h1>
+
+<nav>
+
+<a href="#stats">Stats</a>
+<a href="#players">Jugadores</a>
+<a href="#ranking">Ranking</a>
+<a href="#clips">Clips</a>
+
+<button id="modeToggle">⚡</button>
+
+</nav>
+
+</header>
+
+<section id="hero">
+
+<h2 class="heroText">Con lag, pero con estilo</h2>
+
+</section>
+
+<section id="stats">
+
+<h2>Estadísticas del Clan</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h3 class="counter" data-target="18">0</h3>
+<p>Miembros</p>
+</div>
+
+<div class="stat">
+<h3 class="counter" data-target="240">0</h3>
+<p>Victorias</p>
+</div>
+
+<div class="stat">
+<h3 class="counter" data-target="900">0</h3>
+<p>Goles</p>
+</div>
+
+<div class="stat">
+<h3 class="counter" data-target="7">0</h3>
+<p>Torneos</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="players">
+
+<h2>Jugadores</h2>
+
+<div id="playersContainer" class="players-grid"></div>
+
+</section>
+
+<section id="simulator">
+
+<h2>Simulador de Partido</h2>
+
+<div class="match">
+
+<div class="team">Lag Masters</div>
+
+<div class="score" id="score">0 - 0</div>
+
+<div class="team">Rival Clan</div>
+
+</div>
+
+<button onclick="simulateMatch()" class="boostBtn">
+Simular Partido
+</button>
+
+</section>
+
+
+<section id="tournaments">
+
+<h2>Torneos del Clan</h2>
+
+<div id="tournamentList"></div>
+
+</section>
+
+
+<section id="carAnimation">
+
+<img src="img/car.png" class="car">
+
+</section>
+
+<section id="ranking">
+
+<h2>Ranking del Clan</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>#</th>
+<th>Jugador</th>
+<th>Wins</th>
+<th>MVP</th>
+</tr>
+</thead>
+
+<tbody id="rankingTable"></tbody>
+
+</table>
+
+</section>
+
+<section id="clips">
+
+<h2>Clips del Clan</h2>
+
+<div class="clips">
+
+<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+
+</div>
+
+</section>
+
+<footer>
+
+Lag Masters Clan © 2026
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

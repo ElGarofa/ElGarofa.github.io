@@ -1,40 +1,50 @@
 body{
 
 margin:0;
-font-family:Orbitron, Arial;
-background:#04040f;
+font-family:'Orbitron',sans-serif;
 color:white;
 
+background:#050510;
+
+background-image:
+linear-gradient(#0f0f3a 1px, transparent 1px),
+linear-gradient(90deg, #0f0f3a 1px, transparent 1px);
+
+background-size:40px 40px;
+
+animation:gridMove 20s linear infinite;
+
 }
 
-/* PARTICLES */
+@keyframes gridMove{
 
-#particles-js{
-
-position:fixed;
-width:100%;
-height:100%;
-z-index:-1;
+0%{background-position:0 0;}
+100%{background-position:0 40px;}
 
 }
 
-/* HEADER */
+/* NAVBAR */
 
-header{
+.navbar{
+
+position:sticky;
+top:0;
 
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px;
-background:#000;
+
+padding:15px 40px;
+
+background:rgba(0,0,0,0.8);
+
+border-bottom:1px solid #6a00ff;
 
 }
 
-/* NAV */
-
 nav a{
 
-margin:0 15px;
+margin-left:25px;
 color:white;
 text-decoration:none;
 
@@ -48,15 +58,14 @@ color:#c300ff;
 
 /* LOGO GLITCH */
 
-.logo{
+.glitch{
 
 font-size:40px;
-color:#c300ff;
 position:relative;
 
 text-shadow:
 0 0 10px #c300ff,
-0 0 30px #6a00ff;
+0 0 20px #6a00ff;
 
 }
 
@@ -72,24 +81,29 @@ left:0;
 .glitch::before{
 
 color:red;
-animation:glitch 2s infinite;
+animation:glitch1 2s infinite;
 
 }
 
 .glitch::after{
 
 color:cyan;
-animation:glitch 1.5s infinite;
+animation:glitch2 1.5s infinite;
 
 }
 
-@keyframes glitch{
+@keyframes glitch1{
 
 0%{transform:translate(0)}
-20%{transform:translate(-2px,2px)}
-40%{transform:translate(-2px,-2px)}
-60%{transform:translate(2px,2px)}
-80%{transform:translate(2px,-2px)}
+50%{transform:translate(-2px,2px)}
+100%{transform:translate(0)}
+
+}
+
+@keyframes glitch2{
+
+0%{transform:translate(0)}
+50%{transform:translate(2px,-2px)}
 100%{transform:translate(0)}
 
 }
@@ -102,167 +116,209 @@ height:60vh;
 display:flex;
 justify-content:center;
 align-items:center;
+flex-direction:column;
+
+position:relative;
 
 }
 
-.heroText{
+.heroImg{
 
-font-size:35px;
-
-text-shadow:
-0 0 10px #c300ff,
-0 0 30px #6a00ff;
+position:absolute;
+width:80%;
+opacity:0.15;
 
 }
 
-/* STATS */
+#hero h2{
 
-.stats{
-
-display:flex;
-justify-content:center;
-gap:40px;
-flex-wrap:wrap;
-
-}
-
-.stat{
-
-background:#0a0a2a;
-padding:25px;
-border-radius:10px;
-
-}
-
-.counter{
-
-font-size:45px;
-color:#c300ff;
-
-}
-
-/* PLAYERS */
-
-.players-grid{
-
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-padding:40px;
-
-}
-
-.player-card{
-
-background:#0d0d25;
-padding:20px;
-border-radius:10px;
-text-align:center;
-
-transition:.3s;
-
-}
-
-.player-card:hover{
-
-transform:translateY(-10px);
-box-shadow:0 0 20px #c300ff;
+font-size:40px;
+z-index:2;
 
 }
 
 /* RANKING */
 
-table{
+.rankingContainer{
 
 width:80%;
 margin:auto;
-border-collapse:collapse;
+display:flex;
+flex-direction:column;
+gap:10px;
 
 }
 
-td,th{
+.rankCard{
 
-padding:10px;
-border-bottom:1px solid #333;
+display:flex;
+justify-content:space-between;
+
+background:#0a0a25;
+padding:15px;
+
+border-radius:8px;
+
+}
+
+.rankCard:hover{
+
+box-shadow:0 0 15px #c300ff;
+
+}
+
+/* TORNEOS */
+
+.tournamentGrid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:40px;
+
+}
+
+.tournamentCard{
+
+background:#0d0d30;
+padding:20px;
+border-radius:10px;
+
+}
+
+.tournamentCard:hover{
+
+box-shadow:0 0 20px #6a00ff;
 
 }
 
 /* CLIPS */
 
-.clips{
+.clipsGrid{
 
-display:flex;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 gap:20px;
-justify-content:center;
-flex-wrap:wrap;
+padding:40px;
 
 }
 
 iframe{
 
-width:420px;
-height:230px;
-border:none;
+width:100%;
+height:200px;
 
 }
 
-/* FOOTER */
+/* VIDEOS */
 
-footer{
+.videoGrid{
 
-margin-top:80px;
-padding:30px;
-text-align:center;
-background:black;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+padding:40px;
 
 }
-body{
 
-background:
-linear-gradient(#04040f,#04040f),
-repeating-linear-gradient(
-0deg,
-transparent,
-transparent 40px,
-rgba(255,0,255,0.1) 41px
-);
+video{
 
-}.boostBtn{
+width:100%;
+border-radius:10px;
 
-background:#c300ff;
-border:none;
-padding:15px 25px;
+}
+
+/* BOTONES */
+
+.joinButtons{
+
+display:flex;
+justify-content:center;
+gap:20px;
+padding:40px;
+
+}
+
+.discordBtn{
+
+background:#5865F2;
+padding:15px 30px;
 color:white;
-font-size:16px;
-
-box-shadow:0 0 10px #c300ff;
-
-transition:.2s;
+text-decoration:none;
+border-radius:8px;
 
 }
 
-.boostBtn:hover{
+.whatsappBtn{
 
-transform:scale(1.1);
+background:#25D366;
+padding:15px 30px;
+color:white;
+text-decoration:none;
+border-radius:8px;
 
-box-shadow:
-0 0 20px #c300ff,
-0 0 40px #6a00ff;
+}
 
-}.car{
+/* AUTO */
 
-width:120px;
+.car{
 
-position:relative;
+position:fixed;
+bottom:20px;
+left:-200px;
+width:140px;
 
-animation:drive 8s linear infinite;
+animation:drive 12s linear infinite;
 
 }
 
 @keyframes drive{
 
-0%{left:-150px}
-
+0%{left:-200px}
 100%{left:110%}
+
+}
+#requisitos{
+
+padding:60px 20px;
+text-align:center;
+
+}
+
+.reqContainer{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+
+margin-top:30px;
+
+}
+
+.reqCard{
+
+background:#0d0d30;
+
+padding:25px;
+
+border-radius:10px;
+
+transition:.3s;
+
+}
+
+.reqCard:hover{
+
+transform:scale(1.05);
+box-shadow:0 0 20px #6a00ff;
+
+}
+.tiktokGrid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+
+padding:40px;
 
 }

@@ -6,96 +6,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
 <title>Lag Masters</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
 
 <link rel="stylesheet" href="style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<div id="particles-js"></div>
+<header class="navbar">
 
-<header>
-
-<h1 class="logo glitch" data-text="LAG MASTERS">LAG MASTERS</h1>
+<div class="logo glitch" data-text="LAG MASTERS">
+LAG MASTERS
+</div>
 
 <nav>
 
-<a href="#stats">Stats</a>
-<a href="#players">Jugadores</a>
+<a href="#hero">Inicio</a>
 <a href="#ranking">Ranking</a>
+<a href="#tournaments">Torneos</a>
 <a href="#clips">Clips</a>
-
-<button id="modeToggle">⚡</button>
+<a href="#join">Unirse</a>
 
 </nav>
 
 </header>
 
+
 <section id="hero">
 
-<h2 class="heroText">Con lag, pero con estilo</h2>
+<img src="img/hero.png" class="heroImg">
+
+<h2>Con lag, pero con estilo</h2>
 
 </section>
 
-<section id="stats">
+<section id="requisitos">
 
-<h2>Estadísticas del Clan</h2>
+<h2>Requisitos para entrar</h2>
 
-<div class="stats">
+<div class="reqContainer">
 
-<div class="stat">
-<h3 class="counter" data-target="18">0</h3>
-<p>Miembros</p>
+<div class="reqCard">
+<h3>🏆 Rango mínimo</h3>
+<p>Platino o superior</p>
 </div>
 
-<div class="stat">
-<h3 class="counter" data-target="240">0</h3>
-<p>Victorias</p>
+<div class="reqCard">
+<h3>🎮 Actividad</h3>
+<p>Jugar al menos 3 veces por semana</p>
 </div>
 
-<div class="stat">
-<h3 class="counter" data-target="900">0</h3>
-<p>Goles</p>
+<div class="reqCard">
+<h3>🤝 Trabajo en equipo</h3>
+<p>Respeto y comunicación</p>
 </div>
 
-<div class="stat">
-<h3 class="counter" data-target="7">0</h3>
-<p>Torneos</p>
+<div class="reqCard">
+<h3>💬 Comunidad</h3>
+<p>Estar en Discord o WhatsApp</p>
 </div>
 
 </div>
 
 </section>
 
-<section id="players">
 
-<h2>Jugadores</h2>
+<section id="ranking">
 
-<div id="playersContainer" class="players-grid"></div>
+<h2>Ranking del Clan</h2>
 
-</section>
-
-<section id="simulator">
-
-<h2>Simulador de Partido</h2>
-
-<div class="match">
-
-<div class="team">Lag Masters</div>
-
-<div class="score" id="score">0 - 0</div>
-
-<div class="team">Rival Clan</div>
-
-</div>
-
-<button onclick="simulateMatch()" class="boostBtn">
-Simular Partido
-</button>
+<div class="rankingContainer" id="rankingTable"></div>
 
 </section>
 
@@ -104,43 +90,32 @@ Simular Partido
 
 <h2>Torneos del Clan</h2>
 
-<div id="tournamentList"></div>
+<div class="tournamentGrid">
+
+<div class="tournamentCard">
+<h3>Lag Masters Cup</h3>
+<p>Modo: 2v2</p>
+<p>Fecha: 20 Marzo</p>
+<p>Estado: Próximo</p>
+</div>
+
+<div class="tournamentCard">
+<h3>Rocket Clash</h3>
+<p>Modo: 1v1</p>
+<p>Fecha: 5 Abril</p>
+<p>Estado: Inscripción</p>
+</div>
+
+</div>
 
 </section>
 
-
-<section id="carAnimation">
-
-<img src="img/car.png" class="car">
-
-</section>
-
-<section id="ranking">
-
-<h2>Ranking del Clan</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>#</th>
-<th>Jugador</th>
-<th>Wins</th>
-<th>MVP</th>
-</tr>
-</thead>
-
-<tbody id="rankingTable"></tbody>
-
-</table>
-
-</section>
 
 <section id="clips">
 
 <h2>Clips del Clan</h2>
 
-<div class="clips">
+<div class="clipsGrid">
 
 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
@@ -149,11 +124,55 @@ Simular Partido
 
 </section>
 
-<footer>
 
-Lag Masters Clan © 2026
+<section id="videos">
 
-</footer>
+<h2>Videos</h2>
+
+<div class="videoGrid">
+
+<video controls src="videos/video1.mp4"></video>
+
+</div>
+
+</section>
+
+<section id="tiktok">
+
+<h2>Clips de TikTok</h2>
+
+<div class="tiktokGrid">
+
+<blockquote class="tiktok-embed"
+cite="https://www.tiktok.com/@usuario/video/123456"
+data-video-id="123456">
+
+</blockquote>
+
+</div>
+
+</section>
+
+<script async src="https://www.tiktok.com/embed.js"></script>
+
+
+<section id="join">
+
+<h2>Unite al Clan</h2>
+
+<div class="joinButtons">
+
+<a href="https://discord.gg/UERnEQ5sxj" class="discordBtn">
+Discord
+</a>
+
+<a href="LINK_WHATSAPP" class="whatsappBtn">
+WhatsApp
+</a>
+
+</div>
+
+</section>
 
 <script src="script.js"></script>
 

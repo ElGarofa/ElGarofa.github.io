@@ -29,52 +29,32 @@ update()
 })
 
 /* PLAYERS */
-
 const players=[
 
-{name:"Shadow",rank:"Leader",wins:120,mvp:30},
-{name:"NeoBoost",rank:"Pro Player",wins:100,mvp:25},
-{name:"LagHunter",rank:"Member",wins:80,mvp:12},
-{name:"BoostX",rank:"Member",wins:70,mvp:10}
+{name:"Shadow",wins:120},
+{name:"NeoBoost",wins:100},
+{name:"LagHunter",wins:80},
+{name:"BoostX",wins:60}
 
 ]
 
-const container=document.getElementById("playersContainer")
-
-players.forEach(p=>{
-
-container.innerHTML+=`
-
-<div class="player-card">
-
-<h3>${p.name}</h3>
-<p>${p.rank}</p>
-<p>Wins: ${p.wins}</p>
-
-</div>
-
-`
-
-})
-
-/* RANKING */
-
 const ranking=[...players].sort((a,b)=>b.wins-a.wins)
 
-const table=document.getElementById("rankingTable")
+const container=document.getElementById("rankingTable")
 
 ranking.forEach((p,i)=>{
 
-table.innerHTML+=`
+container.innerHTML+=`
 
-<tr>
+<div class="rankCard">
 
-<td>${i+1}</td>
-<td>${p.name}</td>
-<td>${p.wins}</td>
-<td>${p.mvp}</td>
+<span>#${i+1}</span>
 
-</tr>
+<span>${p.name}</span>
+
+<span>${p.wins} wins</span>
+
+</div>
 
 `
 
@@ -133,3 +113,80 @@ list.innerHTML+=`
 `
 
 })
+
+fetch("data/players.json")
+.then(res=>res.json())
+.then(players=>{
+
+const container=document.getElementById("playersContainer")
+
+players.forEach(p=>{
+
+container.innerHTML+=`
+
+<div class="player-card">
+
+<h3>${p.name}</h3>
+<p>${p.rank}</p>
+<p>Wins: ${p.wins}</p>
+
+</div>
+
+`
+
+})
+
+})
+const sections=document.querySelectorAll("section")
+
+window.addEventListener("scroll",()=>{
+
+sections.forEach(sec=>{
+
+const top=sec.getBoundingClientRect().top
+
+if(top<window.innerHeight-100){
+
+sec.classList.add("show")
+
+}
+
+})
+
+})
+
+document.querySelectorAll("nav a").forEach(anchor=>{
+
+anchor.addEventListener("click",function(e){
+
+e.preventDefault()
+
+document.querySelector(this.getAttribute("href"))
+.scrollIntoView({
+
+behavior:"smooth"
+
+})
+
+})
+
+})
+function counter(el,target){
+
+let count=0
+
+let interval=setInterval(()=>{
+
+count++
+
+el.innerText=count
+
+if(count>=target){
+
+clearInterval(interval)
+
+}
+
+},20)
+
+}

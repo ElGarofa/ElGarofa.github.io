@@ -31,10 +31,10 @@ update()
 /* PLAYERS */
 const players=[
 
-{name:"Shadow",wins:120},
-{name:"NeoBoost",wins:100},
-{name:"LagHunter",wins:80},
-{name:"BoostX",wins:60}
+{name:"LMS Benja",wins:120},
+{name:"LMS Camavinga",wins:80},
+{name:"LMS Lywerd",wins:150},
+{name:"LMS ElGarofa",wins:60}
 
 ]
 

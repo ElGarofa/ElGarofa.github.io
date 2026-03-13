@@ -727,3 +727,164 @@ text-align:center;
 }
 
 }
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+
+.navbar{
+position:sticky;
+top:0;
+z-index:9999;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 20px;
+
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(10px);
+}
+
+/* ========================= */
+/* HERO */
+/* ========================= */
+
+#hero{
+text-align:center;
+padding-top:120px;
+}
+
+.heroImg{
+width:90%;
+max-width:500px;
+}
+
+/* ========================= */
+/* MIEMBROS */
+/* ========================= */
+
+.members-container{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:30px;
+}
+
+.member-card{
+position:relative;
+width:250px;
+text-align:center;
+}
+
+.member-card .car{
+width:100%;
+display:block;
+}
+
+.member-card .rank{
+position:absolute;
+top:-10px;
+left:50%;
+transform:translateX(-50%);
+width:80px;
+}
+
+/* ========================= */
+/* VIDEOS JUGADORES */
+/* ========================= */
+
+.videoGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:40px;
+padding:40px;
+justify-items:center;
+}
+
+.videoGrid video{
+width:100%;
+max-width:380px;
+border-radius:15px;
+box-shadow:0 0 20px cyan;
+}
+
+/* ========================= */
+/* TIKTOK */
+/* ========================= */
+
+.tiktok-container{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:25px;
+}
+
+.tiktok-video{
+width:260px;
+border-radius:15px;
+}
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
+
+.join{
+text-align:center;
+padding:80px 20px;
+}
+
+.join-button{
+display:inline-block;
+padding:15px 40px;
+margin:10px;
+border-radius:12px;
+background:#00e5ff;
+color:black;
+font-weight:bold;
+text-decoration:none;
+}
+
+.whatsappBtn{
+display:inline-block;
+padding:15px 40px;
+margin:10px;
+border-radius:12px;
+background:#25D366;
+color:white;
+font-weight:bold;
+text-decoration:none;
+}
+
+/* ========================= */
+/* CELULARES */
+/* ========================= */
+
+@media (max-width:768px){
+
+nav{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+justify-content:center;
+margin-top:10px;
+}
+
+.logo{
+font-size:24px;
+text-align:center;
+width:100%;
+}
+
+#hero{
+padding-top:140px;
+}
+
+.videoGrid{
+grid-template-columns:1fr;
+}
+
+.youtube-scroll iframe{
+width:90%;
+}
+
+}

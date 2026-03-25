@@ -1,212 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>Community Cup</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="style.css">
 
 </head>
 
-
 <body>
 
-
-<nav class="navbar navbar-dark">
-
-<div class="container">
-
-<h2 class="neon-blue">
-
-COMMUNITY CUP
-
-</h2>
+<!-- NAV -->
+<nav class="navbar px-4">
+<span class="logo">Community Cup</span>
 
 <div>
-
-💰 Sinocoins:
-
-<span id="coins">0</span>
-
-</div>
-
+<span onclick="go('inicio')">Inicio</span>
+<span onclick="go('participantes')">Participantes</span>
+<span onclick="go('sistema')">Sistema</span>
+<span onclick="go('torneo')">Torneo</span>
 </div>
 
 </nav>
 
+<!-- HERO -->
+<section id="inicio" class="hero">
+<div>
+<h1>QUIÉN SERÁ EL MEJOR</h1>
+<p>Evento competitivo Pokémon</p>
+</div>
+</section>
 
+<!-- PARTICIPANTES -->
+<section id="participantes" class="section container">
 
-<div class="container-fluid mt-3">
+<h2 class="title">PARTICIPANTES</h2>
 
-<div class="row">
+<div class="card-ui row">
 
+<div class="col-md-6">
 
-<!-- IZQUIERDA -->
+<h5>Crear jugador</h5>
+<input id="nombre" placeholder="Nombre">
 
-<div class="col-lg-3">
-
-
-<div class="neon-card">
-
-<h4>Crear jugador</h4>
-
-<input id="nombre"
-class="form-control mb-2"
-placeholder="Nombre">
-
-<select id="rango"
-class="form-control mb-2">
-
+<select id="rango">
 <option>A</option>
 <option>B</option>
 <option>C</option>
 <option>D</option>
-
 </select>
 
-<input id="foto"
-type="file"
-class="form-control mb-2">
+<input id="foto" type="file">
 
+<button type="button" onclick="crearJugador()">Crear</button>
 
-<button
-class="btn btn-neon w-100"
-onclick="crearJugador()">
+<hr>
 
-Crear
-
-</button>
+<h5>Lista</h5>
+<div id="players"></div>
 
 </div>
 
+<div class="col-md-6">
 
-<div class="neon-card">
-
-<h4>Participantes</h4>
-
-<div id="players">
+<h5>Perfil</h5>
+<div id="perfil">Selecciona jugador</div>
 
 </div>
 
 </div>
 
+</section>
+
+<!-- SISTEMA -->
+<!-- SISTEMA -->
+<section id="sistema" class="section container">
+
+<h2 class="title">SISTEMA</h2>
+
+<div class="row">
+
+<!-- MONEDAS -->
+<div class="col-md-3">
+<div class="card-ui text-center">
+<h5>💰 Monedas</h5>
+<h2 id="coins">0</h2>
+<p>Se ganan jugando</p>
+</div>
 </div>
 
+<!-- MISIONES -->
+<div class="col-md-3">
+<div class="card-ui text-center">
+<h5>🎯 Misiones</h5>
+<p>Completa objetivos para ganar coins</p>
 
+<a href="misiones.html" class="btn-main w-100 mt-2">
+Ver más
+</a>
 
+</div>
+</div>
 
-<!-- CENTRO -->
+<!-- TIENDA -->
+<div class="col-md-3">
+<div class="card-ui text-center">
+<h5>🛒 Tienda</h5>
+<p>Compra mejoras y ventajas</p>
 
-<div class="col-lg-5">
+<a href="tienda.html" class="btn-main w-100 mt-2">
+Ver más
+</a>
 
+</div>
+</div>
 
-<div class="neon-card">
+<!-- COMODINES -->
+<div class="col-md-3">
+<div class="card-ui text-center">
+<h5>🃏 Comodines</h5>
+<p>Cartas especiales estratégicas</p>
 
-<h4>Perfil</h4>
+<a href="comodines.html" class="btn-main w-100 mt-2">
+Ver más
+</a>
 
-<div id="perfil">
-
-Selecciona jugador
-
+</div>
 </div>
 
 </div>
 
+<!-- LOGROS ABAJO -->
+<div class="card-ui mt-4 text-center">
 
-<div class="neon-card">
+<h5>🏆 Logros</h5>
+<p>Desbloquea recompensas avanzadas</p>
 
-<h4>Torneo</h4>
-
-<button
-class="btn btn-purple mb-3"
-onclick="generarTorneo()">
-
-Generar torneo
-
-</button>
-
-<div id="torneo">
+<a href="logros.html" class="btn-main">
+Ver logros
+</a>
 
 </div>
 
-</div>
+<div class="card-ui mt-4">
+<h5>Tramo</h5>
 
-</div>
-
-
-
-<!-- DERECHA -->
-
-<div class="col-lg-4">
-
-
-<div class="neon-card">
-
-<h4>Ranking</h4>
-
-<div id="ranking"></div>
-
-</div>
-
-
-
-<div class="neon-card">
-
-<h4>Tramo actual</h4>
-
-<select id="tramo"
-class="form-control"
-onchange="cambiarTramo()">
-
-<option value="1">Tramo 1</option>
-<option value="2">Tramo 2</option>
-<option value="3">Tramo 3</option>
-<option value="4">Tramo 4</option>
-<option value="5">Tramo 5</option>
-<option value="6">Tramo 6</option>
-<option value="7">Tramo 7</option>
-<option value="8">Tramo 8</option>
-
+<select id="tramo" class="form-control w-25">
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
 </select>
 
 </div>
 
-<div class="neon-card">
+</section>
 
-<h4>Misiones</h4>
+<!-- TORNEO -->
+<section id="torneo" class="section container">
 
-<div id="misiones"></div>
+<h2 class="title">TORNEO</h2>
 
-</div>
+<div class="card-ui">
 
+<button class="btn-main mb-3" onclick="generarTorneo()">Generar torneo</button>
 
-
-<div class="neon-card">
-
-<h4>Tienda</h4>
-
-<div id="tienda"></div>
+<div id="torneo"></div>
 
 </div>
 
-
-</div>
-
-
-</div>
-
-</div>
-
-
+</section>
 
 <script src="script.js"></script>
 
-
 </body>
-
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 class="title">LOGROS</h1>
+<h2 id="coins"></h2>
+
+<div class="card-ui" id="logros"></div>
+
+<script src="global.js"></script>
+<script>
+
+let logros=[
+{nombre:"5 combates",reward:20,tipo:"bronce"},
+{nombre:"10 combates",reward:50,tipo:"plata"},
+{nombre:"20 combates",reward:100,tipo:"oro"},
+{nombre:"Racha 10",reward:120,tipo:"oro"},
+{nombre:"Sin muertes",reward:150,tipo:"legendario"},
+{nombre:"Campeón",reward:200,tipo:"legendario"}
+]
+
+let div=document.getElementById("logros")
+
+logros.forEach(l=>{
+div.innerHTML+=`
+<div class="logro ${l.tipo}">
+<span>🏆 ${l.nombre}</span>
+
+<div>
+<button onclick="reward('coins',${l.reward})">💰</button>
+<button onclick="reward('comodin')">🃏</button>
+<button onclick="reward('item')">🛒</button>
+</div>
+
+</div>
+`
+})
+
+function reward(tipo,val=0){
+
+if(tipo=="coins"){
+sumarCoins(val)
+}
+
+if(tipo=="comodin"){
+popup("Ganaste comodín 🃏")
+}
+
+if(tipo=="item"){
+popup("Elegí un item gratis 🛒")
+}
+
+}
+
+actualizarCoins()
+
+</script>
+</body>
+</html>

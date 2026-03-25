@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Misiones</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1 class="title">MISIONES</h1>
+<h2 id="coins"></h2>
+
+<div class="card-ui" id="misiones"></div>
+
+<script src="global.js"></script>
+<script>
+
+let misiones=[]
+
+// 3 tramos con 15 misiones cada uno
+for(let t=1;t<=3;t++){
+for(let i=1;i<=15;i++){
+
+misiones.push({
+nombre:`Tramo ${t} - Misión ${i}`,
+reward:(t*10)+i
+})
+
+}
+}
+
+let div=document.getElementById("misiones")
+
+misiones.forEach(m=>{
+div.innerHTML+=`
+<div class="mission">
+<span>${m.nombre}</span>
+
+<button class="btn-game"
+onclick="completar('${m.nombre}',${m.reward})">
+
+💰${m.reward}
+
+</button>
+
+</div>
+`
+})
+
+function completar(nombre,reward){
+
+sumarCoins(reward)
+
+/* guardar en jugador */
+if(localStorage.getItem("jugadorActual")){
+let id=parseInt(localStorage.getItem("jugadorActual"))
+let players=JSON.parse(localStorage.getItem("players")) || []
+
+if(players[id]){
+players[id].misiones.push(nombre)
+localStorage.setItem("players",JSON.stringify(players))
+}
+}
+
+popup("Misión completada ✅")
+
+}
+
+actualizarCoins()
+
+</script>
+</body>
+</html>

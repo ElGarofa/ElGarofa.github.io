@@ -1,764 +1,331 @@
-let players=[]
+let players = JSON.parse(localStorage.getItem("players")) || []
+let jugadorActual = null
 let coins=0
-let jugadorActual=null
-
-let tramoActual=1
-
-/* ---------------- MISIONS ---------------- */
+let file= null
 
 let misiones=[
-
-{
-nombre:"Vencer Gimnasio",
-rewards:{A:5,B:5,C:10,D:15},
-tiers:["A","B","C","D"]
-},
-
-{
-nombre:"Sin muertes en tramo",
-rewards:{A:5,B:5,C:10,D:15},
-tiers:["A","B"]
-},
-
-{
-nombre:"Capturar 5 Pokemon",
-rewards:{A:5,B:5,C:10,D:15},
-tiers:["A","B","C","D"]
-},
-
-{
-nombre:"No usar objetos en boss",
-rewards:{A:5,B:5,C:10,D:15},
-tiers:["A","B"]
-},
-
-{
-nombre:"Equipo full evolucionado",
-rewards:{A:5,B:5,C:10,D:15},
-tiers:["B","C","D"]
-},
-
-{
-nombre:"Completar tramo",
-rewards:{A:5,B:5,C:10,D:15},
-tiers:["A","B","C","D"]
-}
-
+{nombre:"Vencer Gimnasio",rewards:{A:5,B:5,C:10,D:15}},
+{nombre:"Capturar Pokemon",rewards:{A:5,B:5,C:10,D:15}}
 ]
-
-
-/* ---------------- TIENDA ---------------- */
 
 let tienda=[
-
-{
-nombre:"Pokemon Random",
-precios:{A:120,B:100,C:80,D:60},
-tiers:["A","B","C","D"]
-},
-
-{
-nombre:"Captura Extra",
-precios:{A:80,B:70,C:60,D:50},
-tiers:["A","B","C","D"]
-},
-
-{
-nombre:"Revive Pokemon",
-precios:{A:0,B:100,C:80,D:60},
-tiers:["B","C","D"]
-},
-
-{
-nombre:"Quitar Muerte",
-precios:{A:200,B:150,C:120,D:100},
-tiers:["A","B","C","D"]
-},
-
-{
-nombre:"Segunda Vida",
-precios:{A:250,B:200,C:150,D:120},
-tiers:["A","B","C","D"]
-}
-
+{nombre:"Pokemon Random",precios:{A:100,B:80,C:60,D:50}}
 ]
 
-
-/* ---------------- INICIO ---------------- */
-
-window.onload=function(){
-
-actualizarTodo()
-
+/* NAV */
+function go(id){
+document.getElementById(id).scrollIntoView({behavior:"smooth"})
 }
 
-
-/* ---------------- GENERAL ---------------- */
-
-function actualizarTodo(){
-
-actualizarPlayers()
-cargarMisiones()
-cargarTienda()
-actualizarCoins()
-
-}
-
-
-/* ---------------- CREAR JUGADOR ---------------- */
-
+/* CREAR */
 function crearJugador(){
 
-let nombre=document.getElementById("nombre").value
-let rango=document.getElementById("rango").value
-let file=document.getElementById("foto").files[0]
+let nombre = document.getElementById("nombre")?.value
+let rango = document.getElementById("rango")?.value
 
-if(nombre=="") return
-
-
-let jugador={
-
-nombre:nombre,
-rango:rango,
-foto:"",
-team:[],
-victorias:0,
-derrotas:0,
-muertes:0
-
+if(!nombre){
+alert("Poné un nombre")
+return
 }
 
+/* CARGAR PLAYERS */
+let players = JSON.parse(localStorage.getItem("players")) || []
 
-if(file){
+let jugador = {
+nombre: nombre,
+rango: rango,
+foto: "",
+team: [],
+muertes: 0,
+inventario: [],
+misiones: [],
+compras: []
+}
 
-let reader=new FileReader()
+/* -------- FOTO SEGURA -------- */
 
-reader.onload=function(){
+let inputFoto = document.getElementById("foto")
 
-jugador.foto=reader.result
+if(inputFoto && inputFoto.files && inputFoto.files.length > 0){
+
+let file = inputFoto.files[0]
+
+let reader = new FileReader()
+
+reader.onload = function(){
+
+jugador.foto = reader.result
 
 players.push(jugador)
+localStorage.setItem("players", JSON.stringify(players))
 
-actualizarPlayers()
+renderPlayers()
+
+popup("Jugador creado con foto ✅")
 
 }
 
 reader.readAsDataURL(file)
 
-}
-else{
+}else{
 
+/* SIN FOTO */
 players.push(jugador)
+localStorage.setItem("players", JSON.stringify(players))
 
-actualizarPlayers()
+renderPlayers()
+
+popup("Jugador creado ✅")
 
 }
 
+/* LIMPIAR INPUTS */
+document.getElementById("nombre").value=""
+if(inputFoto) inputFoto.value=""
+
 }
 
 
-/* ---------------- LISTA JUGADORES ---------------- */
+/* ---------------- LISTA ---------------- */
 
-function actualizarPlayers(){
+function renderPlayers(){
 
-let div=document.getElementById("players")
+let players = JSON.parse(localStorage.getItem("players")) || []
 
-if(!div)return
+let div = document.getElementById("players")
+
+if(!div) return
 
 div.innerHTML=""
-
 
 players.forEach((p,i)=>{
 
 div.innerHTML+=`
+<div class="playerCard" onclick="verPerfil(${i})">
 
-<div class="playerCard">
+<img src="${p.foto || 'https://via.placeholder.com/40'}">
 
-<b>${p.nombre}</b>
-
-<br>
-
+<div>
+<b>${p.nombre}</b><br>
 ${p.rango}
-
-<br>
-
-<button
-class="btn btn-neon mt-2"
-onclick="verPerfil(${i})">
-
-Perfil
-
-</button>
-
 </div>
 
+</div>
 `
 
 })
 
 }
-
 
 /* ---------------- PERFIL ---------------- */
 
-function verPerfil(id){
+function verPerfil(i){
 
-jugadorActual=id
+jugadorActual=i
+localStorage.setItem("jugadorActual", i)
+
+let p=players[i]
 
 let perfil=document.getElementById("perfil")
 
-perfil.style.display="block"
-
-let p=players[id]
-
-
 perfil.innerHTML=`
 
-<h3>${p.nombre}</h3>
+<h2>${p.nombre}</h2>
 
-<img class="avatarBig"
-src="${p.foto || ''}">
+<img src="${p.foto || ''}" class="avatarBig">
 
-<br><br>
+<p>Muertes: ${p.muertes}</p>
 
-Victorias: ${p.victorias}
+<button class="btn-game" onclick="abrirInventario()">Inventario</button>
 
-<br>
+<button class="btn-game" onclick="pokemonRandom()">Pokemon Random</button>
 
-Derrotas: ${p.derrotas}
-
-<br>
-
-Muertes: ${p.muertes}
-
-<button
-class="btn btn-success mt-2"
-onclick="completarTramo()">
-
-Completar Tramo
-
-</button>
-
-<button
-class="btn btn-danger mt-2"
-onclick="sumarMuerte()">
-
-Sumar Muerte
-
-</button>
-
-<br><br>
-
-
-<h4>Agregar Pokemon</h4>
-
-<input id="pokemonInput">
-
-<button
-class="btn btn-neon"
-onclick="agregarPokemon(${id})">
-
-Agregar
-
-</button>
-
-<br><br>
-
-
-<button
-class="btn btn-purple"
-onclick="pokemonRandomPerfil()">
-
-Pokemon Random
-
-</button>
-
-
-<h4>Equipo</h4>
-
-<div
-class="team"
-id="equipo">
-
+<div class="team">
+${p.team.map(t=>`<img src="${t.img}">`).join("")}
 </div>
-
-
-<button
-class="btn btn-danger mt-3"
-onclick="cerrarPerfil()">
-
-Cerrar
-
-</button>
-
 `
 
-mostrarEquipo(id)
-cargarMisiones()
-cargarTienda()
-
 }
 
+/* ---------------- INVENTARIO ---------------- */
 
-function cerrarPerfil(){
+function abrirInventario(){
 
-document.getElementById("perfil").style.display="none"
+let p=players[jugadorActual]
 
-}
+let modal=document.createElement("div")
+modal.className="modal"
 
+modal.innerHTML=`
+<div class="modal-box">
 
-/* ---------------- EQUIPO ---------------- */
+<h2>${p.nombre}</h2>
 
-function mostrarEquipo(id){
+<h3>🛒 Compras</h3>
+${p.compras.map(c=>`<div>${c}</div>`).join("")}
 
-let div=document.getElementById("equipo")
+<h3>🎯 Misiones</h3>
+${p.misiones.map(m=>`<div>${m}</div>`).join("")}
 
-if(!div)return
+<h3>🃏 Cartas</h3>
+${p.inventario.map(i=>`<div>${i}</div>`).join("")}
 
-div.innerHTML=""
-
-let jugador=players[id]
-
-jugador.team.forEach(p=>{
-
-div.innerHTML+=`
-
-<div class="pokemonCard">
-
-<img src="${p.img}">
-
-<br>
-
-${p.nombre}
+<button onclick="this.parentElement.parentElement.remove()">Cerrar</button>
 
 </div>
-
 `
 
-})
+document.body.appendChild(modal)
 
 }
 
+/* ---------------- POKEMON RANDOM REAL ---------------- */
 
-/* ---------------- AGREGAR POKEMON ---------------- */
+function pokemonRandom(){
 
-function agregarPokemon(id){
+let id=Math.floor(Math.random()*898)+1
 
-let nombre=document
-.getElementById("pokemonInput")
-.value
-.toLowerCase()
-
-if(nombre=="")return
-
-
-fetch(
-"https://pokeapi.co/api/v2/pokemon/"+nombre
-)
-
+fetch("https://pokeapi.co/api/v2/pokemon/"+id)
 .then(r=>r.json())
-
-.then(data=>{
-
-players[id].team.push({
-
-nombre:nombre,
-img:data.sprites.front_default
-
-})
-
-verPerfil(id)
-
-})
-
-}
-
-
-/* ---------------- RULETA PERFIL ---------------- */
-
-function pokemonRandomPerfil(){
-
-if(jugadorActual==null)return
-
-
-let lista=[
-
-"pikachu",
-"garchomp",
-"infernape",
-"staraptor",
-"luxray",
-"lucario",
-"gastrodon",
-"togekiss",
-"roselia",
-"floatzel"
-
-]
-
-
-let poke=lista[
-Math.floor(Math.random()*lista.length)
-]
-
-
-fetch(
-"https://pokeapi.co/api/v2/pokemon/"+poke
-)
-
-.then(r=>r.json())
-
 .then(data=>{
 
 players[jugadorActual].team.push({
-
-nombre:poke,
 img:data.sprites.front_default
-
 })
 
+guardarPlayers()
 verPerfil(jugadorActual)
 
 })
 
 }
 
+/* ---------------- TORNEO BRACKET PRO ---------------- */
 
-/* ---------------- MISIONES ---------------- */
+function generarTorneo(){
 
+let div=document.getElementById("torneo")
+div.innerHTML=""
+
+if(players.length<2){
+div.innerHTML="Necesitas jugadores"
+return
+}
+
+let lista=[...players].sort(()=>Math.random()-0.5)
+
+/* CREAR RONDAS */
+let rounds=[]
+
+while(lista.length>1){
+
+let round=[]
+
+for(let i=0;i<lista.length;i+=2){
+
+if(lista[i+1]){
+round.push([lista[i],lista[i+1]])
+}
+
+}
+
+rounds.push(round)
+lista = new Array(Math.ceil(lista.length/2)).fill({nombre:"?"})
+
+}
+
+/* RENDER VISUAL */
+div.innerHTML='<div class="bracket">'
+
+rounds.forEach((round,r)=>{
+
+div.innerHTML+=`<div class="round">`
+
+round.forEach(match=>{
+div.innerHTML+=`
+<div class="match">
+<div>${match[0].nombre}</div>
+<div>VS</div>
+<div>${match[1].nombre}</div>
+</div>
+`
+})
+
+div.innerHTML+=`</div>`
+
+})
+
+div.innerHTML+='</div>'
+}
+
+/* INIT */
+renderPlayers()
+
+/* MISIONES */
 function cargarMisiones(){
 
 let div=document.getElementById("misiones")
-if(!div)return
-
-div.innerHTML=""
-
-if(jugadorActual==null){
-
-div.innerHTML="Selecciona un jugador"
-return
-
-}
-
-let tierJugador=players[jugadorActual].rango
-
-
-misiones.forEach((m,i)=>{
-
-if(m.tiers.includes(tierJugador)){
-
-let recompensa=m.rewards[tierJugador]
-
-if(recompensa>0){
-
-div.innerHTML+=`
-
-<div class="mission">
-
-<b>${m.nombre}</b>
-
-<br>
-
-💰 ${recompensa}
-
-<br>
-
-<button
-class="btn btn-neon"
-onclick="completarMision(${i})">
-
-Completar
-
-</button>
-
-</div>
-
-`
-
-}
-
-}
-
-})
-
-}
-
-
-/* ---------------- TIENDA ---------------- */
-
-function cargarTienda(){
-
-let div=document.getElementById("tienda")
-if(!div)return
-
-div.innerHTML=""
-
-if(jugadorActual==null){
-
-div.innerHTML="Selecciona un jugador"
-return
-
-}
-
-let tier=players[jugadorActual].rango
-
-tienda.forEach((item,i)=>{
-
-if(item.tiers.includes(tier)){
-
-let precio=item.precios[tier]
-
-if(precio>0){
-
-div.innerHTML+=`
-
-<div class="shopItem card bg-dark text-light border-info shadow-lg mb-3">
-
-<div class="card-body text-center">
-
-<h5 class="text-info">${item.nombre}</h5>
-
-<p class="text-warning fs-5">💰 ${precio}</p>
-
-<button
-class="btn btn-outline-info w-100"
-onclick="comprarItem(${i})">
-
-Comprar
-
-</button>
-
-</div>
-
-</div>
-
-`
-
-}
-
-}
-
-})
-
-}
-
-
-/* ---------------- COINS ---------------- */
-
-function ganarCoins(n){
-
-coins+=n
-
-actualizarCoins()
-
-}
-
-
-function actualizarCoins(){
-
-let c=document.getElementById("coins")
-
-if(c)
-
-c.innerText=coins
-
-}
-
-
-function comprarItem(i){
-
 if(jugadorActual==null)return
 
 let tier=players[jugadorActual].rango
 
-let precio=tienda[i].precios[tier]
+div.innerHTML=""
+
+misiones.forEach(m=>{
+div.innerHTML+=`
+<div>
+${m.nombre} 💰 ${m.rewards[tier]}
+</div>`
+})
+}
+
+/* TIENDA */
+function cargarTienda(){
+
+let div=document.getElementById("tienda")
+if(jugadorActual==null)return
+
+let tier=players[jugadorActual].rango
+
+div.innerHTML=""
+
+tienda.forEach(t=>{
+div.innerHTML+=`
+<div class="shopItem">
+${t.nombre} 💰 ${t.precios[tier]}
+</div>`
+})
+}
+
+/* MUERTE */
+function sumarMuerte(){
+players[jugadorActual].muertes++
+verPerfil(jugadorActual)
+}
+
+function comprar(nombre,precio){
 
 if(coins<precio){
-
-alert("No tienes suficientes monedas")
-
+alert("No tienes monedas")
 return
-
 }
 
 coins-=precio
 actualizarCoins()
 
-aplicarItem(i)
-
-} 
-/* -------- TORNEO -------- */
-
-function generarTorneo(){
-
-let div=document.getElementById("torneo")
-
-if(!div)return
-
-div.innerHTML=""
-
-if(players.length<2){
-
-div.innerHTML="Necesitas jugadores"
-
-return
-
+alert("Compraste: "+nombre)
 }
 
-
-/* mezclar jugadores */
-
-let lista=[...players]
-
-lista.sort(()=>Math.random()-0.5)
-
-
-div.innerHTML+=`
-
-<h4>Bracket</h4>
-
-<div class="bracket">
-
-`
-
-
-for(let i=0;i<lista.length;i+=2){
-
-if(lista[i+1]){
-
-div.innerHTML+=`
-
-<div class="match">
-
-<div>
-
-${lista[i].nombre}
-
-</div>
-
-VS
-
-<div>
-
-${lista[i+1].nombre}
-
-</div>
-
-</div>
-
-`
-
-}
-
-}
-
-
-div.innerHTML+="</div>"
-
-}
-
-
-function monedasPorTramo(tier){
-
-if(tier=="A" || tier=="B") return 5
-
-if(tier=="C") return 10
-
-if(tier=="D") return 15
-
-return 0
-
-}
-
-
-function completarTramo(){
-
-if(jugadorActual==null)return
-
-let jugador=players[jugadorActual]
-
-let base=monedasPorTramo(jugador.rango)
-
-let resultado=base - jugador.muertes
-
-if(resultado<0) resultado=0
-
-coins+=resultado
-
-jugador.muertes=0
-
+function completarMision(reward){
+coins+=reward
 actualizarCoins()
-
-alert("Ganaste "+resultado+" monedas en el tramo "+tramoActual)
-
 }
 
-function sumarMuerte(){
-
-if(jugadorActual==null)return
-
-players[jugadorActual].muertes++
-
-verPerfil(jugadorActual)
-
-}
-
-
-function completarMision(i){
-
-if(jugadorActual==null)return
-
-let tier=players[jugadorActual].rango
-
-let recompensa=misiones[i].rewards[tier]
-
-if(!recompensa)return
-
-coins+=recompensa
-
+function ganarLogro(reward){
+coins+=reward
 actualizarCoins()
-
 }
 
-function aplicarItem(i){
-
-let jugador=players[jugadorActual]
-let nombre=tienda[i].nombre
-
-if(nombre=="Pokemon Random"){
-
-pokemonRandomPerfil()
-
-}
-
-if(nombre=="Quitar Muerte"){
-
-if(jugador.muertes>0){
-
-jugador.muertes--
-
-verPerfil(jugadorActual)
-
-}
-
-}
-
-if(nombre=="Revive Pokemon"){
-
-alert("Revive manualmente en tu juego")
-
-}
-
-if(nombre=="Captura Extra"){
-
-alert("Tienes una captura extra permitida")
-
-}
-
-if(nombre=="Segunda Vida"){
-
-alert("Tienes una segunda oportunidad activa")
-
-}
-
+function guardarPlayers(){
+localStorage.setItem("players", JSON.stringify(players))
 }

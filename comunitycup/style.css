@@ -1,8 +1,9 @@
+/* ================= GLOBAL ================= */
 body{
 margin:0;
-font-family:'Segoe UI', sans-serif;
+font-family:'Segoe UI',sans-serif;
+background: radial-gradient(circle at top,#1a1f3c,#05070d);
 color:white;
-background: radial-gradient(circle at top, #1a1f3c, #05070d);
 overflow-x:hidden;
 }
 
@@ -16,128 +17,261 @@ filter:blur(150px);
 z-index:-1;
 }
 
-body::before{
-background:#ff4da6;
-top:-100px;
-left:-100px;
-}
+body::before{background:#ff4da6;top:-100px;left:-100px;}
+body::after{background:#5b5bff;bottom:-100px;right:-100px;}
 
-body::after{
-background:#5b5bff;
-bottom:-100px;
-right:-100px;
-}
-
-/* NAV */
+/* ================= NAV ================= */
 .navbar{
-background:rgba(0,0,0,0.4);
-backdrop-filter:blur(10px);
-padding:10px 20px;
 display:flex;
 justify-content:space-between;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+padding:12px 20px;
 }
 
-/* TITLES */
-.title{
+.navbar span{
+cursor:pointer;
+margin:0 10px;
+transition:0.2s;
+}
+
+.navbar span:hover{
+color:#ff4da6;
+}
+
+/* ================= HERO ================= */
+.hero{
+height:75vh;
+display:flex;
+justify-content:center;
+align-items:center;
 text-align:center;
-font-size:40px;
-margin:20px;
-background: linear-gradient(90deg,#ff4da6,#5b5bff);
+background:linear-gradient(180deg,#0f0f14,#05070d);
+}
+
+.hero h1{
+font-size:60px;
+background:linear-gradient(90deg,#ff4da6,#5b5bff);
 -webkit-background-clip:text;
 color:transparent;
 }
 
-/* CARD */
+/* ================= CARDS ================= */
 .card-ui{
-background:rgba(255,255,255,0.9);
-color:black;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.1);
 border-radius:15px;
 padding:20px;
-margin:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
+margin:15px 0;
 }
 
-/* BUTTON */
-.btn-game{
+/* ================= BOTONES ================= */
+.btn-main{
 background:linear-gradient(90deg,#ff4da6,#5b5bff);
 border:none;
 color:white;
-padding:6px 12px;
+padding:8px;
 border-radius:8px;
 cursor:pointer;
+transition:0.2s;
 }
 
-/* POPUP */
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.7);
+.btn-main:hover{
+transform:scale(1.05);
+}
+
+/* ================= PLAYERS ================= */
+.playerCard{
+display:flex;
+gap:10px;
+align-items:center;
+padding:8px;
+border-radius:10px;
+background:#111;
+cursor:pointer;
+margin:5px 0;
+transition:0.2s;
+}
+
+.playerCard:hover{
+box-shadow:0 0 10px #5b5bff;
+}
+
+.playerCard img{
+width:40px;
+height:40px;
+border-radius:50%;
+object-fit:cover;
+}
+
+/* ================= PERFIL ================= */
+.avatarBig{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+box-shadow:0 0 20px #5b5bff;
+}
+
+.team img{
+width:60px;
+height:60px;
+}
+
+/* ================= TORNEO PRO REAL ================= */
+.bracket-container{
 display:flex;
 justify-content:center;
+gap:80px;
+padding:40px;
+overflow-x:auto;
+}
+
+.bracket{
+display:flex;
+gap:100px;
+}
+
+/* COLUMNAS */
+.round{
+display:flex;
+flex-direction:column;
+justify-content:space-around;
+gap:60px;
+}
+
+/* MATCH */
+.match{
+display:flex;
+flex-direction:column;
+gap:5px;
+position:relative;
+}
+
+/* SLOT */
+.slot{
+width:180px;
+height:45px;
+background:#111;
+border:2px solid #333;
+border-radius:8px;
+display:flex;
 align-items:center;
-z-index:9999;
+justify-content:center;
+cursor:pointer;
+transition:0.2s;
 }
 
-.popup-box{
-background:white;
-color:black;
-padding:20px;
-border-radius:12px;
-text-align:center;
-animation:pop .3s ease;
+.slot:hover{
+border-color:#5b5bff;
 }
 
-.popup-box img{
-width:120px;
-margin-bottom:10px;
+.slot.filled{
+background:#1a1f3c;
+border:2px solid #5b5bff;
+box-shadow:0 0 10px #5b5bff;
 }
 
-@keyframes pop{
-from{transform:scale(.7);opacity:0}
-to{transform:scale(1);opacity:1}
+/* CONECTORES */
+.match::after{
+content:"";
+position:absolute;
+right:-50px;
+top:50%;
+width:50px;
+height:2px;
+background:#5b5bff;
 }
 
-/* MISION */
+.round:last-child .match::after{
+display:none;
+}
+
+/* PLAYER POOL */
+.player-pool{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.player{
+background:#222;
+padding:8px;
+border-radius:8px;
+cursor:grab;
+transition:0.2s;
+}
+
+.player:hover{
+background:#333;
+transform:scale(1.05);
+}
+
+/* ================= MISIONES ================= */
 .mission{
 background:linear-gradient(135deg,#1a1f3c,#2a2f6c);
-padding:10px;
-margin:6px;
+padding:12px;
 border-radius:10px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+border-left:4px solid #ff4da6;
+transition:0.2s;
 }
 
-/* SHOP */
+.mission:hover{
+transform:scale(1.03);
+box-shadow:0 0 10px #ff4da6;
+}
+
+.mission span{
+color:white;
+font-weight:bold;
+}
+
+/* ================= TIENDA ================= */
 .shopItem{
-background:#111;
-padding:10px;
-margin:6px;
+background:linear-gradient(135deg,#111,#1f1f3c);
+padding:12px;
 border-radius:10px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+border:1px solid #5b5bff;
+transition:0.2s;
 }
 
-/* LOGROS */
+.shopItem:hover{
+transform:scale(1.05);
+box-shadow:0 0 12px #5b5bff;
+}
+
+.shopItem span{
+color:white;
+font-weight:bold;
+}
+
+/* ================= LOGROS ================= */
 .logro{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:10px;
-margin:6px;
+padding:12px;
 border-radius:10px;
+transition:0.2s;
 }
 
-.bronce{background:#5a3a1a;}
-.plata{background:#777;}
-.oro{background:#d4af37;color:black;}
-.legendario{background:#6a00ff;}
+.logro:hover{
+transform:scale(1.05);
+}
 
-/* CARTAS */
+.bronce{background:#5a3a1a;box-shadow:0 0 10px #cd7f32;}
+.plata{background:#777;box-shadow:0 0 10px #c0c0c0;}
+.oro{background:#d4af37;color:black;box-shadow:0 0 15px gold;}
+.legendario{background:#6a00ff;box-shadow:0 0 20px #6a00ff;}
+
+/* ================= COMODINES ================= */
 .card-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -149,63 +283,29 @@ background:#111;
 border-radius:12px;
 padding:10px;
 text-align:center;
+position:relative;
 transition:0.3s;
 }
 
 .card-item:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px #ff4da6;
+transform:scale(1.08);
+box-shadow:0 0 20px #ff4da6;
+}
+
+.card-item::after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(45deg,transparent,#ff4da6);
+opacity:0;
+transition:0.3s;
+}
+
+.card-item:hover::after{
+opacity:0.2;
 }
 
 .card-item img{
 width:100%;
 border-radius:10px;
-}
-/* FIX TEXTOS */
-.mission span,
-.shopItem span{
-color:white;
-}
-
-.bracket{
-display:flex;
-gap:40px;
-overflow:auto;
-padding:20px;
-}
-
-.round{
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:30px;
-}
-
-.match{
-background:#111;
-border:1px solid #5b5bff;
-padding:10px;
-border-radius:10px;
-text-align:center;
-min-width:120px;
-box-shadow:0 0 10px rgba(91,91,255,0.5);
-}
-.playerCard img{
-width:40px;
-height:40px;
-border-radius:50%;
-object-fit:cover;
-}
-
-.avatarBig{
-width:120px;
-height:120px;
-border-radius:50%;
-object-fit:cover;
-}
-
-.team img{
-width:60px;
-height:60px;
-object-fit:contain;
 }

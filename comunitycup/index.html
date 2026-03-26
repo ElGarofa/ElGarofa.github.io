@@ -26,10 +26,28 @@
 
 <!-- HERO -->
 <section id="inicio" class="hero">
-<div>
-<h1>QUIÉN SERÁ EL MEJOR</h1>
-<p>Evento competitivo Pokémon</p>
+
+<div class="hero-overlay"></div>
+
+<div class="hero-content">
+
+<h1 class="hero-title">
+<span>COMMUNITY</span>
+<span class="gradient">CUP</span>
+</h1>
+
+<p class="hero-sub">
+Competí, mejorá tu equipo y convertite en campeón
+</p>
+
+<div class="hero-stats">
+<div>⚔️ Torneos</div>
+<div>🎯 Misiones</div>
+<div>🏆 Ranking</div>
 </div>
+
+</div>
+
 </section>
 
 <!-- PARTICIPANTES -->
@@ -166,12 +184,75 @@ Ver logros
 
 <button class="btn-main mb-3" onclick="generarTorneo()">Generar torneo</button>
 
-<div id="torneo"></div>
+<div class="bracket-container">
+
+<div class="bracket">
+
+<!-- CUARTOS -->
+<div class="round">
+<h4>Cuartos</h4>
+
+<div class="match">
+<div class="slot" data-next="s1"></div>
+<div class="slot" data-next="s1"></div>
+</div>
+
+<div class="match">
+<div class="slot" data-next="s2"></div>
+<div class="slot" data-next="s2"></div>
+</div>
+
+<div class="match">
+<div class="slot" data-next="s3"></div>
+<div class="slot" data-next="s3"></div>
+</div>
+
+<div class="match">
+<div class="slot" data-next="s4"></div>
+<div class="slot" data-next="s4"></div>
+</div>
+
+</div>
+
+<!-- SEMIS -->
+<div class="round">
+<h4>Semis</h4>
+
+<div class="match">
+<div id="s1" class="slot" data-next="f1"></div>
+<div id="s2" class="slot" data-next="f1"></div>
+</div>
+
+<div class="match">
+<div id="s3" class="slot" data-next="f2"></div>
+<div id="s4" class="slot" data-next="f2"></div>
+</div>
+
+</div>
+
+<!-- FINAL -->
+<div class="round">
+<h4>Final</h4>
+
+<div class="match champion">
+<div id="f1" class="slot"></div>
+<div id="f2" class="slot"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- LISTA JUGADORES -->
+<div id="pool" class="player-pool"></div>
+
+</div>
 
 </div>
 
 </section>
 
+</div>
 <script src="script.js"></script>
 
 </body>

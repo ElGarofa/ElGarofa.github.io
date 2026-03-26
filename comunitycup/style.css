@@ -309,3 +309,194 @@ opacity:0.2;
 width:100%;
 border-radius:10px;
 }
+body{
+margin:0;
+font-family:'Segoe UI';
+background:#0b0f1a;
+color:white;
+}
+
+/* NAV */
+.navbar{
+display:flex;
+justify-content:space-between;
+padding:12px 20px;
+background:#0f1629;
+border-bottom:1px solid #1f2a4d;
+}
+
+/* TITULOS */
+.title{
+text-align:center;
+font-size:40px;
+margin:20px;
+background:linear-gradient(90deg,#00f0ff,#ff00c8);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+/* CARD */
+.card-ui{
+background:#0f1629;
+border:1px solid #1f2a4d;
+border-radius:12px;
+padding:20px;
+margin:10px 0;
+}
+
+/* BOTON */
+.btn-main{
+background:linear-gradient(90deg,#00f0ff,#ff00c8);
+border:none;
+padding:8px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
+
+/* ================= TORNEO ================= */
+
+.tournament{
+display:flex;
+justify-content:center;
+gap:100px;
+padding:40px;
+}
+
+.side, .center{
+display:flex;
+flex-direction:column;
+gap:60px;
+}
+
+.round{
+display:flex;
+flex-direction:column;
+gap:50px;
+align-items:center;
+}
+
+/* MATCH */
+.match{
+display:flex;
+flex-direction:column;
+gap:8px;
+position:relative;
+}
+
+/* SLOT */
+.slot{
+width:180px;
+height:45px;
+background:#111827;
+border:2px solid #1f2a4d;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:0.2s;
+}
+
+.slot:hover{
+border-color:#00f0ff;
+}
+
+.slot.filled{
+background:#1f2a4d;
+border:2px solid #00f0ff;
+box-shadow:0 0 10px #00f0ff;
+}
+
+/* LINEAS */
+.match::after{
+content:"";
+position:absolute;
+right:-50px;
+top:50%;
+width:50px;
+height:2px;
+background:#1f2a4d;
+}
+
+.center .match::after{
+display:none;
+}
+
+/* POOL */
+.pool{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+padding:20px;
+}
+
+.player{
+background:#1f2a4d;
+padding:8px 10px;
+border-radius:6px;
+cursor:grab;
+}
+
+/* ================= MISIONES ================= */
+.mission{
+background:#111827;
+padding:12px;
+border-left:4px solid #ff00c8;
+border-radius:8px;
+display:flex;
+justify-content:space-between;
+transition:0.2s;
+}
+
+.mission:hover{
+transform:scale(1.03);
+box-shadow:0 0 10px #ff00c8;
+}
+
+/* ================= TIENDA ================= */
+.shopItem{
+background:#111827;
+padding:12px;
+border-radius:8px;
+border:1px solid #00f0ff;
+display:flex;
+justify-content:space-between;
+transition:0.2s;
+}
+
+.shopItem:hover{
+transform:scale(1.05);
+box-shadow:0 0 10px #00f0ff;
+}
+
+/* ================= LOGROS ================= */
+.logro{
+padding:12px;
+border-radius:8px;
+display:flex;
+justify-content:space-between;
+}
+
+.bronce{background:#5a3a1a;}
+.plata{background:#888;}
+.oro{background:#d4af37;color:black;}
+.legendario{background:#6a00ff;}
+
+/* ================= COMODINES ================= */
+.card-item{
+background:#111827;
+border-radius:10px;
+padding:10px;
+text-align:center;
+transition:0.3s;
+}
+
+.card-item:hover{
+transform:scale(1.08);
+box-shadow:0 0 15px #ff00c8;
+}
+
+.card-item img{
+width:100%;
+}

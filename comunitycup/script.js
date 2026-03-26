@@ -200,13 +200,11 @@ final: []
 /* GENERAR */
 function generarTorneo(){
 
-let pool = document.getElementById("pool")
+let pool=document.getElementById("pool")
 pool.innerHTML=""
 
-/* mezclar jugadores */
-let lista = [...players].sort(()=>Math.random()-0.5)
+let lista=[...players].sort(()=>Math.random()-0.5)
 
-/* crear pool draggable */
 lista.forEach(p=>{
 pool.innerHTML+=`
 <div class="player" draggable="true" data-name="${p.nombre}">
@@ -215,58 +213,53 @@ ${p.nombre}
 })
 
 initDrag()
-
 }
 
-/* DRAG REAL */
+/* DRAG */
 function initDrag(){
 
 document.querySelectorAll(".player").forEach(el=>{
-el.addEventListener("dragstart", e=>{
-e.dataTransfer.setData("text", el.dataset.name)
+el.addEventListener("dragstart",e=>{
+e.dataTransfer.setData("text",el.dataset.name)
 })
 })
 
 document.querySelectorAll(".slot").forEach(slot=>{
 
-slot.addEventListener("dragover", e=>e.preventDefault())
+slot.addEventListener("dragover",e=>e.preventDefault())
 
-slot.addEventListener("drop", e=>{
+slot.addEventListener("drop",e=>{
 e.preventDefault()
 
-let name = e.dataTransfer.getData("text")
+if(slot.innerHTML!="") return
 
-/* evitar duplicados */
-if(slot.innerHTML !== "") return
+let name=e.dataTransfer.getData("text")
 
-slot.innerHTML = name
+slot.innerHTML=name
 slot.classList.add("filled")
 
 })
 
 })
-
 }
 
-/* CLICK PARA AVANZAR GANADOR */
-document.addEventListener("click", function(e){
+/* CLICK AVANCE */
+document.addEventListener("click",e=>{
 
 if(e.target.classList.contains("slot") && e.target.innerHTML){
 
-let next = e.target.dataset.next
+let next=e.target.dataset.next
 
 if(!next) return
 
-let nextSlot = document.getElementById(next)
+let target=document.getElementById(next)
 
-/* llenar siguiente si está vacío */
-if(nextSlot && nextSlot.innerHTML==""){
-nextSlot.innerHTML = e.target.innerHTML
-nextSlot.classList.add("filled")
+if(target && target.innerHTML==""){
+target.innerHTML=e.target.innerHTML
+target.classList.add("filled")
 }
 
 }
-
 })
 
 /* RENDER */

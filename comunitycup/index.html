@@ -184,69 +184,87 @@ Ver logros
 
 <button class="btn-main mb-3" onclick="generarTorneo()">Generar torneo</button>
 
-<div class="bracket-container">
+<div id="torneo" class="tournament">
 
-<div class="bracket">
+<!-- IZQUIERDA -->
+<div class="side">
 
-<!-- CUARTOS -->
 <div class="round">
 <h4>Cuartos</h4>
 
 <div class="match">
-<div class="slot" data-next="s1"></div>
-<div class="slot" data-next="s1"></div>
+<div class="slot" data-next="sl1"></div>
+<div class="slot" data-next="sl1"></div>
 </div>
 
 <div class="match">
-<div class="slot" data-next="s2"></div>
-<div class="slot" data-next="s2"></div>
-</div>
-
-<div class="match">
-<div class="slot" data-next="s3"></div>
-<div class="slot" data-next="s3"></div>
-</div>
-
-<div class="match">
-<div class="slot" data-next="s4"></div>
-<div class="slot" data-next="s4"></div>
+<div class="slot" data-next="sl2"></div>
+<div class="slot" data-next="sl2"></div>
 </div>
 
 </div>
 
-<!-- SEMIS -->
 <div class="round">
 <h4>Semis</h4>
 
 <div class="match">
-<div id="s1" class="slot" data-next="f1"></div>
-<div id="s2" class="slot" data-next="f1"></div>
+<div id="sl1" class="slot" data-next="final1"></div>
+<div id="sl2" class="slot" data-next="final1"></div>
 </div>
 
-<div class="match">
-<div id="s3" class="slot" data-next="f2"></div>
-<div id="s4" class="slot" data-next="f2"></div>
 </div>
 
 </div>
 
 <!-- FINAL -->
+<div class="center">
+
 <div class="round">
 <h4>Final</h4>
 
 <div class="match champion">
-<div id="f1" class="slot"></div>
-<div id="f2" class="slot"></div>
+<div id="final1" class="slot"></div>
+<div id="final2" class="slot"></div>
 </div>
 
 </div>
 
 </div>
 
-<!-- LISTA JUGADORES -->
-<div id="pool" class="player-pool"></div>
+<!-- DERECHA -->
+<div class="side">
+
+<div class="round">
+<h4>Cuartos</h4>
+
+<div class="match">
+<div class="slot" data-next="sr1"></div>
+<div class="slot" data-next="sr1"></div>
+</div>
+
+<div class="match">
+<div class="slot" data-next="sr2"></div>
+<div class="slot" data-next="sr2"></div>
+</div>
 
 </div>
+
+<div class="round">
+<h4>Semis</h4>
+
+<div class="match">
+<div id="sr1" class="slot" data-next="final2"></div>
+<div id="sr2" class="slot" data-next="final2"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- POOL -->
+<div id="pool" class="pool"></div>
 
 </div>
 

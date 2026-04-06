@@ -31,46 +31,44 @@ function crearJugador(){
 
 let nombre = document.getElementById("nombre")?.value
 let rango = document.getElementById("rango")?.value
+let inputFoto = document.getElementById("foto")
 
 if(!nombre){
-popup("Poné nombre ❌")
+alert("Poné un nombre")
 return
 }
 
-let jugador = {
-nombre,
-rango,
-foto:"",
-team:[],
-victorias:0,
-muertes:0,
-inventario:[],
-misiones:[],
-compras:[]
+let formData = new FormData()
+formData.append("nombre", nombre)
+formData.append("rango", rango)
+
+if(inputFoto && inputFoto.files[0]){
+formData.append("foto", inputFoto.files[0])
 }
 
-let inputFoto = document.getElementById("foto")
-
-if(inputFoto?.files?.length > 0){
-
-let reader = new FileReader()
-
-reader.onload = function(){
-jugador.foto = reader.result
-players.push(jugador)
-guardarPlayers()
-renderPlayers()
+fetch("save_player.php",{
+method:"POST",
+body:formData
+})
+.then(res=>res.text())
+.then(()=>{
 popup("Jugador creado 🔥")
+cargarPlayersDB()
+})
+
 }
 
-reader.readAsDataURL(inputFoto.files[0])
+function cargarPlayersDB(){
 
-}else{
-players.push(jugador)
-guardarPlayers()
+fetch("get_players.php")
+.then(res=>res.json())
+.then(data=>{
+
+players = data
+
 renderPlayers()
-popup("Jugador creado 🔥")
-}
+
+})
 
 }
 
@@ -86,7 +84,7 @@ div.innerHTML=""
 players.forEach((p,i)=>{
 div.innerHTML+=`
 <div class="playerCard" onclick="verPerfil(${i})">
-<img src="${p.foto || 'https://via.placeholder.com/40'}">
+<img src="${p.foto ? 'data:image/png;base64,'+p.foto : 'https://via.placeholder.com/40'}">
 <div>
 <b>${p.nombre}</b><br>${p.rango}
 </div>
@@ -378,4 +376,7 @@ renderBracket()
 
 function guardarPlayers(){
 localStorage.setItem("players", JSON.stringify(players))
+}
+window.onload = () => {
+cargarPlayersDB()
 }

@@ -763,30 +763,47 @@ max-width:500px;
 /* MIEMBROS */
 /* ========================= */
 
-.members-container{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:30px;
+.clan-members {
+    padding: 60px 20px;
+    text-align: center;
 }
 
-.member-card{
-position:relative;
-width:250px;
-text-align:center;
+.members-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 50px;
 }
 
-.member-card .car{
-width:100%;
-display:block;
+.member-card {
+    position: relative;
+    width: 280px;
+    background: var(--card-bg);
+    border: 1px solid rgba(106, 0, 255, 0.3);
+    border-radius: 15px;
+    padding: 60px 20px 20px 20px; /* Padding top alto para el rango */
+    backdrop-filter: blur(5px);
+    transition: 0.4s ease;
 }
 
-.member-card .rank{
-position:absolute;
-top:-10px;
-left:50%;
-transform:translateX(-50%);
-width:80px;
+.member-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 10px 30px rgba(0, 247, 255, 0.2);
+}
+
+/* CORRECCIÓN DE RANGOS */
+.rank {
+    position: absolute;
+    top: -35px; /* Sobresale de la tarjeta */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.8));
+    z-index: 10;
 }
 
 /* ========================= */
@@ -887,4 +904,126 @@ grid-template-columns:1fr;
 width:90%;
 }
 
+}
+/* Mejora del fondo: Cuadrícula con brillo */
+body {
+    background: radial-gradient(circle at center, #0f0f3a 0%, #050510 100%);
+    background-attachment: fixed;
+}
+
+/* Efecto de Vidrio (Glassmorphism) para las tarjetas */
+.rankCard, .tournamentCard, .member-card, .player-card {
+    background: rgba(13, 13, 48, 0.7) !important;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(106, 0, 255, 0.3);
+    transition: 0.4s ease;
+}
+
+.rankCard:hover, .tournamentCard:hover {
+    border-color: #00f7ff;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 247, 255, 0.2);
+}
+
+/* Animación de entrada para las secciones */
+
+
+/* Botones con pulso */
+.join-button {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(0, 247, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
+}
+/* EFECTO SCANLINE (Líneas de TV antigua) */
+body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+}
+
+/* BUSCADOR */
+#memberSearch {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 20px auto;
+    display: block;
+    background: #0a0a25;
+    border: 1px solid #6a00ff;
+    color: white;
+    border-radius: 20px;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+}
+
+/* BOTÓN COPIAR ID */
+.copy-btn {
+    background: rgba(0, 247, 255, 0.1);
+    border: 1px solid #00f7ff;
+    color: #00f7ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.copy-btn:hover {
+    background: #00f7ff;
+    color: black;
+}
+
+/* RESPLANDORES POR RANGO */
+.rank-platino { box-shadow: 0 0 20px rgba(93, 252, 230, 0.4); }
+.rank-diamante { box-shadow: 0 0 20px rgba(0, 110, 255, 0.4); }
+.rank-oro { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+
+/* WIDGET DE SERVIDORES */
+.server-status {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid #25D366;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: #25D366;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #25D366;
+}
+/* Efecto de plataforma para los autos en las tarjetas */
+.member-card .car {
+    filter: drop-shadow(0 10px 5px rgba(0,0,0,0.5));
+    transform: scaleX(-1); /* Voltear el auto para que mire hacia la derecha, como al inicio de un partido */
+    transition: 0.5s;
+}
+
+.member-card:hover .car {
+    transform: scaleX(-1) translateX(20px); /* El auto "arranca" al pasar el mouse */
+}
+
+/* Contenedor de clips en formato vertical (TikTok Style) */
+.tiktok-video {
+    aspect-ratio: 9 / 16; /* Forzar el formato de celular */
+    width: 200px;
 }

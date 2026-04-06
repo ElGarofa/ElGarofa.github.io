@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Torneos | Lag Masters</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .tournament-hero { padding: 100px 20px; text-align: center; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img/arena-bg.jpg'); background-size: cover; }
+        .bracket-preview { background: #0a0a25; padding: 40px; border-radius: 20px; margin: 40px auto; max-width: 900px; border: 2px dashed #6a00ff; }
+        .reglas { text-align: left; max-width: 800px; margin: auto; padding: 20px; }
+        .form-inscripcion { background: #0d0d30; padding: 30px; border-radius: 15px; max-width: 500px; margin: 40px auto; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #050510; border: 1px solid #6a00ff; color: white; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo glitch" data-text="LMS TOURNAMENTS">LMS TOURNAMENTS</div>
+        <nav><a href="index.html">Inicio</a></nav>
+    </header>
+
+    <section class="tournament-hero show">
+        <h1 class="glitch" data-text="PRÓXIMO TORNEO">PRÓXIMO TORNEO</h1>
+        <p>Demuestra que el lag no es una excusa.</p>
+    </section>
+
+    <section id="detalles" class="show">
+        <div class="tournamentGrid">
+            <div class="tournamentCard">
+                <h3>Copa de Bienvenida</h3>
+                <p><strong>Modo:</strong> 2vs2</p>
+                <p><strong>Premio:</strong> Rol Especial + 500 Créditos</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reglas show">
+        <h2>Reglas del Torneo</h2>
+        <ul>
+            <li>Respeto absoluto a los rivales.</li>
+            <li>Conexión estable (dentro de lo posible).</li>
+            <li>Ser miembro activo del Discord.</li>
+        </ul>
+    </section>
+
+    <section class="form-inscripcion show">
+        <h2>Inscríbete</h2>
+        <form action="#">
+            <input type="text" placeholder="Tu Nick de Epic" required>
+            <select>
+                <option value="">Selecciona tu Rango</option>
+                <option>Bronce/Plata</option>
+                <option>Oro/Platino</option>
+                <option>Diamante+</option>
+            </select>
+            <button type="submit" class="join-button" style="width:100%; border:none; cursor:pointer;">Registrarme</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

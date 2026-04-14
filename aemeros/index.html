@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aemeros TCG - Engine Completo</title>
+    <style>
+        :root {
+            --primary: #2980b9; --dark: #1a1a1a; --card-w: 130px; --card-h: 180px;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; margin: 0; overflow: hidden; }
+        
+        /* Pantalla de Inicio */
+        #pantalla-inicio { 
+            position: fixed; inset: 0; background: radial-gradient(circle, #2c3e50, #000);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100;
+        }
+
+        /* Tablero */
+        .game-container { display: none; grid-template-columns: 1fr 300px; height: 100vh; }
+        .board { position: relative; background: #222; border: 5px solid #333; display: flex; flex-direction: column; justify-content: space-around; padding: 20px; }
+        
+        .zona { display: flex; justify-content: center; gap: 20px; min-height: 200px; align-items: center; }
+        .zona-oponente { border-bottom: 2px dashed #444; }
+
+        /* Cartas */
+        .card { 
+            width: var(--card-w); height: var(--card-h); background: #eee; color: #111; 
+            border-radius: 8px; position: relative; display: flex; flex-direction: column;
+            padding: 8px; box-sizing: border-box; transition: transform 0.3s; border: 3px solid transparent;
+        }
+        .card.active { border-color: #f1c40f; transform: translateY(-10px); box-shadow: 0 0 15px #f1c40f; }
+        .card.targetable { cursor: pointer; border-color: #e74c3c; }
+        .card-name { font-weight: bold; font-size: 13px; text-align: center; border-bottom: 1px solid #999; }
+        .card-art { flex-grow: 1; background: #ccc; margin: 5px 0; border-radius: 4px; }
+        .card-stats { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; }
+        .hp-bar { width: 100%; height: 6px; background: #ddd; margin-top: 4px; border-radius: 3px; }
+        .hp-fill { height: 100%; background: #2ecc71; transition: width 0.3s; }
+
+        /* Lateral / Log */
+        .sidebar { background: #1a1a1a; border-left: 2px solid #333; padding: 15px; display: flex; flex-direction: column; }
+        #log { flex-grow: 1; background: #000; padding: 10px; font-size: 13px; font-family: monospace; overflow-y: auto; color: #0f0; border: 1px solid #333; }
+        
+        .controls { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+        button { padding: 12px; cursor: pointer; border: none; border-radius: 5px; background: var(--primary); color: white; font-weight: bold; text-transform: uppercase; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        
+        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #333; padding: 30px; border-radius: 10px; text-align: center; border: 2px solid var(--primary); }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-inicio">
+        <h1>AEMEROS TCG</h1>
+        <p>Selecciona Modo de Juego</p>
+        <div style="display:flex; gap: 20px;">
+            <button onclick="iniciarJuego(1)">1 VS 1</button>
+            <button onclick="iniciarJuego(2)">2 VS 2</button>
+        </div>
+    </div>
+
+    <div class="game-container" id="game-ui">
+        <div class="board">
+            <div class="zona zona-oponente" id="zona-op"></div>
+            <div class="zona zona-jugador" id="zona-pj"></div>
+        </div>
+
+        <div class="sidebar">
+            <h3 id="turno-display">TURNO: -</h3>
+            <div id="log"></div>
+            <div class="controls">
+                <button id="btn-accion" onclick="procesarFaseBatalla()">INICIAR COMBATE</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA DE CARTAS (Basado en Edición Fundadores) ---
+        const CARTAS_DB = [
+            { nombre: "Señor Problemas", pv: 50, vel: 70, atq: 60, habilidad: "Jugarreta" },
+            { nombre: "Monedero", pv: 90, vel: 50, atq: 20, habilidad: "Tiro Preciso" },
+            { nombre: "Awe", pv: 70, vel: 70, atq: 30, habilidad: "Chispazo" },
+            { nombre: "Hookmaster", pv: 90, vel: 20, atq: 20, habilidad: "Arito Venenoso" },
+            { nombre: "Zorro Estelar", pv: 90, vel: 60, atq: 40, habilidad: "Velocidad" }
+        ];
+
+        let modoActual = 1;
+        let estado = { fase: 'preparacion', log: [], combatientes: [] };
+
+        function iniciarJuego(modo) {
+            modoActual = modo;
+            document.getElementById('pantalla-inicio').style.display = 'none';
+            document.getElementById('game-ui').style.display = 'grid';
+            
+            // Crear combatientes
+            prepararEquipo('op', modoActual);
+            prepararEquipo('pj', modoActual);
+            actualizarVisual();
+            pushLog(`Partida ${modo}vs${modo} iniciada.`);
+        }
+
+        function prepararEquipo(bando, cantidad) {
+            for(let i=0; i < cantidad; i++) {
+                let randomCard = CARTAS_DB[Math.floor(Math.random()*CARTAS_DB.length)];
+                estado.combatientes.push({
+                    ...randomCard,
+                    id: bando + i,
+                    pvActual: randomCard.pv,
+                    bando: bando,
+                    actuado: false
+                });
+            }
+        }
+
+        function pushLog(msg) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `<div>> ${msg}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function actualizarVisual() {
+            const zonaOp = document.getElementById('zona-op');
+            const zonaPj = document.getElementById('zona-pj');
+            zonaOp.innerHTML = ''; zonaPj.innerHTML = '';
+
+            estado.combatientes.forEach(c => {
+                const perc = (c.pvActual / c.pv) * 100;
+                const cardHTML = `
+                    <div class="card ${c.pvActual <= 0 ? 'muerta' : ''}" id="card-${c.id}">
+                        <div class="card-name">${c.nombre}</div>
+                        <div class="card-art"></div>
+                        <div class="card-stats">
+                            <span>⚡ ${c.vel}</span>
+                            <span>❤️ ${c.pvActual}</span>
+                        </div>
+                        <div class="hp-bar"><div class="hp-fill" style="width:${perc}%"></div></div>
+                    </div>
+                `;
+                if(c.bando === 'op') zonaOp.innerHTML += cardHTML;
+                else zonaPj.innerHTML += cardHTML;
+            });
+        }
+
+        // --- MOTOR DE REGLAS ---
+
+        async function procesarFaseBatalla() {
+            document.getElementById('btn-accion').disabled = true;
+            
+            // 1. Ordenar por velocidad (Regla Manual pág 5)
+            let cola = [...estado.combatientes]
+                .filter(c => c.pvActual > 0)
+                .sort((a, b) => b.vel - a.vel);
+
+            pushLog("--- Iniciando Ronda de Ataques ---");
+
+            for(let atacante of cola) {
+                if(atacante.pvActual <= 0) continue;
+
+                // Resaltar atacante
+                document.getElementById(`card-${atacante.id}`).classList.add('active');
+                
+                // Buscar objetivo (al azar del bando contrario)
+                let posiblesObjetivos = estado.combatientes.filter(c => c.bando !== atacante.bando && c.pvActual > 0);
+                
+                if(posiblesObjetivos.length > 0) {
+                    let objetivo = posiblesObjetivos[Math.floor(Math.random()*posiblesObjetivos.length)];
+                    
+                    await sleep(1000);
+                    pushLog(`${atacante.nombre} ataca a ${objetivo.nombre} por ${atacante.atq} de daño.`);
+                    
+                    objetivo.pvActual -= atacante.atq;
+                    if(objetivo.pvActual < 0) objetivo.pvActual = 0;
+                    
+                    actualizarVisual();
+                }
+
+                await sleep(500);
+                document.getElementById(`card-${atacante.id}`).classList.remove('active');
+                
+                if(verificarFinPartida()) return;
+            }
+
+            pushLog("--- Fin de la Ronda ---");
+            document.getElementById('btn-accion').disabled = false;
+        }
+
+        function verificarFinPartida() {
+            const vivosOp = estado.combatientes.filter(c => c.bando === 'op' && c.pvActual > 0).length;
+            const vivosPj = estado.combatientes.filter(c => c.bando === 'pj' && c.pvActual > 0).length;
+
+            if(vivosOp === 0) {
+                alert("¡VICTORIA! Todos los enemigos han caído.");
+                location.reload();
+                return true;
+            }
+            if(vivosPj === 0) {
+                alert("DERROTA... Tus criaturas han sido derrotadas.");
+                location.reload();
+                return true;
+            }
+            return false;
+        }
+
+        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+    </script>
+</body>
+</html>

@@ -1,63 +1,744 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Torneos | Lag Masters</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        .tournament-hero { padding: 100px 20px; text-align: center; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img/arena-bg.jpg'); background-size: cover; }
-        .bracket-preview { background: #0a0a25; padding: 40px; border-radius: 20px; margin: 40px auto; max-width: 900px; border: 2px dashed #6a00ff; }
-        .reglas { text-align: left; max-width: 800px; margin: auto; padding: 20px; }
-        .form-inscripcion { background: #0d0d30; padding: 30px; border-radius: 15px; max-width: 500px; margin: 40px auto; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #050510; border: 1px solid #6a00ff; color: white; border-radius: 5px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Torneos | Lag Masters</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ================= TORNEO PAGE STYLES ================= */
+
+    .torneo-hero {
+      padding: 120px 20px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .torneo-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center top, rgba(106,0,255,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .torneo-hero h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      margin-bottom: 10px;
+    }
+
+    .torneo-hero p {
+      color: #8888aa;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+    }
+
+    /* INFO CARDS */
+    .torneo-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .info-card {
+      background: rgba(13, 13, 48, 0.8);
+      border: 1px solid rgba(106, 0, 255, 0.3);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .info-card:hover {
+      border-color: #00f7ff;
+      box-shadow: 0 0 20px rgba(0,247,255,0.15);
+      transform: translateY(-4px);
+    }
+
+    .info-card .ic-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .info-card h4 {
+      font-size: 0.75rem;
+      color: #8888aa;
+      font-family: 'Rajdhani', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .info-card p {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #00f7ff;
+    }
+
+    /* TABS */
+    .torneo-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid rgba(106, 0, 255, 0.4);
+      color: #aaa;
+      padding: 10px 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      transition: 0.3s;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: rgba(106, 0, 255, 0.2);
+      border-color: #6a00ff;
+      color: #fff;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* BRACKET */
+    .bracket-section {
+      padding: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow-x: auto;
+    }
+
+    .bracket-wrapper {
+      display: flex;
+      gap: 40px;
+      min-width: 600px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bracket-round {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .round-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.8rem;
+      color: #6a00ff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .match-card {
+      background: rgba(10, 10, 37, 0.9);
+      border: 1px solid rgba(106, 0, 255, 0.3);
+      border-radius: 10px;
+      overflow: hidden;
+      width: 180px;
+      transition: 0.3s;
+    }
+
+    .match-card:hover {
+      border-color: #00f7ff;
+    }
+
+    .match-team {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .match-team:last-child { border-bottom: none; }
+
+    .match-team.winner {
+      background: rgba(0, 247, 255, 0.08);
+      color: #00f7ff;
+      font-weight: 700;
+    }
+
+    .match-team .score {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .match-team.winner .score { color: #00f7ff; }
+
+    .bracket-connector {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      color: rgba(106, 0, 255, 0.5);
+      font-size: 1.5rem;
+      padding: 10px;
+      align-self: center;
+    }
+
+    .tbd { color: #555; font-style: italic; font-size: 0.85rem; }
+
+    /* REGLAS */
+    .reglas-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    .regla-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .regla-num {
+      min-width: 32px;
+      height: 32px;
+      background: rgba(106, 0, 255, 0.2);
+      border: 1px solid #6a00ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #6a00ff;
+    }
+
+    .regla-text h4 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .regla-text p {
+      font-family: 'Rajdhani', sans-serif;
+      color: #8888aa;
+      font-size: 0.95rem;
+    }
+
+    /* INSCRIPCION FORM */
+    .form-section {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    .form-card {
+      background: rgba(13, 13, 48, 0.9);
+      border: 1px solid rgba(106, 0, 255, 0.4);
+      border-radius: 20px;
+      padding: 40px;
+    }
+
+    .form-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .form-card p {
+      color: #8888aa;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #8888aa;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(5, 5, 16, 0.8);
+      border: 1px solid rgba(106, 0, 255, 0.4);
+      color: white;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      transition: 0.3s;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #00f7ff;
+      box-shadow: 0 0 10px rgba(0,247,255,0.2);
+    }
+
+    .form-group select option {
+      background: #0a0a25;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #6a00ff, #00f7ff);
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,247,255,0.3);
+    }
+
+    .submit-btn:active { transform: translateY(0); }
+
+    /* INSCRIPTOS */
+    .inscriptos-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    .inscripto-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(13, 13, 48, 0.6);
+      border: 1px solid rgba(106, 0, 255, 0.2);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .inscripto-row:hover {
+      border-color: rgba(0,247,255,0.4);
+    }
+
+    .inscripto-num {
+      color: #6a00ff;
+      font-weight: 700;
+      min-width: 30px;
+    }
+
+    .inscripto-nick { font-weight: 600; }
+
+    .inscripto-rank {
+      font-size: 0.8rem;
+      color: #8888aa;
+      text-align: right;
+    }
+
+    .inscriptos-count {
+      text-align: center;
+      font-family: 'Rajdhani', sans-serif;
+      color: #8888aa;
+      margin-bottom: 20px;
+    }
+
+    .inscriptos-count span {
+      color: #00f7ff;
+      font-weight: 700;
+    }
+
+    /* SUCCESS MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9998;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.show { display: flex; }
+
+    .modal-box {
+      background: #0d0d30;
+      border: 1px solid #00f7ff;
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      max-width: 400px;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon { font-size: 3rem; margin-bottom: 15px; }
+    .modal-box h3 { font-size: 1.3rem; margin-bottom: 10px; color: #00f7ff; }
+    .modal-box p { font-family: 'Rajdhani', sans-serif; color: #8888aa; margin-bottom: 25px; }
+
+    .modal-close {
+      background: #00f7ff;
+      color: #000;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    @media (max-width: 600px) {
+      .torneo-info-grid { padding: 20px; }
+      .bracket-section { padding: 20px; }
+      .reglas-section, .form-section, .inscriptos-section { padding: 20px; }
+      .form-card { padding: 25px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo glitch" data-text="LMS TOURNAMENTS">LMS TOURNAMENTS</div>
-        <nav><a href="index.html">Inicio</a></nav>
-    </header>
 
-    <section class="tournament-hero show">
-        <h1 class="glitch" data-text="PRÓXIMO TORNEO">PRÓXIMO TORNEO</h1>
-        <p>Demuestra que el lag no es una excusa.</p>
-    </section>
+<header class="navbar" id="navbar">
+  <div class="logo glitch" data-text="LMS TORNEOS">LMS TORNEOS</div>
+  <nav>
+    <a href="index.html">← Inicio</a>
+  </nav>
+</header>
 
-    <section id="detalles" class="show">
-        <div class="tournamentGrid">
-            <div class="tournamentCard">
-                <h3>Copa de Bienvenida</h3>
-                <p><strong>Modo:</strong> 2vs2</p>
-                <p><strong>Premio:</strong> Rol Especial + 500 Créditos</p>
-            </div>
+<!-- HERO -->
+<div class="torneo-hero">
+  <div class="hero-tag">🏆 COMPETENCIA OFICIAL</div>
+  <h1 class="glitch" data-text="COPA LAG MASTERS">COPA LAG MASTERS</h1>
+  <p>Demuestra que el lag no es una excusa.</p>
+</div>
+
+<!-- INFO CARDS -->
+<div class="torneo-info-grid">
+  <div class="info-card">
+    <div class="ic-icon">🎮</div>
+    <h4>Modo</h4>
+    <p>2 vs 2</p>
+  </div>
+  <div class="info-card">
+    <div class="ic-icon">📅</div>
+    <h4>Fecha</h4>
+    <p>30 Mayo 2025</p>
+  </div>
+  <div class="info-card">
+    <div class="ic-icon">👥</div>
+    <h4>Cupos</h4>
+    <p>16 equipos</p>
+  </div>
+  <div class="info-card">
+    <div class="ic-icon">🎁</div>
+    <h4>Premio</h4>
+    <p>Rol + Créditos</p>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="torneo-tabs">
+  <button class="tab-btn active" data-tab="bracket">🏆 Bracket</button>
+  <button class="tab-btn" data-tab="reglas">📋 Reglas</button>
+  <button class="tab-btn" data-tab="inscripcion">✍️ Inscribirse</button>
+  <button class="tab-btn" data-tab="inscriptos">👥 Inscriptos</button>
+</div>
+
+<!-- TAB: BRACKET -->
+<div class="tab-panel active" id="tab-bracket">
+  <div class="bracket-section">
+    <div class="bracket-wrapper">
+      <!-- Cuartos -->
+      <div class="bracket-round">
+        <div class="round-title">Cuartos</div>
+        <div class="match-card">
+          <div class="match-team winner"><span>LMS Marcos</span><span class="score">3</span></div>
+          <div class="match-team"><span>Team Rival 1</span><span class="score">1</span></div>
         </div>
-    </section>
+        <div class="match-card">
+          <div class="match-team winner"><span>LMS Benja</span><span class="score">3</span></div>
+          <div class="match-team"><span>Team Rival 2</span><span class="score">2</span></div>
+        </div>
+        <div class="match-card">
+          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
+          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
+        </div>
+        <div class="match-card">
+          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
+          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
+        </div>
+      </div>
 
-    <section class="reglas show">
-        <h2>Reglas del Torneo</h2>
-        <ul>
-            <li>Respeto absoluto a los rivales.</li>
-            <li>Conexión estable (dentro de lo posible).</li>
-            <li>Ser miembro activo del Discord.</li>
-        </ul>
-    </section>
+      <div class="bracket-connector">→</div>
 
-    <section class="form-inscripcion show">
-        <h2>Inscríbete</h2>
-        <form action="#">
-            <input type="text" placeholder="Tu Nick de Epic" required>
-            <select>
-                <option value="">Selecciona tu Rango</option>
-                <option>Bronce/Plata</option>
-                <option>Oro/Platino</option>
-                <option>Diamante+</option>
+      <!-- Semifinales -->
+      <div class="bracket-round">
+        <div class="round-title">Semis</div>
+        <div class="match-card">
+          <div class="match-team winner"><span>LMS Marcos</span><span class="score">3</span></div>
+          <div class="match-team"><span>LMS Benja</span><span class="score">1</span></div>
+        </div>
+        <div class="match-card">
+          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
+          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
+        </div>
+      </div>
+
+      <div class="bracket-connector">→</div>
+
+      <!-- Final -->
+      <div class="bracket-round">
+        <div class="round-title">Final</div>
+        <div class="match-card" style="border-color: rgba(0,247,255,0.5);">
+          <div class="match-team winner"><span>LMS Marcos</span><span class="score">?</span></div>
+          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center; color:#555; font-family:'Rajdhani',sans-serif; margin-top:30px; font-size:0.85rem;">
+      * Bracket de ejemplo. Se actualiza según los resultados reales.
+    </p>
+  </div>
+</div>
+
+<!-- TAB: REGLAS -->
+<div class="tab-panel" id="tab-reglas">
+  <div class="reglas-section">
+    <div class="regla-item">
+      <div class="regla-num">1</div>
+      <div class="regla-text">
+        <h4>Respeto obligatorio</h4>
+        <p>Respeto absoluto a rivales, árbitros y staff. Cualquier insulto o comportamiento tóxico resulta en descalificación inmediata.</p>
+      </div>
+    </div>
+    <div class="regla-item">
+      <div class="regla-num">2</div>
+      <div class="regla-text">
+        <h4>Conexión estable</h4>
+        <p>Los jugadores deben contar con conexión estable. Los problemas de lag no son excusa para resultados inválidos (sí, sabemos, es el nombre del clan).</p>
+      </div>
+    </div>
+    <div class="regla-item">
+      <div class="regla-num">3</div>
+      <div class="regla-text">
+        <h4>Miembro activo de Discord</h4>
+        <p>Para inscribirse, el jugador debe estar en el servidor de Discord del clan. Es el canal oficial de comunicación.</p>
+      </div>
+    </div>
+    <div class="regla-item">
+      <div class="regla-num">4</div>
+      <div class="regla-text">
+        <h4>Puntualidad</h4>
+        <p>Los partidos tienen 10 minutos de tolerancia. Pasado ese tiempo, el equipo que no se presentó pierde por W.O.</p>
+      </div>
+    </div>
+    <div class="regla-item">
+      <div class="regla-num">5</div>
+      <div class="regla-text">
+        <h4>Formato de partidos</h4>
+        <p>Todos los enfrentamientos son al mejor de 5 sets (BO5), excepto la final que es BO7.</p>
+      </div>
+    </div>
+    <div class="regla-item">
+      <div class="regla-num">6</div>
+      <div class="regla-text">
+        <h4>Capturas obligatorias</h4>
+        <p>Al finalizar cada partida, el equipo ganador debe enviar screenshot del resultado al canal de torneos en Discord.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: INSCRIPCION -->
+<div class="tab-panel" id="tab-inscripcion">
+  <div class="form-section">
+    <div class="form-card">
+      <h3>Formulario de Inscripción</h3>
+      <p>Completá el formulario para inscribirte en la Copa Lag Masters. Te contactaremos por Discord.</p>
+
+      <div id="formContainer">
+        <div class="form-group">
+          <label>Nick de Epic</label>
+          <input type="text" id="epicNick" placeholder="Tu nick exacto en Epic Games" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Rango actual</label>
+            <select id="playerRank">
+              <option value="">Seleccionar...</option>
+              <option>Bronce</option>
+              <option>Plata</option>
+              <option>Oro</option>
+              <option>Platino</option>
+              <option>Diamante</option>
+              <option>Champion</option>
             </select>
-            <button type="submit" class="join-button" style="width:100%; border:none; cursor:pointer;">Registrarme</button>
-        </form>
-    </section>
+          </div>
+          <div class="form-group">
+            <label>Posición preferida</label>
+            <select id="playerPos">
+              <option value="">Seleccionar...</option>
+              <option>Attacker</option>
+              <option>Defender</option>
+              <option>Flex</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Usuario de Discord</label>
+          <input type="text" id="discordUser" placeholder="usuario#0000 o @usuario">
+        </div>
+        <div class="form-group">
+          <label>Nick del compañero de equipo</label>
+          <input type="text" id="teammateName" placeholder="Con quién vas a jugar (si ya tenés equipo)">
+        </div>
+        <button class="submit-btn" onclick="submitForm()">REGISTRARME AL TORNEO</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <script src="script.js"></script>
+<!-- TAB: INSCRIPTOS -->
+<div class="tab-panel" id="tab-inscriptos">
+  <div class="inscriptos-section">
+    <p class="inscriptos-count">Inscriptos: <span id="inscriptosCount">0</span> / 16</p>
+    <div id="inscriptosList"></div>
+    <p style="text-align:center; color:#555; font-family:'Rajdhani',sans-serif; font-size:0.85rem; margin-top:20px;">
+      Los registros se guardan localmente en este dispositivo.
+    </p>
+  </div>
+</div>
+
+<!-- MODAL ÉXITO -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">🏆</div>
+    <h3>¡Inscripción exitosa!</h3>
+    <p id="modalMessage">Te registramos al torneo. Vas a recibir más información por Discord.</p>
+    <button class="modal-close" onclick="closeModal()">LISTO</button>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div class="server-status">
+  <div class="status-dot"></div>
+  <span>SERVERS: ONLINE</span>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // ===== TABS =====
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'inscriptos') renderInscriptos();
+    });
+  });
+
+  // ===== INSCRIPTOS (localStorage) =====
+  function getInscriptos() {
+    try { return JSON.parse(localStorage.getItem('lms_inscriptos') || '[]'); }
+    catch { return []; }
+  }
+
+  function saveInscripto(data) {
+    const list = getInscriptos();
+    list.push(data);
+    localStorage.setItem('lms_inscriptos', JSON.stringify(list));
+  }
+
+  function renderInscriptos() {
+    const list = getInscriptos();
+    const container = document.getElementById('inscriptosList');
+    document.getElementById('inscriptosCount').textContent = list.length;
+    if (list.length === 0) {
+      container.innerHTML = '<p style="text-align:center;color:#555;font-family:\'Rajdhani\',sans-serif;">Todavía no hay inscriptos.</p>';
+      return;
+    }
+    container.innerHTML = list.map((p, i) => `
+      <div class="inscripto-row">
+        <span class="inscripto-num">#${i + 1}</span>
+        <span class="inscripto-nick">${p.nick}</span>
+        <span class="inscripto-rank">${p.rank}<br><small style="color:#6a00ff">${p.pos}</small></span>
+      </div>
+    `).join('');
+  }
+
+  // ===== FORM SUBMIT =====
+  function submitForm() {
+    const nick = document.getElementById('epicNick').value.trim();
+    const rank = document.getElementById('playerRank').value;
+    const pos = document.getElementById('playerPos').value;
+
+    if (!nick) { alert('Ingresá tu nick de Epic.'); return; }
+    if (!rank) { alert('Seleccioná tu rango.'); return; }
+
+    const inscriptos = getInscriptos();
+    if (inscriptos.length >= 16) {
+      alert('Lo sentimos, los cupos están completos.');
+      return;
+    }
+    if (inscriptos.find(p => p.nick.toLowerCase() === nick.toLowerCase())) {
+      alert('Ese nick ya está inscripto.');
+      return;
+    }
+
+    saveInscripto({ nick, rank, pos, discord: document.getElementById('discordUser').value, teammate: document.getElementById('teammateName').value });
+
+    document.getElementById('modalMessage').textContent = `¡${nick} registrado! Revisá Discord para más info.`;
+    document.getElementById('successModal').classList.add('show');
+    document.getElementById('epicNick').value = '';
+    document.getElementById('playerRank').value = '';
+    document.getElementById('playerPos').value = '';
+    document.getElementById('discordUser').value = '';
+    document.getElementById('teammateName').value = '';
+  }
+
+  function closeModal() {
+    document.getElementById('successModal').classList.remove('show');
+  }
+
+  // Inicializar conteo
+  renderInscriptos();
+</script>
 </body>
 </html>

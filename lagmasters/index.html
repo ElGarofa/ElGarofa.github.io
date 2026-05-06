@@ -1,221 +1,237 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-<title>Lag Masters</title>
-
-<link rel="icon" type="image/png" href="favicon.png">
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lag Masters | Clan de Rocket League Sideswipe</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<header class="navbar">
-
-<div class="logo glitch" data-text="LAG MASTERS">
-LAG MASTERS
-</div>
-
-<nav>
-
-<a href="#hero">Inicio</a>
-<a href="#ranking">Ranking</a>
-<a href="#tournaments">Torneos</a>
-<a href="#clips">Clips</a>
-<a href="#join">Unirse</a>
-
-</nav>
-
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+  <div class="logo glitch" data-text="LAG MASTERS">LAG MASTERS</div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
+  <nav id="mainNav">
+    <a href="#hero">Inicio</a>
+    <a href="#requisitos">Requisitos</a>
+    <a href="#ranking">Ranking</a>
+    <a href="#squad">Escuadra</a>
+    <a href="#torneos">Torneos</a>
+    <a href="#clips">Clips</a>
+    <a href="#join">Unirse</a>
+  </nav>
 </header>
 
-
+<!-- HERO -->
 <section id="hero">
-
-<img src="img/hero.png" class="heroImg">
-
-<h2>Con lag, pero con estilo</h2>
-
-</section>
-
-<section id="requisitos">
-
-<h2>Requisitos para entrar</h2>
-
-<div class="reqContainer">
-
-<div class="reqCard">
-<h3>🏆 Rango mínimo</h3>
-<p>Plata o superior</p>
-</div>
-
-<div class="reqCard">
-<h3>🎮 Actividad</h3>
-<p>Jugar al menos 3 veces por semana</p>
-</div>
-
-<div class="reqCard">
-<h3>🤝 Trabajo en equipo</h3>
-<p>Respeto y comunicación</p>
-</div>
-
-<div class="reqCard">
-<h3>💬 Comunidad</h3>
-<p>Estar en Discord o WhatsApp</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="clan-members">
-    <h2>Nuestra Escuadra</h2>
-    <input type="text" id="memberSearch" placeholder="🔍 Buscar por nombre o rango...">
-    <div class="members-container">
-        </div>
-</section>
-
-<div class="server-status">
-    <div class="status-dot"></div>
-    <span>SERVERS: ONLINE</span>
-</div>
-
-<div class="tournamentCard">
-    <h3>Copa Lag Masters</h3>
-    <p>Cupos: 12 / 16</p>
-    <div style="width: 100%; background: #050510; height: 10px; border-radius: 5px;">
-        <div style="width: 75%; background: #00f7ff; height: 100%; border-radius: 5px;"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🏎️ ROCKET LEAGUE SIDESWIPE</div>
+    <h1 class="glitch hero-title" data-text="LAG MASTERS">LAG MASTERS</h1>
+    <p class="hero-sub">Con lag, pero con estilo.</p>
+    <div class="hero-stats">
+      <div class="hstat">
+        <span class="hstat-num" data-target="3">0</span>
+        <span class="hstat-label">Jugadores</span>
+      </div>
+      <div class="hstat-divider"></div>
+      <div class="hstat">
+        <span class="hstat-num" data-target="12">0</span>
+        <span class="hstat-label">Victorias</span>
+      </div>
+      <div class="hstat-divider"></div>
+      <div class="hstat">
+        <span class="hstat-num" data-target="1">0</span>
+        <span class="hstat-label">Torneos</span>
+      </div>
     </div>
-    <br>
-    <a href="torneo.html" class="join-button">Inscribirse</a>
-</div>
-
-
-<section class="youtube">
-
-<h2>Videos del Clan</h2>
-
-<div class="youtube-scroll">
-
-<iframe class="youtube-video"
-src="https://www.youtube.com/embed/ID_VIDEO1"
-frameborder="0"
-allowfullscreen>
-</iframe>
-
-<iframe class="youtube-video"
-src="https://www.youtube.com/embed/ID_VIDEO2"
-frameborder="0"
-allowfullscreen>
-</iframe>
-
-<iframe class="youtube-video"
-src="https://www.youtube.com/embed/ID_VIDEO3"
-frameborder="0"
-allowfullscreen>
-</iframe>
-
-<iframe class="youtube-video"
-src="https://www.youtube.com/embed/ID_VIDEO4"
-frameborder="0"
-allowfullscreen>
-</iframe>
-
-</div>
-
+    <div class="hero-buttons">
+      <a href="#join" class="btn-primary">Unirse al Clan</a>
+      <a href="torneo.html" class="btn-secondary">Ver Torneos</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">↓ scroll</div>
 </section>
 
-
-<section id="videos">
-
-<h2>Presentación de Jugadores</h2>
-
-<div class="players-grid">
-
-<div class="player-card">
-<h3>LagMasters | Marcos</h3>
-<video controls>
-<source src="videos/video2.mp4" type="video/mp4">
-</video>
-</div>
-
-<div class="player-card">
-<h3>LagMasters | LMS Benja</h3>
-<video controls>
-<source src="videos/video1.mp4" type="video/mp4">
-</video>
-</div>
-
-<div class="player-card">
-<h3>LagMasters | LMS Lywerd</h3>
-<video controls>
-<source src="videos/video3.mp4" type="video/mp4">
-</video>
-</div>
-
-<!-- espacio para más jugadores -->
-
-<div class="player-card">
-<h3>Jugador Disponible</h3>
-<video controls>
-<source src="videos/video4.mp4" type="video/mp4">
-</video>
-</div>
-
-</div>
-
+<!-- REQUISITOS -->
+<section id="requisitos" class="section">
+  <div class="container">
+    <h2 class="section-title">Requisitos para <span class="accent">entrar</span></h2>
+    <div class="req-grid">
+      <div class="req-card">
+        <div class="req-icon">🏆</div>
+        <h3>Rango mínimo</h3>
+        <p>Plata o superior para ingresar al clan</p>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🎮</div>
+        <h3>Actividad</h3>
+        <p>Al menos 3 sesiones de juego por semana</p>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🤝</div>
+        <h3>Fair Play</h3>
+        <p>Respeto absoluto, dentro y fuera de la cancha</p>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">💬</div>
+        <h3>Comunidad</h3>
+        <p>Estar activo en Discord o WhatsApp del clan</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="tiktok">
-
-<h2>Clips del Clan (TikTok)</h2>
-
-<div class="tiktok-container">
-
-<video class="tiktok-video" controls>
-<source src="videos/tiktok1.mp4" type="video/mp4">
-</video>
-
-<video class="tiktok-video" controls>
-<source src="videos/tiktok2.mp4" type="video/mp4">
-</video>
-
-<video class="tiktok-video" controls>
-<source src="videos/tiktok3.mp4" type="video/mp4">
-</video>
-
-</div>
-
+<!-- RANKING -->
+<section id="ranking" class="section">
+  <div class="container">
+    <h2 class="section-title">Ranking <span class="accent">Interno</span></h2>
+    <p class="section-sub">Tabla de posiciones actualizada del clan</p>
+    <div class="ranking-table">
+      <div class="ranking-header">
+        <span>#</span>
+        <span>Jugador</span>
+        <span>Rango</span>
+        <span>Victorias</span>
+        <span>Derrotas</span>
+        <span>% Win</span>
+        <span>Puntos</span>
+      </div>
+      <div id="rankingBody"></div>
+    </div>
+  </div>
 </section>
 
-<script async src="https://www.tiktok.com/embed.js"></script>
-
-<section class="join">
-
-<h2>Únete a LagMasters</h2>
-
-<p>El clan es nuevo y estamos buscando jugadores que quieran crecer con nosotros.</p>
-
-<a class="join-button" href="https://discord.gg/UERnEQ5sxj">Unirse al Clan(Discord)</a>
-
-<a href="LINK_WHATSAPP" class="whatsappBtn">
-WhatsApp
-</a>
-
-</div>
-
+<!-- ESCUADRA -->
+<section id="squad" class="section clan-members">
+  <div class="container">
+    <h2 class="section-title">Nuestra <span class="accent">Escuadra</span></h2>
+    <input type="text" id="memberSearch" placeholder="🔍 Buscar por nombre o rango...">
+    <div class="members-container" id="membersContainer"></div>
+  </div>
 </section>
 
+<!-- TORNEOS -->
+<section id="torneos" class="section">
+  <div class="container">
+    <h2 class="section-title">Próximo <span class="accent">Torneo</span></h2>
+    <div class="tournament-featured">
+      <div class="tf-left">
+        <div class="tf-badge">🔥 INSCRIPCIONES ABIERTAS</div>
+        <h3>Copa Lag Masters</h3>
+        <p class="tf-mode">Modo: 2vs2 · Premio: Rol especial + créditos</p>
+        <div class="tf-countdown" id="countdown">
+          <div class="cd-block"><span id="cdDays">00</span><label>días</label></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-block"><span id="cdHours">00</span><label>horas</label></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-block"><span id="cdMins">00</span><label>min</label></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-block"><span id="cdSecs">00</span><label>seg</label></div>
+        </div>
+        <div class="tf-slots">
+          <div class="slots-label">
+            <span>Cupos: <strong id="slotsUsed">12</strong> / <strong>16</strong></span>
+            <span class="slots-pct">75%</span>
+          </div>
+          <div class="slots-bar">
+            <div class="slots-fill" id="slotsFill" style="width: 75%"></div>
+          </div>
+        </div>
+        <a href="torneo.html" class="btn-primary" style="margin-top:20px;display:inline-block;">Inscribirse ahora</a>
+      </div>
+      <div class="tf-right">
+        <div class="bracket-mini">
+          <h4>Bracket</h4>
+          <div class="bracket-preview-grid" id="bracketPreview"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS JUGADORES -->
+<section id="clips" class="section">
+  <div class="container">
+    <h2 class="section-title">Presentación de <span class="accent">Jugadores</span></h2>
+    <div class="players-grid">
+      <div class="player-card">
+        <div class="player-card-tag">LagMasters</div>
+        <h3>Marcos</h3>
+        <video controls>
+          <source src="videos/video2.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="player-card">
+        <div class="player-card-tag">LagMasters</div>
+        <h3>LMS Benja</h3>
+        <video controls>
+          <source src="videos/video1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="player-card">
+        <div class="player-card-tag">LagMasters</div>
+        <h3>LMS Lywerd</h3>
+        <video controls>
+          <source src="videos/video3.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIPS TIKTOK -->
+<section class="section tiktok-section">
+  <div class="container">
+    <h2 class="section-title">Clips del Clan <span class="accent">(TikTok)</span></h2>
+    <div class="tiktok-container">
+      <video class="tiktok-video" controls><source src="videos/tiktok1.mp4" type="video/mp4"></video>
+      <video class="tiktok-video" controls><source src="videos/tiktok2.mp4" type="video/mp4"></video>
+      <video class="tiktok-video" controls><source src="videos/tiktok3.mp4" type="video/mp4"></video>
+    </div>
+  </div>
+</section>
+
+<!-- YOUTUBE -->
+<section class="section youtube-section">
+  <div class="container">
+    <h2 class="section-title">Videos del <span class="accent">Clan</span></h2>
+    <div class="youtube-scroll">
+      <iframe class="youtube-video" src="https://www.youtube.com/embed/ID_VIDEO1" frameborder="0" allowfullscreen></iframe>
+      <iframe class="youtube-video" src="https://www.youtube.com/embed/ID_VIDEO2" frameborder="0" allowfullscreen></iframe>
+      <iframe class="youtube-video" src="https://www.youtube.com/embed/ID_VIDEO3" frameborder="0" allowfullscreen></iframe>
+      <iframe class="youtube-video" src="https://www.youtube.com/embed/ID_VIDEO4" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join" class="section join-section">
+  <div class="container">
+    <h2 class="section-title">Únete a <span class="accent">Lag Masters</span></h2>
+    <p class="join-text">Somos un clan nuevo y estamos buscando jugadores que quieran crecer con nosotros. Sin drama, con ganas de ganar.</p>
+    <div class="join-buttons">
+      <a class="btn-discord" href="https://discord.gg/UERnEQ5sxj" target="_blank">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.078.11 18.1.12 18.12a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        Unirse al Discord
+      </a>
+      <a class="btn-whatsapp" href="#" target="_blank">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS WIDGET -->
+<div class="server-status">
+  <div class="status-dot"></div>
+  <span>SERVERS: ONLINE</span>
+</div>
 
 <script src="script.js"></script>
-
 </body>
 </html>

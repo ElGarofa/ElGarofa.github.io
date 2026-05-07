@@ -1,227 +1,245 @@
-/* COUNTERS */
+/* ===========================
+   LAG MASTERS — script.js
+   =========================== */
 
-const counters = document.querySelectorAll(".counter")
+/* ----- NAVBAR SCROLL ----- */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
 
-counters.forEach(counter=>{
+/* ----- HAMBURGER MENU ----- */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
 
-const update=()=>{
+hamburger?.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
 
-const target=+counter.dataset.target
-const current=+counter.innerText
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
 
-const inc=target/100
+/* ----- SMOOTH SCROLL ----- */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
 
-if(current<target){
+/* ----- COUNTERS ----- */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 1400;
+  const steps = 60;
+  const stepTime = duration / steps;
+  let current = 0;
+  const increment = target / steps;
 
-counter.innerText=Math.ceil(current+inc)
-setTimeout(update,20)
-
-}else{
-
-counter.innerText=target
-
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      el.textContent = target;
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.ceil(current);
+    }
+  }, stepTime);
 }
 
+// Trigger counters when hero is visible
+const counterEls = document.querySelectorAll('.stat-num');
+let countersTriggered = false;
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !countersTriggered) {
+      countersTriggered = true;
+      counterEls.forEach(el => animateCounter(el));
+    }
+  });
+}, { threshold: 0.4 });
+
+const heroSection = document.getElementById('inicio');
+if (heroSection) counterObserver.observe(heroSection);
+
+/* ----- REVEAL ON SCROLL ----- */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, i * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ----- TOAST NOTIFICATION ----- */
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
-update()
-
-})
-
-/* PLAYERS */
-// Lista de miembros con sus IDs de Epic
+/* ----- CLAN MEMBERS ----- */
 const clanMembers = [
-    { name: "Marcos", rank: "Platino", epicId: "LMS ElGarofa", img: "img/auto1.png", rankImg: "img/Platino.png" },
-    { name: "Benja", rank: "Platino", epicId: "LMS Benja", img: "img/auto2.png", rankImg: "img/Platino.png" },
-    { name: "Lywerd", rank: "Diamante", epicId: "LMS Lywerd", img: "img/auto3.png", rankImg: "img/Diamante.png" }
+  {
+    name: "Marcos",
+    rank: "Platino",
+    rankKey: "platino",
+    epicId: "LMS ElGarofa",
+    img: "img/auto1.png",
+    rankImg: "img/Platino.png",
+    wins: 89
+  },
+  {
+    name: "Benja",
+    rank: "Platino",
+    rankKey: "platino",
+    epicId: "LMS Benja",
+    img: "img/auto2.png",
+    rankImg: "img/Platino.png",
+    wins: 76
+  },
+  {
+    name: "Lywerd",
+    rank: "Diamante",
+    rankKey: "diamante",
+    epicId: "LMS Lywerd",
+    img: "img/auto3.png",
+    rankImg: "img/Diamante.png",
+    wins: 112
+  }
 ];
 
-const membersContainer = document.querySelector(".members-container");
-const searchInput = document.getElementById("memberSearch");
+const membersContainer = document.getElementById('membersContainer');
+const searchInput = document.getElementById('memberSearch');
+const noResults = document.getElementById('noResults');
 
-// Función para renderizar miembros
-function displayMembers(filter = "") {
-    membersContainer.innerHTML = "";
-    const filtered = clanMembers.filter(m => 
-        m.name.toLowerCase().includes(filter.toLowerCase()) || 
-        m.rank.toLowerCase().includes(filter.toLowerCase())
-    );
+function displayMembers(filter = '') {
+  if (!membersContainer) return;
+  membersContainer.innerHTML = '';
 
-    filtered.forEach(m => {
-        membersContainer.innerHTML += `
-            <div class="member-card rank-${m.rank.toLowerCase()}">
-                <img src="${m.rankImg}" class="rank">
-                <img src="${m.img}" class="car">
-                <h3>LMS | ${m.name}</h3>
-                <button class="copy-btn" onclick="copyId('${m.epicId}')">
-                    ID: ${m.epicId} 📋
-                </button>
-            </div>
-        `;
-    });
+  const filtered = clanMembers.filter(m =>
+    m.name.toLowerCase().includes(filter.toLowerCase()) ||
+    m.rank.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  if (filtered.length === 0) {
+    noResults.style.display = 'block';
+    return;
+  }
+  noResults.style.display = 'none';
+
+  filtered.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = `member-card rank-${m.rankKey}`;
+    card.style.animationDelay = `${i * 0.1}s`;
+    card.innerHTML = `
+      <img src="${m.rankImg}" class="rank" alt="${m.rank}" onerror="this.style.display='none'">
+      <img src="${m.img}" class="car" alt="${m.name}" onerror="this.style.display='none'">
+      <h3>LMS | ${m.name}</h3>
+      <p style="font-size:0.75rem;color:var(--text-dim);letter-spacing:1px;margin-bottom:4px">${m.rank} · ${m.wins} wins</p>
+      <button class="copy-btn" onclick="copyId('${m.epicId}')">
+        ID: ${m.epicId} 📋
+      </button>
+    `;
+    membersContainer.appendChild(card);
+  });
 }
 
-// Función para copiar ID
 function copyId(id) {
-    navigator.clipboard.writeText(id);
-    alert("ID Copiada: " + id);
+  navigator.clipboard.writeText(id).then(() => {
+    showToast(`✓ ID copiada: ${id}`);
+  }).catch(() => {
+    showToast(`ID: ${id}`);
+  });
 }
 
-// Escuchar el buscador
-searchInput?.addEventListener("input", (e) => displayMembers(e.target.value));
-
-// Inicializar
+searchInput?.addEventListener('input', e => displayMembers(e.target.value));
 displayMembers();
 
-/* PARTICLES */
+/* ----- TOURNAMENTS ----- */
+const tournaments = [
+  {
+    name: "Copa de Bienvenida",
+    mode: "2vs2",
+    date: "15 Jun 2025",
+    prize: "Rol Especial + 500 Créditos",
+    slots: 12,
+    maxSlots: 16,
+    status: "open",       // open | upcoming | finished
+    result: null
+  },
+  {
+    name: "Clan Battle #1",
+    mode: "1vs1",
+    date: "10 Jul 2025",
+    prize: "Créditos + Mención Discord",
+    slots: 6,
+    maxSlots: 8,
+    status: "upcoming",
+    result: null
+  },
+  {
+    name: "Rocket Cup",
+    mode: "3vs3",
+    date: "15 Mar 2025",
+    prize: "Rol Campeón",
+    slots: 16,
+    maxSlots: 16,
+    status: "finished",
+    result: "Win 🏆"
+  }
+];
 
-particlesJS.load('particles-js','https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js/particles.json')
-
-/* MODE TOGGLE */
-
-document.getElementById("modeToggle").onclick=()=>{
-
-document.body.classList.toggle("neon")
-
-}
-function simulateMatch(){
-
-let a = Math.floor(Math.random()*6)
-let b = Math.floor(Math.random()*6)
-
-document.getElementById("score").innerText =
-a + " - " + b
-
-}
-const tournaments=[
-
-{
-name:"Clan Battle",
-date:"10 Mar",
-result:"Win"
-},
-
-{
-name:"Rocket Cup",
-date:"15 Mar",
-result:"Pending"
-}
-
-]
-
-const list=document.getElementById("tournamentList")
-
-tournaments.forEach(t=>{
-
-list.innerHTML+=`
-
-<div class="tournament">
-
-<h3>${t.name}</h3>
-<p>${t.date}</p>
-<p>${t.result}</p>
-
-</div>
-
-`
-
-})
-
-fetch("data/players.json")
-.then(res=>res.json())
-.then(players=>{
-
-const container=document.getElementById("playersContainer")
-
-players.forEach(p=>{
-
-container.innerHTML+=`
-
-<div class="player-card">
-
-<h3>${p.name}</h3>
-<p>${p.rank}</p>
-<p>Wins: ${p.wins}</p>
-
-</div>
-
-`
-
-})
-
-})
-const sections=document.querySelectorAll("section")
-
-window.addEventListener("scroll",()=>{
-
-sections.forEach(sec=>{
-
-const top=sec.getBoundingClientRect().top
-
-if(top<window.innerHeight-100){
-
-sec.classList.add("show")
-
-}
-
-})
-
-})
-
-document.querySelectorAll("nav a").forEach(anchor=>{
-
-anchor.addEventListener("click",function(e){
-
-e.preventDefault()
-
-document.querySelector(this.getAttribute("href"))
-.scrollIntoView({
-
-behavior:"smooth"
-
-})
-
-})
-
-})
-function counter(el,target){
-
-let count=0
-
-let interval=setInterval(()=>{
-
-count++
-
-el.innerText=count
-
-if(count>=target){
-
-clearInterval(interval)
-
-}
-
-},20)
-
-}
-// Función para detectar el scroll y mostrar secciones
-const observerOptions = {
-    threshold: 0.1
+const statusLabel = {
+  open: "INSCRIPCIÓN ABIERTA",
+  upcoming: "PRÓXIMAMENTE",
+  finished: "FINALIZADO"
 };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-        }
-    });
-}, observerOptions);
+function renderTournaments() {
+  const grid = document.getElementById('tournamentsGrid');
+  if (!grid) return;
 
-document.querySelectorAll('section').forEach(section => {
-    observer.observe(section);
-});
+  tournaments.forEach(t => {
+    const pct = Math.round((t.slots / t.maxSlots) * 100);
+    const card = document.createElement('div');
+    card.className = 'tournament-card reveal';
+    card.innerHTML = `
+      <span class="tournament-status status-${t.status}">${statusLabel[t.status]}</span>
+      <h3>${t.name}</h3>
+      <div class="meta">
+        <span class="meta-item">🎮 ${t.mode}</span>
+        <span class="meta-item">📅 ${t.date}</span>
+        <span class="meta-item">🏅 ${t.prize}</span>
+        ${t.result ? `<span class="meta-item" style="color:#00f7ff">🏆 ${t.result}</span>` : ''}
+      </div>
+      ${t.status !== 'finished' ? `
+        <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-dim);margin-bottom:6px">
+          <span>Cupos</span>
+          <span>${t.slots} / ${t.maxSlots}</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" style="width:${pct}%"></div>
+        </div>
+      ` : ''}
+      ${t.status === 'open' ? `<a href="torneo.html" class="btn btn-primary">Inscribirse</a>` : ''}
+      ${t.status === 'upcoming' ? `<button class="btn btn-outline" disabled style="width:100%;justify-content:center;cursor:not-allowed;opacity:0.5">Próximamente</button>` : ''}
+    `;
+    grid.appendChild(card);
+    // Observe for reveal
+    revealObserver.observe(card);
+  });
+}
 
-// Validación simple del formulario de torneo
-document.querySelector('form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert("¡Inscripción enviada! Nos vemos en la arena.");
-});
+renderTournaments();

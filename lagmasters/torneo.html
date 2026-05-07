@@ -4,741 +4,528 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Torneos | Lag Masters</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ================= TORNEO PAGE STYLES ================= */
-
+    /* ---- TORNEO PAGE EXTRA STYLES ---- */
     .torneo-hero {
-      padding: 120px 20px 60px;
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      padding: 120px 40px 60px;
       position: relative;
       overflow: hidden;
     }
-
     .torneo-hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center top, rgba(106,0,255,0.25) 0%, transparent 70%);
-      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(106,0,255,0.18), transparent),
+        radial-gradient(ellipse 40% 40% at 70% 30%, rgba(0,247,255,0.08), transparent);
     }
-
-    .torneo-hero h1 {
-      font-size: clamp(2rem, 6vw, 4rem);
-      margin-bottom: 10px;
+    .torneo-hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,247,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,247,255,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 15s linear infinite;
     }
-
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 50px; }
+    }
+    .torneo-hero-content { position: relative; z-index: 2; }
     .torneo-hero p {
-      color: #8888aa;
-      font-family: 'Rajdhani', sans-serif;
       font-size: 1.1rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      margin-top: 10px;
     }
 
-    /* INFO CARDS */
-    .torneo-info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 40px;
-      max-width: 900px;
+    /* ---- DETALLES ---- */
+    .torneo-details {
+      max-width: 1100px;
       margin: 0 auto;
+      padding: 0 40px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    @media (max-width: 768px) {
+      .torneo-details { grid-template-columns: 1fr; padding: 0 20px 60px; }
     }
 
-    .info-card {
-      background: rgba(13, 13, 48, 0.8);
-      border: 1px solid rgba(106, 0, 255, 0.3);
-      border-radius: 12px;
-      padding: 25px;
-      text-align: center;
-      transition: 0.3s;
+    .detail-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+      transition: 0.4s;
     }
-
-    .info-card:hover {
-      border-color: #00f7ff;
-      box-shadow: 0 0 20px rgba(0,247,255,0.15);
+    .detail-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--purple), var(--cyan));
+    }
+    .detail-card:hover {
+      border-color: rgba(0,247,255,0.4);
       transform: translateY(-4px);
     }
 
-    .info-card .ic-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .info-card h4 {
-      font-size: 0.75rem;
-      color: #8888aa;
-      font-family: 'Rajdhani', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 6px;
-    }
-
-    .info-card p {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #00f7ff;
-    }
-
-    /* TABS */
-    .torneo-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 20px;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: 1px solid rgba(106, 0, 255, 0.4);
-      color: #aaa;
-      padding: 10px 25px;
-      border-radius: 30px;
-      cursor: pointer;
+    .detail-card h3 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem;
-      transition: 0.3s;
-    }
-
-    .tab-btn.active, .tab-btn:hover {
-      background: rgba(106, 0, 255, 0.2);
-      border-color: #6a00ff;
-      color: #fff;
-    }
-
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    /* BRACKET */
-    .bracket-section {
-      padding: 40px;
-      max-width: 1000px;
-      margin: 0 auto;
-      overflow-x: auto;
-    }
-
-    .bracket-wrapper {
+      font-size: 1rem;
+      color: var(--cyan);
+      margin-bottom: 20px;
       display: flex;
-      gap: 40px;
-      min-width: 600px;
       align-items: center;
-      justify-content: center;
+      gap: 10px;
     }
 
-    .bracket-round {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .round-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.8rem;
-      color: #6a00ff;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .match-card {
-      background: rgba(10, 10, 37, 0.9);
-      border: 1px solid rgba(106, 0, 255, 0.3);
-      border-radius: 10px;
-      overflow: hidden;
-      width: 180px;
-      transition: 0.3s;
-    }
-
-    .match-card:hover {
-      border-color: #00f7ff;
-    }
-
-    .match-team {
+    .info-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 14px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.9rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
     }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: var(--text-dim); font-size: 0.85rem; letter-spacing: 1px; }
+    .info-value { color: white; font-weight: 600; }
 
-    .match-team:last-child { border-bottom: none; }
-
-    .match-team.winner {
-      background: rgba(0, 247, 255, 0.08);
-      color: #00f7ff;
-      font-weight: 700;
+    /* ---- REGLAS ---- */
+    .rules-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
-
-    .match-team .score {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #fff;
-    }
-
-    .match-team.winner .score { color: #00f7ff; }
-
-    .bracket-connector {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0;
-      color: rgba(106, 0, 255, 0.5);
-      font-size: 1.5rem;
-      padding: 10px;
-      align-self: center;
-    }
-
-    .tbd { color: #555; font-style: italic; font-size: 0.85rem; }
-
-    /* REGLAS */
-    .reglas-section {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 40px;
-    }
-
-    .regla-item {
+    .rules-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: flex-start;
-      gap: 15px;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .regla-num {
-      min-width: 32px;
-      height: 32px;
-      background: rgba(106, 0, 255, 0.2);
-      border: 1px solid #6a00ff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #6a00ff;
-    }
-
-    .regla-text h4 {
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-    }
-
-    .regla-text p {
-      font-family: 'Rajdhani', sans-serif;
-      color: #8888aa;
+      gap: 12px;
       font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .rules-list li:last-child { border-bottom: none; }
+    .rule-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      color: var(--cyan);
+      background: rgba(0,247,255,0.1);
+      border: 1px solid var(--border-cyan);
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
 
-    /* INSCRIPCION FORM */
-    .form-section {
-      max-width: 560px;
+    /* ---- INSCRIPCION ---- */
+    .inscripcion-wrap {
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 40px;
+      padding: 0 40px 100px;
     }
+    @media (max-width: 768px) { .inscripcion-wrap { padding: 0 20px 60px; } }
 
     .form-card {
-      background: rgba(13, 13, 48, 0.9);
-      border: 1px solid rgba(106, 0, 255, 0.4);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: 20px;
       padding: 40px;
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--purple), var(--cyan), var(--pink));
     }
 
-    .form-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 6px;
-    }
-
-    .form-card p {
-      color: #8888aa;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.95rem;
-      margin-bottom: 25px;
+    .form-card h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 30px;
     }
 
     .form-group {
       margin-bottom: 18px;
     }
-
     .form-group label {
       display: block;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #8888aa;
-      margin-bottom: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 8px;
     }
-
     .form-group input,
-    .form-group select {
+    .form-group select,
+    .form-group textarea {
       width: 100%;
-      padding: 13px 16px;
-      background: rgba(5, 5, 16, 0.8);
-      border: 1px solid rgba(106, 0, 255, 0.4);
+      padding: 13px 18px;
+      background: rgba(5,5,16,0.8);
+      border: 1px solid var(--border);
       color: white;
       border-radius: 8px;
       font-family: 'Rajdhani', sans-serif;
       font-size: 1rem;
-      transition: 0.3s;
-      box-sizing: border-box;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
+      letter-spacing: 0.5px;
       outline: none;
-      border-color: #00f7ff;
-      box-shadow: 0 0 10px rgba(0,247,255,0.2);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      -webkit-appearance: none;
     }
-
-    .form-group select option {
-      background: #0a0a25;
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0,247,255,0.12);
     }
+    .form-group select option { background: var(--dark2); }
+    .form-group textarea { resize: none; height: 90px; }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .submit-btn {
+    .form-submit {
       width: 100%;
       padding: 15px;
-      background: linear-gradient(135deg, #6a00ff, #00f7ff);
-      border: none;
-      border-radius: 10px;
-      color: #000;
-      font-family: 'Orbitron', sans-serif;
       font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 10px;
-      letter-spacing: 1px;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0,247,255,0.3);
-    }
-
-    .submit-btn:active { transform: translateY(0); }
-
-    /* INSCRIPTOS */
-    .inscriptos-section {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 40px;
-    }
-
-    .inscripto-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
-      background: rgba(13, 13, 48, 0.6);
-      border: 1px solid rgba(106, 0, 255, 0.2);
-      border-radius: 10px;
-      margin-bottom: 10px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      transition: 0.3s;
-    }
-
-    .inscripto-row:hover {
-      border-color: rgba(0,247,255,0.4);
-    }
-
-    .inscripto-num {
-      color: #6a00ff;
-      font-weight: 700;
-      min-width: 30px;
-    }
-
-    .inscripto-nick { font-weight: 600; }
-
-    .inscripto-rank {
-      font-size: 0.8rem;
-      color: #8888aa;
-      text-align: right;
-    }
-
-    .inscriptos-count {
-      text-align: center;
-      font-family: 'Rajdhani', sans-serif;
-      color: #8888aa;
-      margin-bottom: 20px;
-    }
-
-    .inscriptos-count span {
-      color: #00f7ff;
-      font-weight: 700;
-    }
-
-    /* SUCCESS MODAL */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 9998;
-      align-items: center;
       justify-content: center;
+      margin-top: 8px;
     }
 
-    .modal-overlay.show { display: flex; }
-
-    .modal-box {
-      background: #0d0d30;
-      border: 1px solid #00f7ff;
-      border-radius: 20px;
-      padding: 50px 40px;
+    .form-success {
+      display: none;
       text-align: center;
-      max-width: 400px;
-      animation: modalIn 0.3s ease;
+      padding: 30px;
     }
-
-    @keyframes modalIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .form-success .check {
+      font-size: 3rem;
+      margin-bottom: 16px;
     }
-
-    .modal-icon { font-size: 3rem; margin-bottom: 15px; }
-    .modal-box h3 { font-size: 1.3rem; margin-bottom: 10px; color: #00f7ff; }
-    .modal-box p { font-family: 'Rajdhani', sans-serif; color: #8888aa; margin-bottom: 25px; }
-
-    .modal-close {
-      background: #00f7ff;
-      color: #000;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 8px;
+    .form-success h3 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.8rem;
-      cursor: pointer;
-      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+    .form-success p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
 
-    @media (max-width: 600px) {
-      .torneo-info-grid { padding: 20px; }
-      .bracket-section { padding: 20px; }
-      .reglas-section, .form-section, .inscriptos-section { padding: 20px; }
-      .form-card { padding: 25px 20px; }
-      .form-row { grid-template-columns: 1fr; }
+    /* ---- CUPOS BAR ---- */
+    .cupos-bar-wrap {
+      margin: 6px 0 12px;
     }
+    .cupos-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+    .cupos-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .cupos-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(to right, var(--purple), var(--cyan));
+      width: 75%;
+      transition: width 1s ease;
+    }
+
+    /* ---- BRACKET PREVIEW ---- */
+    .bracket-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+    @media (max-width: 768px) { .bracket-section { padding: 0 20px 60px; } }
+
+    .bracket-card {
+      background: var(--card-bg);
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 50px;
+      text-align: center;
+      color: var(--text-dim);
+    }
+    .bracket-icon { font-size: 2.5rem; margin-bottom: 14px; }
+    .bracket-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .bracket-card p { font-size: 0.9rem; line-height: 1.6; }
+
+    /* ---- BACK LINK ---- */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--cyan); }
   </style>
 </head>
 <body>
 
 <header class="navbar" id="navbar">
-  <div class="logo glitch" data-text="LMS TORNEOS">LMS TORNEOS</div>
-  <nav>
+  <div class="logo glitch" data-text="LMS">LMS</div>
+  <nav class="nav-links">
     <a href="index.html">← Inicio</a>
+    <a href="index.html#miembros">Escuadra</a>
+    <a href="#inscripcion">Inscribirse</a>
   </nav>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mobile-link">← Inicio</a>
+  <a href="index.html#miembros" class="mobile-link">Escuadra</a>
+  <a href="#inscripcion" class="mobile-link">Inscribirse</a>
+</div>
+
 <!-- HERO -->
-<div class="torneo-hero">
-  <div class="hero-tag">🏆 COMPETENCIA OFICIAL</div>
-  <h1 class="glitch" data-text="COPA LAG MASTERS">COPA LAG MASTERS</h1>
-  <p>Demuestra que el lag no es una excusa.</p>
-</div>
+<section class="torneo-hero">
+  <div class="torneo-hero-grid"></div>
+  <div class="torneo-hero-content">
+    <div class="hero-badge">🏆 COMPETENCIA OFICIAL</div>
+    <h1 class="section-title glitch" data-text="COPA DE BIENVENIDA" style="font-size:clamp(1.6rem,5vw,3.2rem);margin-bottom:6px">COPA DE BIENVENIDA</h1>
+    <p>Demuestra que el lag no es una excusa.</p>
+  </div>
+</section>
 
-<!-- INFO CARDS -->
-<div class="torneo-info-grid">
-  <div class="info-card">
-    <div class="ic-icon">🎮</div>
-    <h4>Modo</h4>
-    <p>2 vs 2</p>
-  </div>
-  <div class="info-card">
-    <div class="ic-icon">📅</div>
-    <h4>Fecha</h4>
-    <p>30 Mayo 2025</p>
-  </div>
-  <div class="info-card">
-    <div class="ic-icon">👥</div>
-    <h4>Cupos</h4>
-    <p>16 equipos</p>
-  </div>
-  <div class="info-card">
-    <div class="ic-icon">🎁</div>
-    <h4>Premio</h4>
-    <p>Rol + Créditos</p>
-  </div>
-</div>
-
-<!-- TABS -->
-<div class="torneo-tabs">
-  <button class="tab-btn active" data-tab="bracket">🏆 Bracket</button>
-  <button class="tab-btn" data-tab="reglas">📋 Reglas</button>
-  <button class="tab-btn" data-tab="inscripcion">✍️ Inscribirse</button>
-  <button class="tab-btn" data-tab="inscriptos">👥 Inscriptos</button>
-</div>
-
-<!-- TAB: BRACKET -->
-<div class="tab-panel active" id="tab-bracket">
-  <div class="bracket-section">
-    <div class="bracket-wrapper">
-      <!-- Cuartos -->
-      <div class="bracket-round">
-        <div class="round-title">Cuartos</div>
-        <div class="match-card">
-          <div class="match-team winner"><span>LMS Marcos</span><span class="score">3</span></div>
-          <div class="match-team"><span>Team Rival 1</span><span class="score">1</span></div>
-        </div>
-        <div class="match-card">
-          <div class="match-team winner"><span>LMS Benja</span><span class="score">3</span></div>
-          <div class="match-team"><span>Team Rival 2</span><span class="score">2</span></div>
-        </div>
-        <div class="match-card">
-          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
-          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
-        </div>
-        <div class="match-card">
-          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
-          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
-        </div>
+<!-- DETALLES -->
+<div class="torneo-details">
+  <!-- Info del torneo -->
+  <div class="detail-card reveal">
+    <h3>🎮 Información del Torneo</h3>
+    <div class="info-row">
+      <span class="info-label">MODO</span>
+      <span class="info-value">2 vs 2</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">FECHA</span>
+      <span class="info-value">15 de Junio, 2025</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">HORA</span>
+      <span class="info-value">20:00 ARG</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">PLATAFORMA</span>
+      <span class="info-value">Rocket League Sideswipe</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">PREMIO</span>
+      <span class="info-value" style="color:var(--cyan)">Rol Especial + 500 Créditos</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">ESTADO</span>
+      <span class="tournament-status status-open" style="margin:0">ABIERTO</span>
+    </div>
+    <div style="margin-top:20px">
+      <div class="cupos-labels">
+        <span>Cupos</span>
+        <span id="cuposText">12 / 16</span>
       </div>
-
-      <div class="bracket-connector">→</div>
-
-      <!-- Semifinales -->
-      <div class="bracket-round">
-        <div class="round-title">Semis</div>
-        <div class="match-card">
-          <div class="match-team winner"><span>LMS Marcos</span><span class="score">3</span></div>
-          <div class="match-team"><span>LMS Benja</span><span class="score">1</span></div>
-        </div>
-        <div class="match-card">
-          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
-          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
-        </div>
-      </div>
-
-      <div class="bracket-connector">→</div>
-
-      <!-- Final -->
-      <div class="bracket-round">
-        <div class="round-title">Final</div>
-        <div class="match-card" style="border-color: rgba(0,247,255,0.5);">
-          <div class="match-team winner"><span>LMS Marcos</span><span class="score">?</span></div>
-          <div class="match-team"><span class="tbd">TBD</span><span class="score">-</span></div>
-        </div>
+      <div class="cupos-bar">
+        <div class="cupos-fill" id="cuposFill"></div>
       </div>
     </div>
-    <p style="text-align:center; color:#555; font-family:'Rajdhani',sans-serif; margin-top:30px; font-size:0.85rem;">
-      * Bracket de ejemplo. Se actualiza según los resultados reales.
-    </p>
+  </div>
+
+  <!-- Reglas -->
+  <div class="detail-card reveal">
+    <h3>📋 Reglas del Torneo</h3>
+    <ul class="rules-list">
+      <li><span class="rule-num">01</span> Respeto absoluto a los rivales. Cualquier falta será penalizada.</li>
+      <li><span class="rule-num">02</span> Conexión estable es responsabilidad de cada equipo. No se repiten partidas por lag.</li>
+      <li><span class="rule-num">03</span> Ser miembro activo del Discord del clan.</li>
+      <li><span class="rule-num">04</span> Presentarse a tiempo. 5 minutos de tolerancia, luego se da por perdido.</li>
+      <li><span class="rule-num">05</span> No se permiten smurf accounts o boosting.</li>
+      <li><span class="rule-num">06</span> Las decisiones del organizador son finales.</li>
+    </ul>
   </div>
 </div>
 
-<!-- TAB: REGLAS -->
-<div class="tab-panel" id="tab-reglas">
-  <div class="reglas-section">
-    <div class="regla-item">
-      <div class="regla-num">1</div>
-      <div class="regla-text">
-        <h4>Respeto obligatorio</h4>
-        <p>Respeto absoluto a rivales, árbitros y staff. Cualquier insulto o comportamiento tóxico resulta en descalificación inmediata.</p>
+<!-- BRACKET -->
+<div class="bracket-section">
+  <div class="bracket-card reveal">
+    <div class="bracket-icon">🏗️</div>
+    <h3>Bracket del Torneo</h3>
+    <p>El bracket se publicará una vez cerradas las inscripciones.<br>
+    Unite al Discord para recibir notificaciones en tiempo real.</p>
+    <a href="https://discord.gg/UERnEQ5sxj" class="btn btn-primary" style="margin-top:20px">Ver en Discord</a>
+  </div>
+</div>
+
+<!-- INSCRIPCION -->
+<div class="inscripcion-wrap" id="inscripcion">
+  <div class="form-card reveal">
+    <h2>📝 Inscribirse</h2>
+
+    <!-- Form -->
+    <div id="formContent">
+      <div class="form-group">
+        <label>NICK DE EPIC GAMES</label>
+        <input type="text" id="epicNick" placeholder="Tu ID de Epic exacto" autocomplete="off" required>
       </div>
+      <div class="form-group">
+        <label>RANGO ACTUAL</label>
+        <select id="rango" required>
+          <option value="">Seleccioná tu rango</option>
+          <option value="bronce-plata">🥉 Bronce / Plata</option>
+          <option value="oro-platino">🥇 Oro / Platino</option>
+          <option value="diamante">💎 Diamante</option>
+          <option value="champion">🏆 Champion+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>COMPAÑERO DE EQUIPO (opcional)</label>
+        <input type="text" id="compañero" placeholder="Nick de tu duo (si tienen equipo)">
+      </div>
+      <div class="form-group">
+        <label>ALGO MÁS QUE QUIERAS AGREGAR</label>
+        <textarea id="nota" placeholder="Experiencia, disponibilidad horaria, etc."></textarea>
+      </div>
+      <button class="btn btn-primary form-submit" id="formSubmit" onclick="submitForm()">
+        Registrarme al Torneo
+      </button>
     </div>
-    <div class="regla-item">
-      <div class="regla-num">2</div>
-      <div class="regla-text">
-        <h4>Conexión estable</h4>
-        <p>Los jugadores deben contar con conexión estable. Los problemas de lag no son excusa para resultados inválidos (sí, sabemos, es el nombre del clan).</p>
-      </div>
-    </div>
-    <div class="regla-item">
-      <div class="regla-num">3</div>
-      <div class="regla-text">
-        <h4>Miembro activo de Discord</h4>
-        <p>Para inscribirse, el jugador debe estar en el servidor de Discord del clan. Es el canal oficial de comunicación.</p>
-      </div>
-    </div>
-    <div class="regla-item">
-      <div class="regla-num">4</div>
-      <div class="regla-text">
-        <h4>Puntualidad</h4>
-        <p>Los partidos tienen 10 minutos de tolerancia. Pasado ese tiempo, el equipo que no se presentó pierde por W.O.</p>
-      </div>
-    </div>
-    <div class="regla-item">
-      <div class="regla-num">5</div>
-      <div class="regla-text">
-        <h4>Formato de partidos</h4>
-        <p>Todos los enfrentamientos son al mejor de 5 sets (BO5), excepto la final que es BO7.</p>
-      </div>
-    </div>
-    <div class="regla-item">
-      <div class="regla-num">6</div>
-      <div class="regla-text">
-        <h4>Capturas obligatorias</h4>
-        <p>Al finalizar cada partida, el equipo ganador debe enviar screenshot del resultado al canal de torneos en Discord.</p>
-      </div>
+
+    <!-- Éxito -->
+    <div class="form-success" id="formSuccess">
+      <div class="check">✅</div>
+      <h3>¡Inscripción enviada!</h3>
+      <p>Tu registro fue recibido. Seguí el Discord para confirmaciones y novedades del torneo.<br><br>Nos vemos en la arena.</p>
+      <a href="https://discord.gg/UERnEQ5sxj" class="btn btn-primary" style="margin-top:20px">Ir al Discord</a>
     </div>
   </div>
 </div>
 
-<!-- TAB: INSCRIPCION -->
-<div class="tab-panel" id="tab-inscripcion">
-  <div class="form-section">
-    <div class="form-card">
-      <h3>Formulario de Inscripción</h3>
-      <p>Completá el formulario para inscribirte en la Copa Lag Masters. Te contactaremos por Discord.</p>
-
-      <div id="formContainer">
-        <div class="form-group">
-          <label>Nick de Epic</label>
-          <input type="text" id="epicNick" placeholder="Tu nick exacto en Epic Games" required>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Rango actual</label>
-            <select id="playerRank">
-              <option value="">Seleccionar...</option>
-              <option>Bronce</option>
-              <option>Plata</option>
-              <option>Oro</option>
-              <option>Platino</option>
-              <option>Diamante</option>
-              <option>Champion</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Posición preferida</label>
-            <select id="playerPos">
-              <option value="">Seleccionar...</option>
-              <option>Attacker</option>
-              <option>Defender</option>
-              <option>Flex</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Usuario de Discord</label>
-          <input type="text" id="discordUser" placeholder="usuario#0000 o @usuario">
-        </div>
-        <div class="form-group">
-          <label>Nick del compañero de equipo</label>
-          <input type="text" id="teammateName" placeholder="Con quién vas a jugar (si ya tenés equipo)">
-        </div>
-        <button class="submit-btn" onclick="submitForm()">REGISTRARME AL TORNEO</button>
-      </div>
-    </div>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="index.html" class="back-link">← Volver al Inicio</a>
+    <span style="font-family:'Orbitron',sans-serif;font-size:1rem;letter-spacing:3px;margin-top:10px" class="glitch" data-text="LAG MASTERS">LAG MASTERS</span>
+    <p style="font-size:0.75rem;opacity:0.35;margin-top:4px">© 2025 Lag Masters · Rocket League Sideswipe</p>
   </div>
-</div>
+</footer>
 
-<!-- TAB: INSCRIPTOS -->
-<div class="tab-panel" id="tab-inscriptos">
-  <div class="inscriptos-section">
-    <p class="inscriptos-count">Inscriptos: <span id="inscriptosCount">0</span> / 16</p>
-    <div id="inscriptosList"></div>
-    <p style="text-align:center; color:#555; font-family:'Rajdhani',sans-serif; font-size:0.85rem; margin-top:20px;">
-      Los registros se guardan localmente en este dispositivo.
-    </p>
-  </div>
-</div>
-
-<!-- MODAL ÉXITO -->
-<div class="modal-overlay" id="successModal">
-  <div class="modal-box">
-    <div class="modal-icon">🏆</div>
-    <h3>¡Inscripción exitosa!</h3>
-    <p id="modalMessage">Te registramos al torneo. Vas a recibir más información por Discord.</p>
-    <button class="modal-close" onclick="closeModal()">LISTO</button>
-  </div>
-</div>
-
-<!-- STATUS -->
 <div class="server-status">
   <div class="status-dot"></div>
   <span>SERVERS: ONLINE</span>
 </div>
 
-<script src="script.js"></script>
+<div class="toast" id="toast"></div>
+
 <script>
-  // ===== TABS =====
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-      if (btn.dataset.tab === 'inscriptos') renderInscriptos();
-    });
+// Navbar
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger?.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
   });
+});
 
-  // ===== INSCRIPTOS (localStorage) =====
-  function getInscriptos() {
-    try { return JSON.parse(localStorage.getItem('lms_inscriptos') || '[]'); }
-    catch { return []; }
-  }
-
-  function saveInscripto(data) {
-    const list = getInscriptos();
-    list.push(data);
-    localStorage.setItem('lms_inscriptos', JSON.stringify(list));
-  }
-
-  function renderInscriptos() {
-    const list = getInscriptos();
-    const container = document.getElementById('inscriptosList');
-    document.getElementById('inscriptosCount').textContent = list.length;
-    if (list.length === 0) {
-      container.innerHTML = '<p style="text-align:center;color:#555;font-family:\'Rajdhani\',sans-serif;">Todavía no hay inscriptos.</p>';
-      return;
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
     }
-    container.innerHTML = list.map((p, i) => `
-      <div class="inscripto-row">
-        <span class="inscripto-num">#${i + 1}</span>
-        <span class="inscripto-nick">${p.nick}</span>
-        <span class="inscripto-rank">${p.rank}<br><small style="color:#6a00ff">${p.pos}</small></span>
-      </div>
-    `).join('');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Cupos
+const cupos = 12, maxCupos = 16;
+document.getElementById('cuposFill').style.width = (cupos / maxCupos * 100) + '%';
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Form submit
+function submitForm() {
+  const nick = document.getElementById('epicNick').value.trim();
+  const rango = document.getElementById('rango').value;
+
+  if (!nick) {
+    showToast('⚠ Ingresá tu Nick de Epic');
+    document.getElementById('epicNick').focus();
+    return;
+  }
+  if (!rango) {
+    showToast('⚠ Seleccioná tu rango');
+    document.getElementById('rango').focus();
+    return;
   }
 
-  // ===== FORM SUBMIT =====
-  function submitForm() {
-    const nick = document.getElementById('epicNick').value.trim();
-    const rank = document.getElementById('playerRank').value;
-    const pos = document.getElementById('playerPos').value;
+  // Simulación de envío
+  const btn = document.getElementById('formSubmit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
 
-    if (!nick) { alert('Ingresá tu nick de Epic.'); return; }
-    if (!rank) { alert('Seleccioná tu rango.'); return; }
-
-    const inscriptos = getInscriptos();
-    if (inscriptos.length >= 16) {
-      alert('Lo sentimos, los cupos están completos.');
-      return;
-    }
-    if (inscriptos.find(p => p.nick.toLowerCase() === nick.toLowerCase())) {
-      alert('Ese nick ya está inscripto.');
-      return;
-    }
-
-    saveInscripto({ nick, rank, pos, discord: document.getElementById('discordUser').value, teammate: document.getElementById('teammateName').value });
-
-    document.getElementById('modalMessage').textContent = `¡${nick} registrado! Revisá Discord para más info.`;
-    document.getElementById('successModal').classList.add('show');
-    document.getElementById('epicNick').value = '';
-    document.getElementById('playerRank').value = '';
-    document.getElementById('playerPos').value = '';
-    document.getElementById('discordUser').value = '';
-    document.getElementById('teammateName').value = '';
-  }
-
-  function closeModal() {
-    document.getElementById('successModal').classList.remove('show');
-  }
-
-  // Inicializar conteo
-  renderInscriptos();
+  setTimeout(() => {
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+    // Update cupos
+    document.getElementById('cuposText').textContent = (cupos + 1) + ' / ' + maxCupos;
+    document.getElementById('cuposFill').style.width = ((cupos + 1) / maxCupos * 100) + '%';
+  }, 1200);
+}
 </script>
 </body>
 </html>

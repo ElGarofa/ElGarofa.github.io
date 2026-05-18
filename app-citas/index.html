@@ -2,28 +2,1254 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Therian Connect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sniffer 🐾</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --card: #16161f;
+  --border: rgba(255,255,255,0.07);
+  --text: #f0eeff;
+  --muted: #6b6880;
+  --dim: #3a3850;
+  --amber: #ffb347;
+  --rose: #ff4d6d;
+  --forest: #2d9e5f;
+  --sky: #38bdf8;
+  --glow-amber: rgba(255,179,71,0.18);
+  --glow-rose: rgba(255,77,109,0.18);
+}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+}
+
+/* ── GRAIN ── */
+body::after {
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9999;
+  opacity:0.6;
+}
+
+/* ── WRAPPER ── */
+.app-shell {
+  width: 100%;
+  max-width: 430px;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px 12px;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-paw { font-size: 1rem; }
+
+.xp-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,179,71,0.1);
+  border: 1px solid rgba(255,179,71,0.2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--amber);
+}
+
+.xp-bar-wrap {
+  width: 60px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber), var(--rose));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.screen.active { display: flex; }
+
+/* ── EXPLORE SCREEN ── */
+.card-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px 0;
+  position: relative;
+  min-height: 0;
+}
+
+/* ghost card behind */
+.card-ghost {
+  position: absolute;
+  width: calc(100% - 56px);
+  height: calc(100% - 16px);
+  max-width: 360px;
+  border-radius: 24px;
+  background: var(--card);
+  transform: scale(0.95) translateY(10px);
+  opacity: 0.4;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 360px;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.08s ease;
+  will-change: transform;
+}
+
+.profile-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9) 0%,
+    rgba(0,0,0,0.3) 45%,
+    transparent 70%
+  );
+}
+
+.card-top-gradient {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+}
+
+.card-type-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 24px 24px 20px;
+}
+
+.card-name {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+.card-desc {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* swipe indicators */
+.swipe-indicator {
+  position: absolute;
+  top: 32px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+  border: 3px solid;
+}
+
+.swipe-indicator.like {
+  left: 20px;
+  color: var(--forest);
+  border-color: var(--forest);
+  transform: rotate(-15deg);
+}
+
+.swipe-indicator.nope {
+  right: 20px;
+  color: var(--rose);
+  border-color: var(--rose);
+  transform: rotate(15deg);
+}
+
+/* ── SWIPE BUTTONS ── */
+.swipe-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0 8px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 1.4rem;
+  position: relative;
+}
+
+.action-btn::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.action-btn:active { transform: scale(0.9); }
+
+.btn-dislike {
+  width: 62px; height: 62px;
+  background: var(--surface);
+  border: 2px solid rgba(255,77,109,0.3);
+  color: var(--rose);
+}
+
+.btn-dislike:hover {
+  background: rgba(255,77,109,0.12);
+  border-color: var(--rose);
+  transform: scale(1.08);
+}
+
+.btn-like {
+  width: 74px; height: 74px;
+  background: linear-gradient(135deg, var(--rose), #c2185b);
+  color: white;
+  box-shadow: 0 8px 24px rgba(255,77,109,0.4);
+}
+
+.btn-like:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(255,77,109,0.6);
+}
+
+.btn-super {
+  width: 58px; height: 58px;
+  background: var(--surface);
+  border: 2px solid rgba(56,189,248,0.3);
+  color: var(--sky);
+  font-size: 1.1rem;
+}
+
+.btn-super:hover {
+  background: rgba(56,189,248,0.1);
+  border-color: var(--sky);
+  transform: scale(1.08);
+}
+
+/* empty state */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px;
+  text-align: center;
+}
+
+.empty-state .paw-big { font-size: 4rem; opacity: 0.3; }
+.empty-state h3 { font-family: 'Unbounded', sans-serif; font-size: 1rem; color: var(--muted); }
+.empty-state p { color: var(--dim); font-size: 0.85rem; }
+
+/* ── MATCHES SCREEN ── */
+.screen-header {
+  padding: 8px 22px 16px;
+  flex-shrink: 0;
+}
+
+.screen-title {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.screen-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.matches-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 8px;
+}
+
+.matches-list::-webkit-scrollbar { width: 0; }
+
+.match-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.match-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--glow-rose), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.match-item:hover::before { opacity: 1; }
+.match-item:hover { border-color: rgba(255,77,109,0.3); transform: translateX(4px); }
+
+.match-avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--rose);
+  flex-shrink: 0;
+}
+
+.match-name {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.match-type {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.match-arrow {
+  margin-left: auto;
+  color: var(--dim);
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.match-item:hover .match-arrow { color: var(--rose); }
+
+.no-matches {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--muted);
+  text-align: center;
+  padding: 40px;
+}
+
+.no-matches .icon { font-size: 3rem; opacity: 0.3; }
+.no-matches p { font-size: 0.85rem; }
+
+/* ── CHAT SCREEN ── */
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chat-header-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--rose);
+}
+
+.chat-header-name {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.chat-header-type {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px 4px 0;
+  transition: color 0.2s;
+}
+
+.back-btn:hover { color: var(--text); }
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.chat-messages::-webkit-scrollbar { width: 0; }
+
+.msg-bubble {
+  max-width: 72%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  animation: popIn 0.2s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.msg-bubble.mine {
+  background: linear-gradient(135deg, var(--rose), #c2185b);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
+}
+
+.msg-bubble.theirs {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
+}
+
+.chat-input-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chat-input-area input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 10px 18px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input-area input::placeholder { color: var(--dim); }
+.chat-input-area input:focus { border-color: rgba(255,77,109,0.5); }
+
+.send-btn {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), #c2185b);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.send-btn:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(255,77,109,0.4); }
+
+/* ── PROFILE SCREEN ── */
+.profile-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 22px;
+}
+
+.profile-content::-webkit-scrollbar { width: 0; }
+
+.profile-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.profile-avatar-ring {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--amber), var(--rose));
+  margin-bottom: 14px;
+}
+
+.profile-avatar-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg);
+}
+
+.profile-username {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.profile-spirit {
+  color: var(--amber);
+  font-size: 0.85rem;
+}
+
+/* XP block */
+.xp-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.xp-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.xp-level-label {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.xp-level-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--amber);
+}
+
+.xp-track {
+  height: 8px;
+  background: var(--surface);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.xp-track-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber), var(--rose));
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.xp-caption {
+  font-size: 0.72rem;
+  color: var(--dim);
+}
+
+/* stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--rose);
+  display: block;
+}
+
+.stat-lbl {
+  font-size: 0.68rem;
+  color: var(--dim);
+  margin-top: 4px;
+  display: block;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  display: flex;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--dim);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-btn.active { color: var(--rose); }
+
+.nav-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 2px;
+  background: var(--rose);
+  border-radius: 1px;
+  transition: width 0.25s;
+}
+
+.nav-btn.active::before { width: 24px; }
+
+.nav-icon { font-size: 1.3rem; }
+.nav-label { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+
+/* ── MATCH TOAST ── */
+.match-toast {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  animation: toastIn 0.4s ease;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.toast-glow {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,77,109,0.25), transparent);
+  filter: blur(40px);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.toast-emojis {
+  font-size: 2.5rem;
+  animation: bounce 0.6s ease infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-8px); }
+}
+
+.toast-title {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--amber), var(--rose));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+
+.toast-names {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.toast-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--rose);
+  box-shadow: 0 0 20px rgba(255,77,109,0.5);
+}
+
+.toast-name {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.toast-btn {
+  background: linear-gradient(135deg, var(--rose), #c2185b);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 14px 32px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.toast-btn:hover { transform: scale(1.06); }
+
+.toast-skip {
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-size: 0.8rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+</style>
 </head>
-
 <body>
 
-<div class="mobile-container">
+<div class="app-shell">
 
-<div id="app"></div>
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="logo"><span class="logo-paw">🐾</span> Sniffer</div>
+    <div class="xp-pill">
+      Nv.<span id="topLvl">1</span>
+      <div class="xp-bar-wrap"><div class="xp-bar-fill" id="topXpBar" style="width:0%"></div></div>
+    </div>
+  </div>
 
-<div class="bottom-nav">
-<button onclick="navigate('inicio')">🔥</button>
-<button onclick="navigate('matches')">❤️</button>
-<button onclick="navigate('perfil')">👤</button>
+  <!-- ── EXPLORE ── -->
+  <div class="screen active" id="screen-explore">
+
+    <div class="card-area" id="cardArea">
+      <div class="card-ghost"></div>
+      <!-- card injected by JS -->
+    </div>
+
+    <div class="swipe-actions" id="swipeActions">
+      <button class="action-btn btn-dislike" onclick="swipe(false)" title="Pasar">✕</button>
+      <button class="action-btn btn-like"    onclick="swipe(true)"  title="Like">🐾</button>
+      <button class="action-btn btn-super"   onclick="swipe('super')" title="Super Like">⭐</button>
+    </div>
+
+  </div>
+
+  <!-- ── MATCHES ── -->
+  <div class="screen" id="screen-matches">
+    <div class="screen-header">
+      <div class="screen-title">Tus Matches</div>
+      <div class="screen-sub" id="matchCount">0 conexiones</div>
+    </div>
+    <div class="matches-list" id="matchesList"></div>
+  </div>
+
+  <!-- ── CHAT ── -->
+  <div class="screen" id="screen-chat">
+    <div class="chat-header">
+      <button class="back-btn" onclick="showScreen('matches')">←</button>
+      <img class="chat-header-avatar" id="chatAvatar" src="">
+      <div>
+        <div class="chat-header-name" id="chatName"></div>
+        <div class="chat-header-type" id="chatType"></div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="msgInput" placeholder="Escribí algo..." 
+             onkeydown="if(event.key==='Enter') sendMsg()">
+      <button class="send-btn" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+
+  <!-- ── PROFILE ── -->
+  <div class="screen" id="screen-profile">
+    <div class="profile-content">
+      <div class="profile-hero">
+        <div class="profile-avatar-ring">
+          <img src="https://picsum.photos/200/200?random=99" id="profileAvatar">
+        </div>
+        <div class="profile-username">Tú</div>
+        <div class="profile-spirit" id="profileSpirit">🌙 Espíritu Salvaje</div>
+      </div>
+
+      <div class="xp-block">
+        <div class="xp-block-header">
+          <span class="xp-level-label">NIVEL</span>
+          <span class="xp-level-num" id="profileLvl">1</span>
+        </div>
+        <div class="xp-track">
+          <div class="xp-track-fill" id="profileXpTrack" style="width:0%"></div>
+        </div>
+        <div class="xp-caption" id="profileXpCaption">0 / 100 XP</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-num" id="statLikes">0</span>
+          <span class="stat-lbl">Likes dados</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" id="statMatches">0</span>
+          <span class="stat-lbl">Matches</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" id="statMessages">0</span>
+          <span class="stat-lbl">Mensajes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-screen="explore" onclick="showScreen('explore')">
+      <span class="nav-icon">🔥</span>
+      <span class="nav-label">Explorar</span>
+    </button>
+    <button class="nav-btn" data-screen="matches" onclick="showScreen('matches')">
+      <span class="nav-icon">❤️</span>
+      <span class="nav-label">Matches</span>
+    </button>
+    <button class="nav-btn" data-screen="profile" onclick="showScreen('profile')">
+      <span class="nav-icon">🐺</span>
+      <span class="nav-label">Perfil</span>
+    </button>
+  </nav>
+
 </div>
 
+<!-- MATCH TOAST -->
+<div class="match-toast" id="matchToast" style="display:none">
+  <div class="toast-glow"></div>
+  <div class="toast-emojis">🐾 ❤️ 🐾</div>
+  <div class="toast-title">¡Match!</div>
+  <div class="toast-names" id="toastNames"></div>
+  <button class="toast-btn" id="toastChatBtn">Abrir chat</button>
+  <button class="toast-skip" onclick="closeToast()">Seguir explorando</button>
 </div>
 
-<script src="app.js"></script>
+<script>
+/* ── STATE ── */
+let state = JSON.parse(localStorage.getItem("snifferState2")) || {
+  xp: 0, nivel: 1,
+  matches: [],
+  likesEnviados: [],
+  likesRecibidos: [],
+  chats: {},
+  messageCount: 0
+}
 
+function save() {
+  localStorage.setItem("snifferState2", JSON.stringify(state))
+}
+
+/* ── USUARIOS ── */
+const usuarios = [
+  { id:1, nombre:"Luna",   tipo:"Lobo 🌙",    desc:"Corredora nocturna. Amo la luna llena y los bosques.",   img:"https://picsum.photos/400/600?random=10" },
+  { id:2, nombre:"Kai",    tipo:"Zorro 🦊",   desc:"Astuto y curioso. Siempre encontrando nuevos caminos.",   img:"https://picsum.photos/400/600?random=20" },
+  { id:3, nombre:"Nova",   tipo:"Gato 🐱",    desc:"Independiente. Me gusta el silencio y las alturas.",      img:"https://picsum.photos/400/600?random=30" },
+  { id:4, nombre:"Rune",   tipo:"Cuervo 🐦‍⬛", desc:"Observador de todo. Las sombras son mi hogar.",           img:"https://picsum.photos/400/600?random=40" },
+  { id:5, nombre:"Asha",   tipo:"Tigre 🐯",   desc:"Fuerza y gracia. Sigo mi instinto, siempre.",             img:"https://picsum.photos/400/600?random=50" },
+  { id:6, nombre:"Ember",  tipo:"Dragón 🐉",  desc:"Libre, feroz, imposible de ignorar.",                     img:"https://picsum.photos/400/600?random=60" },
+  { id:7, nombre:"Frost",  tipo:"Oso 🐻",     desc:"Tranquilo hasta que no lo soy. Naturaleza pura.",         img:"https://picsum.photos/400/600?random=70" },
+]
+
+const fakeReplies = [
+  "Hola! 🐾", "Me alegra que hayas escrito ✨",
+  "¿Tu tótem también cambia con la luna? 🌙",
+  "Cuéntame más sobre vos 👀",
+  "Awoo~ 🐺", "Eso es muy interesante...",
+  "Soy más nocturno/a 🦉", "¡Yo también siento eso!",
+  "¿Alguna vez tuviste un sueño de manada?",
+]
+
+let currentIndex = 0
+let activeChatId = null
+
+/* ── SCREENS ── */
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'))
+  document.getElementById('screen-'+name).classList.add('active')
+  document.querySelector(`[data-screen="${name}"]`)?.classList.add('active')
+
+  if (name === 'matches') renderMatches()
+  if (name === 'profile') renderProfile()
+  if (name === 'explore') renderCard()
+}
+
+/* ── CARD RENDER ── */
+function renderCard() {
+  const area = document.getElementById('cardArea')
+  const actions = document.getElementById('swipeActions')
+  const available = usuarios.filter(u => !state.likesEnviados.includes(u.id))
+  const user = available[0]
+
+  if (!user) {
+    area.innerHTML = `
+      <div class="empty-state">
+        <div class="paw-big">🐾</div>
+        <h3>Sin más perfiles</h3>
+        <p>Volvé más tarde,<br>la manada crece.</p>
+      </div>`
+    actions.style.opacity = '0.3'
+    actions.style.pointerEvents = 'none'
+    return
+  }
+
+  actions.style.opacity = '1'
+  actions.style.pointerEvents = 'auto'
+
+  area.innerHTML = `
+    <div class="profile-card" id="pCard">
+      <img src="${user.img}" draggable="false">
+      <div class="card-top-gradient"></div>
+      <div class="card-gradient"></div>
+      <div class="card-type-badge">${user.tipo}</div>
+      <div class="swipe-indicator like" id="indLike">GUSTAR</div>
+      <div class="swipe-indicator nope" id="indNope">PASAR</div>
+      <div class="card-info">
+        <div class="card-name">${user.nombre}</div>
+        <div class="card-desc">${user.desc}</div>
+      </div>
+    </div>`
+
+  initDrag(document.getElementById('pCard'), user)
+}
+
+/* ── DRAG SWIPE ── */
+function initDrag(card, user) {
+  let startX = 0, startY = 0, curX = 0
+  let dragging = false
+
+  function onStart(e) {
+    dragging = true
+    const p = e.touches ? e.touches[0] : e
+    startX = p.clientX; startY = p.clientY
+    card.style.transition = 'none'
+  }
+
+  function onMove(e) {
+    if (!dragging) return
+    const p = e.touches ? e.touches[0] : e
+    curX = p.clientX - startX
+    const curY = p.clientY - startY
+    const rot = curX * 0.08
+    card.style.transform = `translate(${curX}px, ${curY}px) rotate(${rot}deg)`
+    
+    const likeEl = document.getElementById('indLike')
+    const nopeEl = document.getElementById('indNope')
+    if (curX > 30) { likeEl.style.opacity = Math.min((curX-30)/80,1); nopeEl.style.opacity=0 }
+    else if (curX < -30) { nopeEl.style.opacity = Math.min((-curX-30)/80,1); likeEl.style.opacity=0 }
+    else { likeEl.style.opacity=0; nopeEl.style.opacity=0 }
+  }
+
+  function onEnd() {
+    if (!dragging) return
+    dragging = false
+    card.style.transition = 'transform 0.4s ease'
+    if (curX > 80) {
+      card.style.transform = `translate(120%, -20%) rotate(25deg)`
+      setTimeout(() => processSwipe(true, user), 350)
+    } else if (curX < -80) {
+      card.style.transform = `translate(-120%, -20%) rotate(-25deg)`
+      setTimeout(() => processSwipe(false, user), 350)
+    } else {
+      card.style.transform = ''
+      document.getElementById('indLike').style.opacity = 0
+      document.getElementById('indNope').style.opacity = 0
+    }
+    curX = 0
+  }
+
+  card.addEventListener('mousedown', onStart)
+  card.addEventListener('touchstart', onStart, { passive: true })
+  document.addEventListener('mousemove', onMove)
+  document.addEventListener('touchmove', onMove, { passive: true })
+  document.addEventListener('mouseup', onEnd)
+  document.addEventListener('touchend', onEnd)
+}
+
+/* ── SWIPE LOGIC ── */
+function swipe(like) {
+  const available = usuarios.filter(u => !state.likesEnviados.includes(u.id))
+  const user = available[0]
+  if (!user) return
+  const card = document.getElementById('pCard')
+  if (!card) return
+
+  if (like === true || like === 'super') {
+    card.style.transition = 'transform 0.35s ease'
+    card.style.transform = 'translate(120%,-15%) rotate(20deg)'
+  } else {
+    card.style.transition = 'transform 0.35s ease'
+    card.style.transform = 'translate(-120%,-15%) rotate(-20deg)'
+  }
+
+  setTimeout(() => processSwipe(like, user), 320)
+}
+
+function processSwipe(like, user) {
+  state.likesEnviados.push(user.id)
+
+  if (like === true || like === 'super') {
+    const isMatch = like === 'super' ? true : Math.random() > 0.4
+    if (isMatch && !state.matches.find(m => m.id === user.id)) {
+      state.matches.push(user)
+      state.chats[user.id] = []
+      state.xp += like === 'super' ? 25 : 10
+      showMatchToast(user)
+    } else {
+      state.xp += 5
+    }
+  }
+
+  if (state.xp >= 100) { state.nivel++; state.xp = 0 }
+
+  save()
+  updateXpUI()
+  renderCard()
+}
+
+/* ── MATCH TOAST ── */
+let pendingChatId = null
+
+function showMatchToast(user) {
+  pendingChatId = user.id
+  const toast = document.getElementById('matchToast')
+  document.getElementById('toastNames').innerHTML = `
+    <div>
+      <img class="toast-avatar" src="https://picsum.photos/200/200?random=99">
+      <div class="toast-name">Tú</div>
+    </div>
+    <div>
+      <img class="toast-avatar" src="${user.img}">
+      <div class="toast-name">${user.nombre}</div>
+    </div>`
+  document.getElementById('toastChatBtn').onclick = () => {
+    closeToast()
+    openChat(user.id)
+    showScreen('chat')
+  }
+  toast.style.display = 'flex'
+}
+
+function closeToast() {
+  document.getElementById('matchToast').style.display = 'none'
+}
+
+/* ── MATCHES SCREEN ── */
+function renderMatches() {
+  const list = document.getElementById('matchesList')
+  const count = document.getElementById('matchCount')
+  count.textContent = `${state.matches.length} ${state.matches.length === 1 ? 'conexión' : 'conexiones'}`
+
+  if (!state.matches.length) {
+    list.innerHTML = `<div class="no-matches"><div class="icon">🐾</div><p>Seguí explorando,<br>tu manada te espera.</p></div>`
+    return
+  }
+
+  list.innerHTML = state.matches.map(m => `
+    <div class="match-item" onclick="openChat(${m.id}); showScreen('chat')">
+      <img class="match-avatar" src="${m.img}">
+      <div>
+        <div class="match-name">${m.nombre}</div>
+        <div class="match-type">${m.tipo}</div>
+      </div>
+      <span class="match-arrow">→</span>
+    </div>
+  `).join('')
+}
+
+/* ── CHAT ── */
+function openChat(id) {
+  activeChatId = id
+  const user = state.matches.find(m => m.id === id)
+  document.getElementById('chatAvatar').src = user.img
+  document.getElementById('chatName').textContent = user.nombre
+  document.getElementById('chatType').textContent = user.tipo
+  if (!state.chats[id]) state.chats[id] = []
+  renderMessages()
+}
+
+function renderMessages() {
+  const box = document.getElementById('chatMessages')
+  box.innerHTML = (state.chats[activeChatId] || []).map(m =>
+    `<div class="msg-bubble ${m.mine ? 'mine' : 'theirs'}">${m.text}</div>`
+  ).join('')
+  box.scrollTop = box.scrollHeight
+}
+
+function sendMsg() {
+  const input = document.getElementById('msgInput')
+  const text = input.value.trim()
+  if (!text || activeChatId === null) return
+
+  state.chats[activeChatId].push({ text, mine: true })
+  state.messageCount = (state.messageCount || 0) + 1
+  input.value = ''
+  save()
+  renderMessages()
+
+  setTimeout(() => {
+    const reply = fakeReplies[Math.floor(Math.random() * fakeReplies.length)]
+    state.chats[activeChatId].push({ text: reply, mine: false })
+    save()
+    renderMessages()
+  }, 700 + Math.random() * 600)
+}
+
+/* ── PROFILE ── */
+function renderProfile() {
+  document.getElementById('profileLvl').textContent = state.nivel
+  document.getElementById('profileXpTrack').style.width = state.xp + '%'
+  document.getElementById('profileXpCaption').textContent = `${state.xp} / 100 XP`
+  document.getElementById('statLikes').textContent = state.likesEnviados.length
+  document.getElementById('statMatches').textContent = state.matches.length
+  document.getElementById('statMessages').textContent = state.messageCount || 0
+}
+
+/* ── XP UI ── */
+function updateXpUI() {
+  document.getElementById('topLvl').textContent = state.nivel
+  document.getElementById('topXpBar').style.width = state.xp + '%'
+}
+
+/* ── INIT ── */
+updateXpUI()
+renderCard()
+</script>
 </body>
 </html>

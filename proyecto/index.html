@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Municipalidad de San Miguel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gray:#4E4E4E; --gray-dark:#3A3A3A;
+  --blue:#1CADE4; --blue-dark:#0E8FC0; --blue-bar:#1B9FD8;
+  --bg:#FFFFFF; --bg-soft:#F2F3F4; --ink:#2E2E2E; --ink-soft:#6B7076;
+  --line:rgba(0,0,0,.08); --fs:1; --radius:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#14171A; --bg-soft:#1D2126; --ink:#EDEFF2; --ink-soft:#AEB4BC; --line:rgba(255,255,255,.12); }
+}
+:root[data-theme="dark"]{ --bg:#14171A; --bg-soft:#1D2126; --ink:#EDEFF2; --ink-soft:#AEB4BC; --line:rgba(255,255,255,.12); }
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  font-size:calc(16px*var(--fs));}
+h1,h2,h3{margin:0 0 .3rem;color:var(--ink);font-weight:800;}
+p{line-height:1.55;color:var(--ink-soft);margin:0 0 .5rem;}
+.hidden{display:none !important;}
+button{font-family:inherit;}
+
+/* HEADER */
+header{background:var(--gray);position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px);}
+.hd{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1rem;padding:.7rem 1.1rem;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:.7rem;flex-shrink:0;}
+.brand .seal{width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;}
+.brand-txt strong{display:block;color:#fff;font-size:.75rem;letter-spacing:.03em;font-weight:600;}
+.brand-txt span{display:block;color:var(--blue);font-size:1.15rem;font-weight:800;letter-spacing:.02em;}
+nav{display:flex;gap:.5rem;flex-wrap:wrap;margin-left:auto;}
+.navbtn{background:transparent;border:1px solid #8A8A8A;color:#fff;font-weight:600;font-size:.82rem;padding:.5rem .9rem;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:.4rem;}
+.navbtn:hover{background:rgba(255,255,255,.1);}
+.navbtn.accent{background:var(--blue);border-color:var(--blue);}
+.navbtn.accent.on{background:#fff;color:var(--blue-dark);}
+@media(max-width:860px){ nav .navlabel{display:none;} }
+@media(max-width:600px){ .brand-txt{display:none;} nav{gap:.35rem;} .navbtn{padding:.5rem .6rem;} }
+
+.announce{background:var(--blue-bar);color:#fff;text-align:center;padding:.7rem 1rem;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+
+.searchwrap{max-width:700px;margin:0 auto;text-align:center;padding:2rem 1.1rem 1.6rem;}
+.searchwrap h2{font-size:1.3rem;}
+.searchbar{display:flex;align-items:center;border:1px solid var(--line);border-radius:24px;padding:.4rem .5rem .4rem 1.1rem;margin-top:.8rem;background:var(--bg);}
+.searchbar input{flex:1;border:none;outline:none;font-size:1rem;background:transparent;color:var(--ink);padding:.4rem 0;}
+.searchbar button{background:var(--bg-soft);border:none;border-radius:50%;width:38px;height:38px;font-size:1.05rem;cursor:pointer;}
+
+/* HERO */
+.hero{position:relative;background:linear-gradient(120deg,#0E8FC0,#1CADE4 60%,#5FD0EE);min-height:280px;display:flex;align-items:flex-end;overflow:hidden;}
+.hero-cap{color:#fff;padding:1.6rem 2rem 2.8rem;max-width:600px;}
+.hero-cap .eyebrow{font-weight:700;font-size:.95rem;letter-spacing:.03em;}
+.hero-cap h2{color:#fff;font-size:calc(1.9rem*var(--fs));margin:.1rem 0;}
+.hero-arrow{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.3);border:none;color:#fff;font-size:1.1rem;cursor:pointer;z-index:2;}
+.hero-arrow.l{left:10px;} .hero-arrow.r{right:10px;}
+
+.portals-wrap{max-width:1200px;margin:-2.6rem auto 0;padding:0 1.1rem;position:relative;z-index:3;}
+.portals{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+@media(max-width:900px){.portals{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:560px){.portals{grid-template-columns:repeat(2,1fr);}}
+.portal-card{background:var(--bg);border:1px solid var(--line);border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.08);padding:1.4rem 1rem;text-align:center;cursor:pointer;}
+.portal-card .ic{font-size:2.1rem;color:var(--blue);margin-bottom:.6rem;}
+.portal-card strong{display:block;font-size:.82rem;font-weight:800;letter-spacing:.01em;color:var(--ink);text-transform:uppercase;}
+
+.wrap{max-width:1200px;margin:0 auto;padding:2.2rem 1.1rem;}
+h2.section{font-size:1.35rem;text-align:center;margin-bottom:1.2rem;font-weight:800;}
+
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+@media(max-width:760px){.prog-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.prog-grid{grid-template-columns:1fr;}}
+.prog-item{display:flex;align-items:stretch;background:var(--bg-soft);cursor:pointer;}
+.prog-ic{width:64px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;}
+.prog-label{display:flex;align-items:center;padding:.7rem 1rem;font-weight:700;font-size:.85rem;color:var(--ink);letter-spacing:.01em;}
+
+.sumate{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:600px){.sumate{grid-template-columns:1fr;}}
+.sumate-card{background:var(--bg-soft);border-radius:10px;padding:1.3rem 1.4rem;display:flex;align-items:center;gap:1rem;cursor:pointer;}
+.sumate-card .ic{font-size:1.7rem;}
+.sumate-card strong{display:block;font-size:1rem;}
+.sumate-card span{font-size:.85rem;}
+
+.areas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+@media(max-width:760px){.areas-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.areas-grid{grid-template-columns:1fr;}}
+.area-card{background:var(--bg);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:4px;padding:.9rem 1.1rem;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.01em;}
+
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+@media(max-width:800px){.news-grid{grid-template-columns:1fr;}}
+.news-card{border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.news-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;color:#fff;}
+.news-body{padding:1rem;}
+.pill{display:inline-block;font-size:.7rem;font-weight:700;color:var(--blue-dark);background:rgba(28,173,228,.13);padding:.15rem .6rem;border-radius:20px;margin-bottom:.4rem;}
+.news-body strong{display:block;font-size:.95rem;margin-bottom:.3rem;}
+.news-body p{font-size:.85rem;margin:0;}
+
+.emg{background:var(--gray-dark);color:#fff;border-radius:10px;padding:1.1rem 1.3rem;}
+.emg h3{color:#fff;font-size:1rem;}
+.emg ul{display:flex;flex-wrap:wrap;gap:.5rem 1rem;list-style:none;padding:0;margin:0;font-size:.85rem;}
+.emg b{color:var(--blue);} .emg a{color:#fff;font-weight:600;}
+.footer-info{text-align:center;font-size:.8rem;color:var(--ink-soft);margin-top:2rem;}
+
+/* MASCOT */
+.mascot-btn{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:1.6rem;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;z-index:30;}
+.mascot-tip{position:fixed;bottom:86px;right:20px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:1rem;max-width:230px;box-shadow:0 8px 20px rgba(0,0,0,.15);z-index:30;}
+.mascot-tip p{font-size:.85rem;margin-bottom:.6rem;}
+.mascot-tip button{background:var(--blue);color:#fff;border:none;border-radius:16px;padding:.4rem .9rem;font-weight:700;font-size:.8rem;cursor:pointer;}
+
+/* MODO SIMPLE */
+body.simple .searchwrap,body.simple .hero,body.simple .portals-wrap,body.simple #normal-extra{display:none;}
+.simple-screen{display:none;text-align:center;padding:2rem 1.1rem 3rem;max-width:1000px;margin:0 auto;}
+body.simple .simple-screen{display:block;}
+.eyebrow-s{color:var(--blue-dark);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;}
+.simple-screen h1{font-size:calc(1.7rem*var(--fs));margin:.3rem 0 .3rem;}
+.mic{width:96px;height:96px;border-radius:50%;background:var(--gray-dark);color:#fff;border:none;font-size:2.2rem;cursor:pointer;margin:1.4rem auto .6rem;display:flex;align-items:center;justify-content:center;}
+.mic-label{font-weight:700;color:var(--ink);margin-bottom:1.6rem;}
+.simple-main{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:640px;margin:0 auto;}
+@media(max-width:600px){.simple-main{grid-template-columns:1fr;}}
+.simple-card{background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:1.4rem 1rem;cursor:pointer;text-align:center;}
+.simple-card .ic{font-size:1.8rem;display:block;margin-bottom:.4rem;}
+.simple-card strong{color:var(--blue-dark);font-size:calc(1rem*var(--fs));}
+.simple-secondary{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;max-width:640px;margin:1rem auto 0;}
+@media(max-width:600px){.simple-secondary{grid-template-columns:1fr;}}
+.simple-sec-card{background:var(--bg-soft);border:none;border-radius:12px;padding:1rem;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.7rem;}
+.simple-sec-card strong{color:var(--blue-dark);font-size:.92rem;}
+
+/* MOBILE TABBAR */
+.tabbar{display:none;}
+@media(max-width:768px){
+  .tabbar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--line);padding:.5rem 0 calc(.5rem + env(safe-area-inset-bottom,0px));z-index:20;}
+  body:not(.simple){padding-bottom:4.5rem;}
+  body.simple .tabbar{display:none;}
+}
+.tabbar button{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:.15rem;font-size:.62rem;color:var(--ink-soft);cursor:pointer;}
+.tabbar button.active{color:var(--blue-dark);}
+.tabbar .ic{font-size:1.1rem;}
+
+/* subviews */
+.subview{max-width:640px;margin:0 auto;padding:1.5rem 1.1rem 3rem;}
+.back{background:none;border:none;color:var(--ink-soft);font-size:.9rem;cursor:pointer;margin-bottom:.8rem;text-decoration:underline;padding:0;}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:.85rem 1.05rem;margin-bottom:.65rem;cursor:pointer;font-size:calc(1rem*var(--fs));color:var(--ink);}
+.opt.correct{border-color:#2E8B57;background:rgba(46,139,87,.1);}
+.opt.wrong{border-color:#C0392B;background:rgba(192,57,43,.1);}
+.opt:disabled{cursor:default;}
+.feedback{font-weight:700;} .feedback.ok{color:#2E8B57;} .feedback.no{color:#C0392B;}
+.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:1rem;}
+.progress>div{height:100%;background:var(--blue);}
+.score-num{font-size:2.6rem;font-weight:800;color:var(--blue-dark);margin:0;}
+.btn{background:var(--blue);color:#fff;border:none;border-radius:20px;padding:.8rem 1.3rem;font-weight:700;cursor:pointer;}
+.btn.ghost{background:transparent;color:var(--blue-dark);border:2px solid var(--blue);}
+.center{text-align:center;}
+.panel{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:1.3rem;}
+</style>
+</head>
+<body data-mode="normal">
+
+<header>
+  <div class="hd">
+    <div class="brand"><span class="seal">🏛️</span><div class="brand-txt"><strong>MUNICIPALIDAD DE</strong><span>SAN MIGUEL</span></div></div>
+    <nav>
+      <button class="navbtn accent" id="modoBtn" onclick="toggleSimple()">♿ <span class="navlabel">Modo Simple</span></button>
+      <button class="navbtn" onclick="openTramite('Trámites','Accedé al portal general de trámites municipales.')">📋 <span class="navlabel">Trámites</span></button>
+      <button class="navbtn" onclick="openTramite('Áreas de Gobierno','Conocé las secretarías que forman parte del municipio.')">🏢 <span class="navlabel">Áreas de Gobierno</span></button>
+      <button class="navbtn" onclick="openTramite('Gobierno Abierto','Accedé a información pública y de gestión.')">🏦 <span class="navlabel">Gobierno Abierto</span></button>
+      <button class="navbtn" onclick="openTramite('San Miguel en Imágenes','Galería de fotos de actividades municipales.')">🖼️ <span class="navlabel">San Miguel en Imágenes</span></button>
+    </nav>
+  </div>
+</header>
+
+<div class="announce">📢 RECORDÁ. Los feriados no se recolectan reciclables. Lunes a sábados hábiles.</div>
+
+<main id="home">
+  <div class="searchwrap">
+    <h2>Bienvenido, buscá por trámite, servicio o palabra clave</h2>
+    <div class="searchbar"><input id="searchInput" placeholder="Buscar..." onkeypress="if(event.key==='Enter')doSearch()"><button onclick="doSearch()">🔍</button></div>
+  </div>
+
+  <div class="hero">
+    <button class="hero-arrow l" onclick="heroNav(-1)">‹</button>
+    <div class="hero-cap"><div class="eyebrow" id="hero-eyebrow"></div><h2 id="hero-title"></h2></div>
+    <button class="hero-arrow r" onclick="heroNav(1)">›</button>
+  </div>
+  <div class="portals-wrap"><div class="portals" id="grid-tramites"></div></div>
+
+  <div class="wrap" id="normal-extra">
+    <h2 class="section">¡Conocé todos los programas y servicios que tenemos para vos!</h2>
+    <div class="prog-grid" id="grid-programas"></div>
+
+    <h2 class="section" style="margin-top:2.2rem">¡Sumate!</h2>
+    <div class="sumate">
+      <div class="sumate-card" onclick="openTramite('Débito automático','Adherite al débito automático y ganá tranquilidad todos los meses.')"><span class="ic">🧾</span><div><strong>¡Adherite al Débito Automático!</strong><span>Y ganá tranquilidad todos los meses</span></div></div>
+      <div class="sumate-card" onclick="openTramite('Ojos en alerta','Reportá situaciones sospechosas en tu barrio, tu mirada puede cambiar todo.')"><span class="ic">👁️</span><div><strong>OJOS EN ALERTA</strong><span>Tu mirada puede cambiar todo</span></div></div>
+    </div>
+
+    <h2 class="section" style="margin-top:2.2rem">Áreas de Gobierno</h2>
+    <div class="areas-grid" id="lista-areas"></div>
+
+    <h2 class="section" style="margin-top:2.2rem">Últimas novedades</h2>
+    <div class="news-grid" id="lista-novedades"></div>
+
+    <div class="emg" style="margin-top:2rem">
+      <h3>Números útiles</h3>
+      <ul><li><b>SAME</b> <a href="tel:107">107</a></li><li><b>Bomberos</b> <a href="tel:01146642222">(011) 4664-2222</a></li><li><b>Atención al vecino</b> <a href="tel:147">147</a></li><li><b>COM</b> <a href="tel:08003331055">0800-333-1055</a></li><li><b>Comisaría de la mujer</b> <a href="tel:01144550371">(011) 4455-0371</a></li></ul>
+    </div>
+    <p class="footer-info">Municipalidad de San Miguel · Domingo F. Sarmiento 1551, San Miguel, Buenos Aires</p>
+  </div>
+
+  <div class="simple-screen">
+    <div class="eyebrow-s">Accesos principales</div>
+    <h1>¿En qué te podemos ayudar hoy?</h1>
+    <p>Elegí una opción o usá tu voz.</p>
+    <button class="mic" onclick="useMic()">🎤</button>
+    <div class="mic-label">Presioná para hablar</div>
+    <div class="simple-main">
+      <button class="simple-card" onclick="openTramite('Reclamo','Contanos el problema (baches, luminarias, basura) y lo derivamos al área correspondiente.')"><span class="ic">⚠️</span><strong>Hacer un reclamo</strong></button>
+      <button class="simple-card" onclick="openTramite('Pagos','Pagá tasas municipales de forma segura desde el portal de pagos.')"><span class="ic">💳</span><strong>Pagar tasas</strong></button>
+      <button class="simple-card" onclick="openTramite('Consultar trámite','Revisá el estado de un trámite que ya iniciaste.')"><span class="ic">📄</span><strong>Consultar un trámite</strong></button>
+    </div>
+    <div class="simple-secondary">
+      <button class="simple-sec-card" onclick="openTramite('Turnos de salud','Reservá o consultá tu turno en los centros de salud municipales.')"><span class="ic">❤️</span><strong>Turnos de salud</strong></button>
+      <button class="simple-sec-card" onclick="openTramite('Agenda municipal','Conocé las próximas actividades del municipio.')"><span class="ic">📅</span><strong>Agenda municipal</strong></button>
+      <button class="simple-sec-card" onclick="go('juego-intro')"><span class="ic">🎮</span><strong>Aprendé a usar apps</strong></button>
+    </div>
+  </div>
+</main>
+
+<div id="view-tramite" class="hidden"><div class="subview"><button class="back" onclick="closeSub()">← Volver</button>
+  <div class="panel center"><h2 id="tramite-titulo"></h2><p id="tramite-texto"></p><button class="btn" onclick="closeSub()">Entendido</button></div></div></div>
+
+<div id="view-juego-intro" class="hidden"><div class="subview"><button class="back" onclick="closeSub()">← Volver</button>
+  <div class="panel"><h2>Aprendé a usar las apps</h2><p>Respondé preguntas sencillas sobre Mercado Pago, WhatsApp, Mi Argentina y home banking. No hay apuro ni penalidad: es para practicar.</p><button class="btn" onclick="startGame()">Empezar</button></div></div></div>
+
+<div id="view-juego" class="hidden"><div class="subview">
+  <div class="progress"><div id="progress-bar" style="width:0%"></div></div>
+  <div class="panel"><h2 id="pregunta-texto"></h2><div id="opciones"></div><p id="feedback" class="feedback"></p><button class="btn" id="btn-siguiente" onclick="nextQuestion()" style="display:none">Siguiente</button></div></div></div>
+
+<div id="view-resultado" class="hidden"><div class="subview center">
+  <div class="panel"><h2>¡Terminaste!</h2><p class="score-num" id="score-final"></p><p id="score-msg"></p>
+    <div style="display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap"><button class="btn ghost" onclick="startGame()">Jugar de nuevo</button><button class="btn" onclick="closeSub()">Volver</button></div>
+  </div></div></div>
+
+<button class="mascot-btn" onclick="toggleMascotTip()">🤖</button>
+<div class="mascot-tip hidden" id="mascotTip"><p>¿Sabías que podés activar el <b>Modo Simple</b> para una versión más fácil de usar?</p><button onclick="toggleSimple();toggleMascotTip()">Activar</button></div>
+
+<div class="tabbar">
+  <button class="active"><span class="ic">🏠</span>Inicio</button>
+  <button onclick="openTramite('Trámites','Accedé al portal general de trámites municipales.')"><span class="ic">📋</span>Trámites</button>
+  <button onclick="document.getElementById('normal-extra').scrollIntoView({behavior:'smooth'})"><span class="ic">🏢</span>Programas</button>
+  <button onclick="openTramite('Novedades','Enterate de las últimas noticias del municipio.')"><span class="ic">📰</span>Novedades</button>
+  <button onclick="toggleSimple()"><span class="ic">♿</span>Modo Simple</button>
+</div>
+
+<script>
+function toggleSimple(){
+  var on=document.body.classList.toggle('simple');
+  document.getElementById('modoBtn').classList.toggle('on',on);
+}
+function toggleMascotTip(){ document.getElementById('mascotTip').classList.toggle('hidden'); }
+
+var tramites=[
+  {ic:'📄',t:'Portal de trámites'},
+  {ic:'🅿️',t:'Estacionamiento medido'},
+  {ic:'💻',t:'Portal de pagos'},
+  {ic:'🪪',t:'Licencias de conducir'},
+  {ic:'🩺',t:'Portal pacientes'}
+];
+var tramiteTxt={
+  'Portal de trámites':'Accedé al portal general de trámites municipales.',
+  'Estacionamiento medido':'Consultá zonas y tarifas del estacionamiento medido en San Miguel.',
+  'Portal de pagos':'Pagá tus tasas municipales desde la web, con tarjeta o débito automático.',
+  'Licencias de conducir':'Gestioná la renovación o el trámite inicial de tu licencia de conducir.',
+  'Portal pacientes':'Ingresá al portal de pacientes de los centros de salud municipales.'
+};
+var pg=document.getElementById('grid-tramites');
+tramites.forEach(function(t){ var d=document.createElement('button'); d.className='portal-card';
+  d.innerHTML='<div class="ic">'+t.ic+'</div><strong>'+t.t+'</strong>'; d.onclick=function(){ openTramite(t.t,tramiteTxt[t.t]); }; pg.appendChild(d); });
+
+var programas=[
+  {ic:'💬',c:'#1CADE4',t:'Atención al vecino',d:'Consultas y reclamos, línea 147.'},
+  {ic:'🎻',c:'#F5A623',t:'Cultura',d:'Talleres y espacios culturales.'},
+  {ic:'🏸',c:'#8C8C8C',t:'Deportes',d:'Actividades deportivas municipales.'},
+  {ic:'🏥',c:'#6EC6E8',t:'Salud',d:'Hospitales y centros de salud del municipio.'},
+  {ic:'🐾',c:'#B7B23A',t:'Zoonosis',d:'Vacunación y cuidado de mascotas.'},
+  {ic:'🤝',c:'#E0536E',t:'Emprendedores',d:'Apoyo a emprendimientos locales.'},
+  {ic:'♿',c:'#C97B63',t:'Discapacidad',d:'Trámites de CUD y accesibilidad.'},
+  {ic:'📖',c:'#2D3A4A',t:'Educación',d:'Escuelas e institutos municipales.'},
+  {ic:'📡',c:'#1B6FC9',t:'Tecnología',d:'UTEC y programas tecnológicos.'},
+  {ic:'👶',c:'#9B59B6',t:'Infancia y familia',d:'Programas para niñez y familia.'},
+  {ic:'👵',c:'#E0791E',t:'Adultos mayores',d:'Programas y actividades para la tercera edad.'},
+  {ic:'🌻',c:'#2FA89A',t:'Adicciones',d:'Centro de día "Nunca es tarde".'},
+  {ic:'🌎',c:'#7A5B45',t:'Ambiente',d:'Programas ambientales del municipio.'},
+  {ic:'♻️',c:'#3FA84C',t:'Reciclaje',d:'Puntos verdes y circuito de reciclaje.'},
+  {ic:'🏠',c:'#C9A876',t:'Tierras y viviendas',d:'Trámites de regularización de tierras.'},
+  {ic:'💼',c:'#1F5C8B',t:'Empleo',d:'Oficina de empleo municipal.'},
+  {ic:'🏭',c:'#F0A93A',t:'Industria y comercio',d:'Habilitaciones comerciales.'},
+  {ic:'🚲',c:'#B05060',t:'Bicicleteros',d:'Bicicleteros municipales gratuitos.'}
+];
+var prg=document.getElementById('grid-programas');
+programas.forEach(function(p){ var d=document.createElement('div'); d.className='prog-item';
+  d.innerHTML='<div class="prog-ic" style="background:'+p.c+'">'+p.ic+'</div><div class="prog-label">'+p.t.toUpperCase()+'</div>';
+  d.onclick=function(){ openTramite(p.t,p.d); }; prg.appendChild(d); });
+
+var areas=['Jefatura de Gabinete','Secretaría de Gobierno','Secretaría de Economía y Finanzas','Secretaría de Salud','Secretaría de Obras y Espacio Público','Secretaría de Seguridad','Secretaría de Planeamiento y Desarrollo Urbano','Secretaría de Infancia y Familia','Secretaría de Educación y Trabajo','Secretaría de Comunicación y Deportes'];
+var ag=document.getElementById('lista-areas');
+areas.forEach(function(a){ var d=document.createElement('div'); d.className='area-card'; d.textContent=a; ag.appendChild(d); });
+
+var novedades=[
+  {cat:'Seguridad',ic:'🚓',color:'#5B6673',t:'Persecución a un auto sin patente en San Miguel',d:'La Policía Municipal detuvo al conductor de un vehículo que circulaba sin patente delantera.'},
+  {cat:'Eventos',ic:'🚗',color:'#1CADE4',t:'Desfile de autos clásicos, motos y bicicletas',d:'Miles de vecinos disfrutaron de una exhibición de vehículos en las principales calles del distrito.'},
+  {cat:'Obras',ic:'🛣️',color:'#8C8C8C',t:'Avanza la repavimentación de Gaspar Campos',d:'Continúa la repavimentación de la avenida entre Balbín y Arrisueño.'}
+];
+var ng=document.getElementById('lista-novedades');
+novedades.forEach(function(n){ var d=document.createElement('div'); d.className='news-card';
+  d.innerHTML='<div class="news-img" style="background:'+n.color+'">'+n.ic+'</div><div class="news-body"><span class="pill">'+n.cat+'</span><strong>'+n.t+'</strong><p>'+n.d+'</p></div>';
+  ng.appendChild(d); });
+
+var heroSlides=[
+  {e:'NUEVOS','h:':''},
+];
+var heroData=[
+  {e:'NUEVOS','h':'BICICLETEROS MUNICIPALES'},
+  {e:'CAMPAÑA','h':'VACUNACIÓN ANTIRRÁBICA GRATUITA'},
+  {e:'INSCRIBITE','h':'TALLERES CULTURALES 2026'}
+];
+var hi=0;
+function renderHero(){ document.getElementById('hero-eyebrow').textContent=heroData[hi].e; document.getElementById('hero-title').textContent=heroData[hi].h; }
+function heroNav(d){ hi=(hi+d+heroData.length)%heroData.length; renderHero(); }
+renderHero();
+
+function openTramite(t,txt){
+  document.getElementById('tramite-titulo').textContent=t;
+  document.getElementById('tramite-texto').textContent=txt+' (simulación para la demo del hackatón)';
+  go('tramite');
+}
+function go(id){
+  ['tramite','juego-intro','juego','resultado'].forEach(function(s){ document.getElementById('view-'+s).classList.add('hidden'); });
+  document.getElementById('home').classList.add('hidden');
+  document.getElementById('view-'+id).classList.remove('hidden');
+}
+function closeSub(){
+  ['tramite','juego-intro','juego','resultado'].forEach(function(s){ document.getElementById('view-'+s).classList.add('hidden'); });
+  document.getElementById('home').classList.remove('hidden');
+}
+function doSearch(){
+  var q=document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!q) return;
+  var found=programas.find(function(p){ return p.t.toLowerCase().indexOf(q)>-1; }) || tramites.find(function(t){ return t.t.toLowerCase().indexOf(q)>-1; });
+  if(found){ openTramite(found.t, found.d||tramiteTxt[found.t]); }
+  else { alert('No encontramos resultados para "'+q+'". Te mostramos todos los programas y servicios.'); document.getElementById('grid-programas').scrollIntoView({behavior:'smooth'}); }
+}
+function useMic(){
+  if(!('webkitSpeechRecognition' in window)){ alert('Tu navegador no soporta reconocimiento de voz. Probá con Chrome.'); return; }
+  var r=new webkitSpeechRecognition(); r.lang='es-AR';
+  r.onresult=function(e){ routeVoice(e.results[0][0].transcript.toLowerCase()); };
+  r.onerror=function(){ alert('No pude escucharte, probá de nuevo.'); };
+  r.start();
+}
+function routeVoice(t){
+  if(t.indexOf('reclamo')>-1) openTramite('Reclamo','Contanos el problema y lo derivamos al área correspondiente.');
+  else if(t.indexOf('pagar')>-1||t.indexOf('tasa')>-1) openTramite('Pagos','Pagá tasas municipales de forma segura.');
+  else if(t.indexOf('tr\u00e1mite')>-1||t.indexOf('tramite')>-1) openTramite('Consultar trámite','Revisá el estado de un trámite iniciado.');
+  else if(t.indexOf('turno')>-1) openTramite('Turnos de salud','Reservá o consultá tu turno en salud.');
+  else alert('Escuché: "'+t+'". Probá decir "reclamo", "pagar tasas" o "consultar trámite".');
+}
+
+var preguntas=[
+  {q:'Querés mandarle una foto a tu nieto/a. ¿Qué app usás?', o:['WhatsApp','Mercado Pago','Home banking','Mi Argentina'], c:0, exp:'WhatsApp sirve para mandar mensajes, fotos y hacer videollamadas gratis.'},
+  {q:'Recibiste un cobro y querés pagarlo escaneando un código en el celular. ¿Qué usás?', o:['Mi Argentina','Mercado Pago','Instagram','Contactos'], c:1, exp:'Mercado Pago permite pagar escaneando un código QR en el comercio.'},
+  {q:'Necesitás tu Libreta de Salud o DNI digital sin llevar el papel. ¿Dónde lo buscás?', o:['Mercado Pago','WhatsApp','Mi Argentina','Google Maps'], c:2, exp:'Mi Argentina guarda tus documentos oficiales en el celular.'},
+  {q:'Querés saber cuánta plata tenés en el banco sin ir a la sucursal. ¿Qué usás?', o:['La app del banco (home banking)','WhatsApp','Una cámara de seguridad','Netflix'], c:0, exp:'El home banking te muestra el saldo y los movimientos de tu cuenta.'},
+  {q:'Alguien te pide el "código de un solo uso" por teléfono para "verificar tu cuenta". ¿Qué hacés?', o:['Se lo doy si suena confiable','Nunca lo comparto, corto y llamo a mi banco','Lo publico en redes','Se lo mando por WhatsApp'], c:1, exp:'Ningún banco o app pide ese código por teléfono. Si te lo piden, es un engaño.'}
+];
+var idx=0, score=0;
+function startGame(){ idx=0; score=0; go('juego'); showQuestion(); }
+function showQuestion(){
+  var p=preguntas[idx];
+  document.getElementById('progress-bar').style.width=Math.round((idx/preguntas.length)*100)+'%';
+  document.getElementById('pregunta-texto').textContent=(idx+1)+'. '+p.q;
+  var cont=document.getElementById('opciones'); cont.innerHTML='';
+  p.o.forEach(function(op,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=op;
+    b.onclick=function(){ answer(i,b,cont); }; cont.appendChild(b); });
+  document.getElementById('feedback').textContent=''; document.getElementById('feedback').className='feedback';
+  document.getElementById('btn-siguiente').style.display='none';
+}
+function answer(i,btn,cont){
+  var p=preguntas[idx]; var all=cont.querySelectorAll('.opt'); all.forEach(function(o){o.disabled=true;});
+  if(i===p.c){ btn.classList.add('correct'); score++; document.getElementById('feedback').textContent='Correcto. '+p.exp; document.getElementById('feedback').className='feedback ok'; }
+  else { btn.classList.add('wrong'); all[p.c].classList.add('correct'); document.getElementById('feedback').textContent='No era esa. '+p.exp; document.getElementById('feedback').className='feedback no'; }
+  document.getElementById('btn-siguiente').style.display='inline-block';
+}
+function nextQuestion(){
+  idx++;
+  if(idx>=preguntas.length){
+    document.getElementById('score-final').textContent=score+' / '+preguntas.length;
+    var msg=score===preguntas.length?'¡Excelente! Ya conocés bien estas apps.':(score>=preguntas.length/2?'Muy bien, vas por buen camino.':'Está bueno practicar de nuevo, de a poco se aprende.');
+    document.getElementById('score-msg').textContent=msg;
+    go('resultado');
+  } else { showQuestion(); }
+}
+</script>
+</body>
+</html>

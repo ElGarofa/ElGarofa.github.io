@@ -16,6 +16,7 @@
   :root:not([data-theme="light"]){ --bg:#14171A; --bg-soft:#1D2126; --ink:#EDEFF2; --ink-soft:#AEB4BC; --line:rgba(255,255,255,.12); }
 }
 :root[data-theme="dark"]{ --bg:#14171A; --bg-soft:#1D2126; --ink:#EDEFF2; --ink-soft:#AEB4BC; --line:rgba(255,255,255,.12); }
+:root[data-contrast="high"]{ --ink:#000000; --ink-soft:#000000; --bg:#FFFFFF; --bg-soft:#FFFFFF; --line:#000000; --blue:#003C82; --blue-dark:#002450; --blue-bar:#003C82; --gray:#000000; --gray-dark:#000000; }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);
@@ -25,6 +26,8 @@ h1,h2,h3{margin:0 0 .3rem;color:var(--ink);font-weight:800;}
 p{line-height:1.55;color:var(--ink-soft);margin:0 0 .5rem;}
 .hidden{display:none !important;}
 button{font-family:inherit;}
+:focus-visible{outline:3px solid #FFB300;outline-offset:2px;}
+[data-contrast="high"] .portal-card,[data-contrast="high"] .prog-item,[data-contrast="high"] .area-card,[data-contrast="high"] .news-card,[data-contrast="high"] .simple-card,[data-contrast="high"] .navbtn,[data-contrast="high"] .a11y-bar button{border-width:2px !important;border-color:#000 !important;}
 
 /* HEADER */
 header{background:var(--gray);position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px);}
@@ -36,10 +39,17 @@ header{background:var(--gray);position:sticky;top:0;z-index:20;padding-top:env(s
 nav{display:flex;gap:.5rem;flex-wrap:wrap;margin-left:auto;}
 .navbtn{background:transparent;border:1px solid #8A8A8A;color:#fff;font-weight:600;font-size:.82rem;padding:.5rem .9rem;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:.4rem;}
 .navbtn:hover{background:rgba(255,255,255,.1);}
-.navbtn.accent{background:var(--blue);border-color:var(--blue);}
-.navbtn.accent.on{background:#fff;color:var(--blue-dark);}
 @media(max-width:860px){ nav .navlabel{display:none;} }
 @media(max-width:600px){ .brand-txt{display:none;} nav{gap:.35rem;} .navbtn{padding:.5rem .6rem;} }
+
+/* A11Y BAR */
+.a11y-bar{background:var(--bg-soft);border-bottom:1px solid var(--line);}
+.a11y-in{max-width:1200px;margin:0 auto;padding:.5rem 1.1rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;font-size:.82rem;color:var(--ink);}
+.a11y-in b{font-weight:700;}
+.a11y-bar button{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;font-weight:700;cursor:pointer;color:var(--ink);font-size:.85rem;}
+.a11y-bar button.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+.a11y-bar button.big{background:var(--blue);color:#fff;border-color:var(--blue);}
+.a11y-bar button.big.on{background:#fff;color:var(--blue-dark);}
 
 .announce{background:var(--blue-bar);color:#fff;text-align:center;padding:.7rem 1rem;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;gap:.5rem;}
 
@@ -51,6 +61,7 @@ nav{display:flex;gap:.5rem;flex-wrap:wrap;margin-left:auto;}
 
 /* HERO */
 .hero{position:relative;background:linear-gradient(120deg,#0E8FC0,#1CADE4 60%,#5FD0EE);min-height:280px;display:flex;align-items:flex-end;overflow:hidden;}
+[data-contrast="high"] .hero{background:#003C82;}
 .hero-cap{color:#fff;padding:1.6rem 2rem 2.8rem;max-width:600px;}
 .hero-cap .eyebrow{font-weight:700;font-size:.95rem;letter-spacing:.03em;}
 .hero-cap h2{color:#fff;font-size:calc(1.9rem*var(--fs));margin:.1rem 0;}
@@ -71,13 +82,13 @@ h2.section{font-size:1.35rem;text-align:center;margin-bottom:1.2rem;font-weight:
 .prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
 @media(max-width:760px){.prog-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:480px){.prog-grid{grid-template-columns:1fr;}}
-.prog-item{display:flex;align-items:stretch;background:var(--bg-soft);cursor:pointer;}
+.prog-item{display:flex;align-items:stretch;background:var(--bg-soft);cursor:pointer;border:none;text-align:left;padding:0;width:100%;}
 .prog-ic{width:64px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;}
 .prog-label{display:flex;align-items:center;padding:.7rem 1rem;font-weight:700;font-size:.85rem;color:var(--ink);letter-spacing:.01em;}
 
 .sumate{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 @media(max-width:600px){.sumate{grid-template-columns:1fr;}}
-.sumate-card{background:var(--bg-soft);border-radius:10px;padding:1.3rem 1.4rem;display:flex;align-items:center;gap:1rem;cursor:pointer;}
+.sumate-card{background:var(--bg-soft);border:none;border-radius:10px;padding:1.3rem 1.4rem;display:flex;align-items:center;gap:1rem;cursor:pointer;text-align:left;width:100%;}
 .sumate-card .ic{font-size:1.7rem;}
 .sumate-card strong{display:block;font-size:1rem;}
 .sumate-card span{font-size:.85rem;}
@@ -102,10 +113,9 @@ h2.section{font-size:1.35rem;text-align:center;margin-bottom:1.2rem;font-weight:
 .emg b{color:var(--blue);} .emg a{color:#fff;font-weight:600;}
 .footer-info{text-align:center;font-size:.8rem;color:var(--ink-soft);margin-top:2rem;}
 
-/* MASCOT */
 .mascot-btn{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:1.6rem;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;z-index:30;}
 .mascot-tip{position:fixed;bottom:86px;right:20px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:1rem;max-width:230px;box-shadow:0 8px 20px rgba(0,0,0,.15);z-index:30;}
-.mascot-tip p{font-size:.85rem;margin-bottom:.6rem;}
+.mascot-tip p{font-size:.85rem;margin-bottom:.6rem;color:var(--ink);}
 .mascot-tip button{background:var(--blue);color:#fff;border:none;border-radius:16px;padding:.4rem .9rem;font-weight:700;font-size:.8rem;cursor:pointer;}
 
 /* MODO SIMPLE */
@@ -118,13 +128,17 @@ body.simple .simple-screen{display:block;}
 .mic-label{font-weight:700;color:var(--ink);margin-bottom:1.6rem;}
 .simple-main{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:640px;margin:0 auto;}
 @media(max-width:600px){.simple-main{grid-template-columns:1fr;}}
-.simple-card{background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:1.4rem 1rem;cursor:pointer;text-align:center;}
+.simple-card{background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:1.4rem 1rem;cursor:pointer;text-align:center;width:100%;}
 .simple-card .ic{font-size:1.8rem;display:block;margin-bottom:.4rem;}
 .simple-card strong{color:var(--blue-dark);font-size:calc(1rem*var(--fs));}
 .simple-secondary{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;max-width:640px;margin:1rem auto 0;}
 @media(max-width:600px){.simple-secondary{grid-template-columns:1fr;}}
-.simple-sec-card{background:var(--bg-soft);border:none;border-radius:12px;padding:1rem;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.7rem;}
+.simple-sec-card{background:var(--bg-soft);border:none;border-radius:12px;padding:1rem;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.7rem;width:100%;}
 .simple-sec-card strong{color:var(--blue-dark);font-size:.92rem;}
+.safety-card{max-width:640px;margin:1.6rem auto 0;background:#FFF7E6;border:1px solid #F0D48A;border-radius:14px;padding:1.2rem 1.4rem;text-align:left;}
+[data-contrast="high"] .safety-card{background:#fff;border:2px solid #000;}
+.safety-card h3{font-size:1rem;margin-bottom:.5rem;}
+.safety-card ul{margin:0;padding-left:1.2rem;color:var(--ink-soft);font-size:.88rem;line-height:1.6;}
 
 /* MOBILE TABBAR */
 .tabbar{display:none;}
@@ -137,7 +151,6 @@ body.simple .simple-screen{display:block;}
 .tabbar button.active{color:var(--blue-dark);}
 .tabbar .ic{font-size:1.1rem;}
 
-/* subviews */
 .subview{max-width:640px;margin:0 auto;padding:1.5rem 1.1rem 3rem;}
 .back{background:none;border:none;color:var(--ink-soft);font-size:.9rem;cursor:pointer;margin-bottom:.8rem;text-decoration:underline;padding:0;}
 .opt{display:block;width:100%;text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:.85rem 1.05rem;margin-bottom:.65rem;cursor:pointer;font-size:calc(1rem*var(--fs));color:var(--ink);}
@@ -150,37 +163,49 @@ body.simple .simple-screen{display:block;}
 .score-num{font-size:2.6rem;font-weight:800;color:var(--blue-dark);margin:0;}
 .btn{background:var(--blue);color:#fff;border:none;border-radius:20px;padding:.8rem 1.3rem;font-weight:700;cursor:pointer;}
 .btn.ghost{background:transparent;color:var(--blue-dark);border:2px solid var(--blue);}
+.btn.sm{padding:.6rem 1rem;font-size:.85rem;}
 .center{text-align:center;}
 .panel{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:1.3rem;}
+.tts-btn{background:var(--bg-soft);border:1px solid var(--line);border-radius:20px;padding:.5rem 1rem;font-weight:700;font-size:.85rem;cursor:pointer;margin-bottom:.8rem;color:var(--ink);}
 </style>
 </head>
 <body data-mode="normal">
 
 <header>
   <div class="hd">
-    <div class="brand"><span class="seal">🏛️</span><div class="brand-txt"><strong>MUNICIPALIDAD DE</strong><span>SAN MIGUEL</span></div></div>
-    <nav>
-      <button class="navbtn accent" id="modoBtn" onclick="toggleSimple()">♿ <span class="navlabel">Modo Simple</span></button>
-      <button class="navbtn" onclick="openTramite('Trámites','Accedé al portal general de trámites municipales.')">📋 <span class="navlabel">Trámites</span></button>
-      <button class="navbtn" onclick="openTramite('Áreas de Gobierno','Conocé las secretarías que forman parte del municipio.')">🏢 <span class="navlabel">Áreas de Gobierno</span></button>
-      <button class="navbtn" onclick="openTramite('Gobierno Abierto','Accedé a información pública y de gestión.')">🏦 <span class="navlabel">Gobierno Abierto</span></button>
-      <button class="navbtn" onclick="openTramite('San Miguel en Imágenes','Galería de fotos de actividades municipales.')">🖼️ <span class="navlabel">San Miguel en Imágenes</span></button>
+    <div class="brand"><span class="seal" aria-hidden="true">🏛️</span><div class="brand-txt"><strong>MUNICIPALIDAD DE</strong><span>SAN MIGUEL</span></div></div>
+    <nav aria-label="Navegación principal">
+      <button class="navbtn" onclick="openTramite('Trámites','Accedé al portal general de trámites municipales.')"><span aria-hidden="true">📋</span> <span class="navlabel">Trámites</span></button>
+      <button class="navbtn" onclick="openTramite('Áreas de Gobierno','Conocé las secretarías que forman parte del municipio.')"><span aria-hidden="true">🏢</span> <span class="navlabel">Áreas de Gobierno</span></button>
+      <button class="navbtn" onclick="openTramite('Gobierno Abierto','Accedé a información pública y de gestión.')"><span aria-hidden="true">🏦</span> <span class="navlabel">Gobierno Abierto</span></button>
+      <button class="navbtn" onclick="openTramite('San Miguel en Imágenes','Galería de fotos de actividades municipales.')"><span aria-hidden="true">🖼️</span> <span class="navlabel">San Miguel en Imágenes</span></button>
     </nav>
   </div>
 </header>
 
-<div class="announce">📢 RECORDÁ. Los feriados no se recolectan reciclables. Lunes a sábados hábiles.</div>
+<div class="a11y-bar">
+  <div class="a11y-in">
+    <b>Accesibilidad:</b>
+    <span>Texto</span>
+    <button aria-label="Disminuir tamaño de letra" onclick="changeFont(-1)">A-</button>
+    <button aria-label="Aumentar tamaño de letra" onclick="changeFont(1)">A+</button>
+    <button aria-label="Alternar alto contraste" id="contrastBtn" role="switch" aria-checked="false" onclick="toggleContrast()">◐ Alto contraste</button>
+    <button class="big" aria-label="Alternar Modo Simple" id="modoBtn" role="switch" aria-checked="false" onclick="toggleSimple()">♿ Modo Simple</button>
+  </div>
+</div>
+
+<div class="announce"><span aria-hidden="true">📢</span> RECORDÁ. Los feriados no se recolectan reciclables. Lunes a sábados hábiles.</div>
 
 <main id="home">
   <div class="searchwrap">
     <h2>Bienvenido, buscá por trámite, servicio o palabra clave</h2>
-    <div class="searchbar"><input id="searchInput" placeholder="Buscar..." onkeypress="if(event.key==='Enter')doSearch()"><button onclick="doSearch()">🔍</button></div>
+    <div class="searchbar"><input id="searchInput" aria-label="Buscar trámite, servicio o palabra clave" placeholder="Buscar..." onkeypress="if(event.key==='Enter')doSearch()"><button aria-label="Buscar" onclick="doSearch()">🔍</button></div>
   </div>
 
   <div class="hero">
-    <button class="hero-arrow l" onclick="heroNav(-1)">‹</button>
+    <button class="hero-arrow l" aria-label="Anuncio anterior" onclick="heroNav(-1)">‹</button>
     <div class="hero-cap"><div class="eyebrow" id="hero-eyebrow"></div><h2 id="hero-title"></h2></div>
-    <button class="hero-arrow r" onclick="heroNav(1)">›</button>
+    <button class="hero-arrow r" aria-label="Anuncio siguiente" onclick="heroNav(1)">›</button>
   </div>
   <div class="portals-wrap"><div class="portals" id="grid-tramites"></div></div>
 
@@ -190,8 +215,8 @@ body.simple .simple-screen{display:block;}
 
     <h2 class="section" style="margin-top:2.2rem">¡Sumate!</h2>
     <div class="sumate">
-      <div class="sumate-card" onclick="openTramite('Débito automático','Adherite al débito automático y ganá tranquilidad todos los meses.')"><span class="ic">🧾</span><div><strong>¡Adherite al Débito Automático!</strong><span>Y ganá tranquilidad todos los meses</span></div></div>
-      <div class="sumate-card" onclick="openTramite('Ojos en alerta','Reportá situaciones sospechosas en tu barrio, tu mirada puede cambiar todo.')"><span class="ic">👁️</span><div><strong>OJOS EN ALERTA</strong><span>Tu mirada puede cambiar todo</span></div></div>
+      <button class="sumate-card" onclick="openTramite('Débito automático','Adherite al débito automático y ganá tranquilidad todos los meses.')"><span class="ic" aria-hidden="true">🧾</span><div><strong>¡Adherite al Débito Automático!</strong><span>Y ganá tranquilidad todos los meses</span></div></button>
+      <button class="sumate-card" onclick="openTramite('Ojos en alerta','Reportá situaciones sospechosas en tu barrio, tu mirada puede cambiar todo.')"><span class="ic" aria-hidden="true">👁️</span><div><strong>OJOS EN ALERTA</strong><span>Tu mirada puede cambiar todo</span></div></button>
     </div>
 
     <h2 class="section" style="margin-top:2.2rem">Áreas de Gobierno</h2>
@@ -211,23 +236,31 @@ body.simple .simple-screen{display:block;}
     <div class="eyebrow-s">Accesos principales</div>
     <h1>¿En qué te podemos ayudar hoy?</h1>
     <p>Elegí una opción o usá tu voz.</p>
-    <button class="mic" onclick="useMic()">🎤</button>
+    <button class="mic" aria-label="Activar micrófono para hablar" onclick="useMic()">🎤</button>
     <div class="mic-label">Presioná para hablar</div>
     <div class="simple-main">
-      <button class="simple-card" onclick="openTramite('Reclamo','Contanos el problema (baches, luminarias, basura) y lo derivamos al área correspondiente.')"><span class="ic">⚠️</span><strong>Hacer un reclamo</strong></button>
-      <button class="simple-card" onclick="openTramite('Pagos','Pagá tasas municipales de forma segura desde el portal de pagos.')"><span class="ic">💳</span><strong>Pagar tasas</strong></button>
-      <button class="simple-card" onclick="openTramite('Consultar trámite','Revisá el estado de un trámite que ya iniciaste.')"><span class="ic">📄</span><strong>Consultar un trámite</strong></button>
+      <button class="simple-card" onclick="openTramite('Reclamo','Contanos el problema (baches, luminarias, basura) y lo derivamos al área correspondiente.')"><span class="ic" aria-hidden="true">⚠️</span><strong>Hacer un reclamo</strong></button>
+      <button class="simple-card" onclick="openTramite('Pagos','Pagá tasas municipales de forma segura desde el portal de pagos.')"><span class="ic" aria-hidden="true">💳</span><strong>Pagar tasas</strong></button>
+      <button class="simple-card" onclick="openTramite('Consultar trámite','Revisá el estado de un trámite que ya iniciaste.')"><span class="ic" aria-hidden="true">📄</span><strong>Consultar un trámite</strong></button>
     </div>
     <div class="simple-secondary">
-      <button class="simple-sec-card" onclick="openTramite('Turnos de salud','Reservá o consultá tu turno en los centros de salud municipales.')"><span class="ic">❤️</span><strong>Turnos de salud</strong></button>
-      <button class="simple-sec-card" onclick="openTramite('Agenda municipal','Conocé las próximas actividades del municipio.')"><span class="ic">📅</span><strong>Agenda municipal</strong></button>
-      <button class="simple-sec-card" onclick="go('juego-intro')"><span class="ic">🎮</span><strong>Aprendé a usar apps</strong></button>
+      <button class="simple-sec-card" onclick="openTramite('Turnos de salud','Reservá o consultá tu turno en los centros de salud municipales.')"><span class="ic" aria-hidden="true">❤️</span><strong>Turnos de salud</strong></button>
+      <button class="simple-sec-card" onclick="openTramite('Agenda municipal','Conocé las próximas actividades del municipio.')"><span class="ic" aria-hidden="true">📅</span><strong>Agenda municipal</strong></button>
+      <button class="simple-sec-card" onclick="go('juego-intro')"><span class="ic" aria-hidden="true">🎮</span><strong>Aprendé a usar apps</strong></button>
+    </div>
+    <div class="safety-card">
+      <h3>🛡️ Cuidado con las estafas</h3>
+      <ul>
+        <li>Ningún banco, app o municipio te pide códigos por teléfono o WhatsApp.</li>
+        <li>Ante una duda, cortá y llamá vos mismo/a al número oficial.</li>
+        <li>Nunca compartas tu clave ni la foto de tu tarjeta con nadie.</li>
+      </ul>
     </div>
   </div>
 </main>
 
 <div id="view-tramite" class="hidden"><div class="subview"><button class="back" onclick="closeSub()">← Volver</button>
-  <div class="panel center"><h2 id="tramite-titulo"></h2><p id="tramite-texto"></p><button class="btn" onclick="closeSub()">Entendido</button></div></div></div>
+  <div class="panel center"><h2 id="tramite-titulo"></h2><button class="tts-btn" onclick="leerEnVoz()">🔊 Leer en voz alta</button><p id="tramite-texto"></p><button class="btn" onclick="closeSub()">Entendido</button></div></div></div>
 
 <div id="view-juego-intro" class="hidden"><div class="subview"><button class="back" onclick="closeSub()">← Volver</button>
   <div class="panel"><h2>Aprendé a usar las apps</h2><p>Respondé preguntas sencillas sobre Mercado Pago, WhatsApp, Mi Argentina y home banking. No hay apuro ni penalidad: es para practicar.</p><button class="btn" onclick="startGame()">Empezar</button></div></div></div>
@@ -238,33 +271,62 @@ body.simple .simple-screen{display:block;}
 
 <div id="view-resultado" class="hidden"><div class="subview center">
   <div class="panel"><h2>¡Terminaste!</h2><p class="score-num" id="score-final"></p><p id="score-msg"></p>
-    <div style="display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap"><button class="btn ghost" onclick="startGame()">Jugar de nuevo</button><button class="btn" onclick="closeSub()">Volver</button></div>
+    <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn ghost sm" onclick="startGame(false)">Jugar de nuevo</button>
+      <button class="btn sm hidden" id="btn-repasar" onclick="startGame(true)">Repasar solo lo que fallé</button>
+      <button class="btn sm" onclick="closeSub()">Volver</button>
+    </div>
   </div></div></div>
 
-<button class="mascot-btn" onclick="toggleMascotTip()">🤖</button>
+<button class="mascot-btn" aria-label="Asistente virtual, sugerencia de accesibilidad" onclick="toggleMascotTip()">🤖</button>
 <div class="mascot-tip hidden" id="mascotTip"><p>¿Sabías que podés activar el <b>Modo Simple</b> para una versión más fácil de usar?</p><button onclick="toggleSimple();toggleMascotTip()">Activar</button></div>
 
-<div class="tabbar">
-  <button class="active"><span class="ic">🏠</span>Inicio</button>
-  <button onclick="openTramite('Trámites','Accedé al portal general de trámites municipales.')"><span class="ic">📋</span>Trámites</button>
-  <button onclick="document.getElementById('normal-extra').scrollIntoView({behavior:'smooth'})"><span class="ic">🏢</span>Programas</button>
-  <button onclick="openTramite('Novedades','Enterate de las últimas noticias del municipio.')"><span class="ic">📰</span>Novedades</button>
-  <button onclick="toggleSimple()"><span class="ic">♿</span>Modo Simple</button>
+<div class="tabbar" aria-label="Navegación mobile">
+  <button class="active"><span class="ic" aria-hidden="true">🏠</span>Inicio</button>
+  <button onclick="openTramite('Trámites','Accedé al portal general de trámites municipales.')"><span class="ic" aria-hidden="true">📋</span>Trámites</button>
+  <button onclick="document.getElementById('normal-extra').scrollIntoView({behavior:'smooth'})"><span class="ic" aria-hidden="true">🏢</span>Programas</button>
+  <button onclick="openTramite('Novedades','Enterate de las últimas noticias del municipio.')"><span class="ic" aria-hidden="true">📰</span>Novedades</button>
+  <button onclick="toggleSimple()"><span class="ic" aria-hidden="true">♿</span>Modo Simple</button>
 </div>
 
 <script>
-function toggleSimple(){
+/* Accesibilidad: fuente, contraste, modo simple (persistentes) */
+var fsVal=parseFloat(localStorage.getItem('msm_fs')||'1');
+document.documentElement.style.setProperty('--fs',fsVal);
+function changeFont(d){
+  fsVal=Math.max(0.85,Math.min(1.6,fsVal+d*0.1));
+  document.documentElement.style.setProperty('--fs',fsVal);
+  localStorage.setItem('msm_fs',fsVal);
+}
+function toggleContrast(save){
+  var on=document.documentElement.getAttribute('data-contrast')==='high';
+  on=!on;
+  document.documentElement.setAttribute('data-contrast', on?'high':'normal');
+  document.getElementById('contrastBtn').classList.toggle('on',on);
+  document.getElementById('contrastBtn').setAttribute('aria-checked',on);
+  if(save!==false) localStorage.setItem('msm_contrast', on?'1':'0');
+}
+function toggleSimple(save){
   var on=document.body.classList.toggle('simple');
   document.getElementById('modoBtn').classList.toggle('on',on);
+  document.getElementById('modoBtn').setAttribute('aria-checked',on);
+  if(save!==false) localStorage.setItem('msm_simple', on?'1':'0');
 }
+(function(){
+  if(localStorage.getItem('msm_contrast')==='1'){ toggleContrast(false); }
+  if(localStorage.getItem('msm_simple')==='1'){ toggleSimple(false); }
+})();
 function toggleMascotTip(){ document.getElementById('mascotTip').classList.toggle('hidden'); }
+function leerEnVoz(){
+  if(!('speechSynthesis' in window)){ alert('Tu navegador no soporta lectura en voz alta.'); return; }
+  var txt=document.getElementById('tramite-titulo').textContent+'. '+document.getElementById('tramite-texto').textContent;
+  var u=new SpeechSynthesisUtterance(txt); u.lang='es-AR';
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
 
 var tramites=[
-  {ic:'📄',t:'Portal de trámites'},
-  {ic:'🅿️',t:'Estacionamiento medido'},
-  {ic:'💻',t:'Portal de pagos'},
-  {ic:'🪪',t:'Licencias de conducir'},
-  {ic:'🩺',t:'Portal pacientes'}
+  {ic:'📄',t:'Portal de trámites'},{ic:'🅿️',t:'Estacionamiento medido'},{ic:'💻',t:'Portal de pagos'},
+  {ic:'🪪',t:'Licencias de conducir'},{ic:'🩺',t:'Portal pacientes'}
 ];
 var tramiteTxt={
   'Portal de trámites':'Accedé al portal general de trámites municipales.',
@@ -274,8 +336,8 @@ var tramiteTxt={
   'Portal pacientes':'Ingresá al portal de pacientes de los centros de salud municipales.'
 };
 var pg=document.getElementById('grid-tramites');
-tramites.forEach(function(t){ var d=document.createElement('button'); d.className='portal-card';
-  d.innerHTML='<div class="ic">'+t.ic+'</div><strong>'+t.t+'</strong>'; d.onclick=function(){ openTramite(t.t,tramiteTxt[t.t]); }; pg.appendChild(d); });
+tramites.forEach(function(t){ var d=document.createElement('button'); d.className='portal-card'; d.setAttribute('aria-label',t.t);
+  d.innerHTML='<div class="ic" aria-hidden="true">'+t.ic+'</div><strong>'+t.t+'</strong>'; d.onclick=function(){ openTramite(t.t,tramiteTxt[t.t]); }; pg.appendChild(d); });
 
 var programas=[
   {ic:'💬',c:'#1CADE4',t:'Atención al vecino',d:'Consultas y reclamos, línea 147.'},
@@ -298,8 +360,8 @@ var programas=[
   {ic:'🚲',c:'#B05060',t:'Bicicleteros',d:'Bicicleteros municipales gratuitos.'}
 ];
 var prg=document.getElementById('grid-programas');
-programas.forEach(function(p){ var d=document.createElement('div'); d.className='prog-item';
-  d.innerHTML='<div class="prog-ic" style="background:'+p.c+'">'+p.ic+'</div><div class="prog-label">'+p.t.toUpperCase()+'</div>';
+programas.forEach(function(p){ var d=document.createElement('button'); d.className='prog-item'; d.setAttribute('aria-label',p.t+': '+p.d);
+  d.innerHTML='<div class="prog-ic" aria-hidden="true" style="background:'+p.c+'">'+p.ic+'</div><div class="prog-label">'+p.t.toUpperCase()+'</div>';
   d.onclick=function(){ openTramite(p.t,p.d); }; prg.appendChild(d); });
 
 var areas=['Jefatura de Gabinete','Secretaría de Gobierno','Secretaría de Economía y Finanzas','Secretaría de Salud','Secretaría de Obras y Espacio Público','Secretaría de Seguridad','Secretaría de Planeamiento y Desarrollo Urbano','Secretaría de Infancia y Familia','Secretaría de Educación y Trabajo','Secretaría de Comunicación y Deportes'];
@@ -313,12 +375,9 @@ var novedades=[
 ];
 var ng=document.getElementById('lista-novedades');
 novedades.forEach(function(n){ var d=document.createElement('div'); d.className='news-card';
-  d.innerHTML='<div class="news-img" style="background:'+n.color+'">'+n.ic+'</div><div class="news-body"><span class="pill">'+n.cat+'</span><strong>'+n.t+'</strong><p>'+n.d+'</p></div>';
+  d.innerHTML='<div class="news-img" aria-hidden="true" style="background:'+n.color+'">'+n.ic+'</div><div class="news-body"><span class="pill">'+n.cat+'</span><strong>'+n.t+'</strong><p>'+n.d+'</p></div>';
   ng.appendChild(d); });
 
-var heroSlides=[
-  {e:'NUEVOS','h:':''},
-];
 var heroData=[
   {e:'NUEVOS','h':'BICICLETEROS MUNICIPALES'},
   {e:'CAMPAÑA','h':'VACUNACIÓN ANTIRRÁBICA GRATUITA'},
@@ -340,6 +399,7 @@ function go(id){
   document.getElementById('view-'+id).classList.remove('hidden');
 }
 function closeSub(){
+  speechSynthesis.cancel();
   ['tramite','juego-intro','juego','resultado'].forEach(function(s){ document.getElementById('view-'+s).classList.add('hidden'); });
   document.getElementById('home').classList.remove('hidden');
 }
@@ -372,11 +432,14 @@ var preguntas=[
   {q:'Querés saber cuánta plata tenés en el banco sin ir a la sucursal. ¿Qué usás?', o:['La app del banco (home banking)','WhatsApp','Una cámara de seguridad','Netflix'], c:0, exp:'El home banking te muestra el saldo y los movimientos de tu cuenta.'},
   {q:'Alguien te pide el "código de un solo uso" por teléfono para "verificar tu cuenta". ¿Qué hacés?', o:['Se lo doy si suena confiable','Nunca lo comparto, corto y llamo a mi banco','Lo publico en redes','Se lo mando por WhatsApp'], c:1, exp:'Ningún banco o app pide ese código por teléfono. Si te lo piden, es un engaño.'}
 ];
-var idx=0, score=0;
-function startGame(){ idx=0; score=0; go('juego'); showQuestion(); }
+var idx=0, score=0, wrongIds=[], activeSet=null;
+function startGame(soloFallidas){
+  activeSet = (soloFallidas && wrongIds.length) ? wrongIds.slice() : preguntas.map(function(_,i){return i;});
+  idx=0; score=0; wrongIds=[]; go('juego'); showQuestion();
+}
 function showQuestion(){
-  var p=preguntas[idx];
-  document.getElementById('progress-bar').style.width=Math.round((idx/preguntas.length)*100)+'%';
+  var p=preguntas[activeSet[idx]];
+  document.getElementById('progress-bar').style.width=Math.round((idx/activeSet.length)*100)+'%';
   document.getElementById('pregunta-texto').textContent=(idx+1)+'. '+p.q;
   var cont=document.getElementById('opciones'); cont.innerHTML='';
   p.o.forEach(function(op,i){ var b=document.createElement('button'); b.className='opt'; b.textContent=op;
@@ -385,17 +448,18 @@ function showQuestion(){
   document.getElementById('btn-siguiente').style.display='none';
 }
 function answer(i,btn,cont){
-  var p=preguntas[idx]; var all=cont.querySelectorAll('.opt'); all.forEach(function(o){o.disabled=true;});
+  var qIndex=activeSet[idx]; var p=preguntas[qIndex]; var all=cont.querySelectorAll('.opt'); all.forEach(function(o){o.disabled=true;});
   if(i===p.c){ btn.classList.add('correct'); score++; document.getElementById('feedback').textContent='Correcto. '+p.exp; document.getElementById('feedback').className='feedback ok'; }
-  else { btn.classList.add('wrong'); all[p.c].classList.add('correct'); document.getElementById('feedback').textContent='No era esa. '+p.exp; document.getElementById('feedback').className='feedback no'; }
+  else { btn.classList.add('wrong'); all[p.c].classList.add('correct'); wrongIds.push(qIndex); document.getElementById('feedback').textContent='No era esa. '+p.exp; document.getElementById('feedback').className='feedback no'; }
   document.getElementById('btn-siguiente').style.display='inline-block';
 }
 function nextQuestion(){
   idx++;
-  if(idx>=preguntas.length){
-    document.getElementById('score-final').textContent=score+' / '+preguntas.length;
-    var msg=score===preguntas.length?'¡Excelente! Ya conocés bien estas apps.':(score>=preguntas.length/2?'Muy bien, vas por buen camino.':'Está bueno practicar de nuevo, de a poco se aprende.');
+  if(idx>=activeSet.length){
+    document.getElementById('score-final').textContent=score+' / '+activeSet.length;
+    var msg=score===activeSet.length?'¡Excelente! Ya conocés bien estas apps.':(score>=activeSet.length/2?'Muy bien, vas por buen camino.':'Está bueno practicar de nuevo, de a poco se aprende.');
     document.getElementById('score-msg').textContent=msg;
+    document.getElementById('btn-repasar').classList.toggle('hidden', wrongIds.length===0);
     go('resultado');
   } else { showQuestion(); }
 }

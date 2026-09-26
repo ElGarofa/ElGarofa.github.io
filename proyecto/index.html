@@ -167,6 +167,26 @@ body.simple .simple-screen{display:block;}
 .center{text-align:center;}
 .panel{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:1.3rem;}
 .tts-btn{background:var(--bg-soft);border:1px solid var(--line);border-radius:20px;padding:.5rem 1rem;font-weight:700;font-size:.85rem;cursor:pointer;margin-bottom:.8rem;color:var(--ink);}
+
+/* ASISTENTE DE VOZ */
+.assistant-btn{position:fixed;bottom:86px;right:20px;width:56px;height:56px;border-radius:50%;background:var(--gray-dark);color:#fff;border:none;font-size:1.5rem;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;z-index:30;}
+@media(max-width:768px){ .assistant-btn{bottom:148px;} body.simple .assistant-btn{bottom:86px;} }
+.ao-overlay{position:fixed;inset:0;background:rgba(20,22,26,.6);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem;}
+.ao-card{background:var(--bg);border-radius:20px;padding:1.8rem 1.6rem;max-width:380px;width:100%;text-align:center;position:relative;}
+.ao-close{position:absolute;top:.8rem;right:.9rem;background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--ink-soft);}
+.ao-mic-wrap{position:relative;width:110px;height:110px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;}
+.ao-ring{position:absolute;border-radius:50%;border:2px solid var(--blue);opacity:0;}
+.ao-mic-wrap.listening .r1{animation:aoPulse 1.6s ease-out infinite;}
+.ao-mic-wrap.listening .r2{animation:aoPulse 1.6s ease-out infinite .5s;}
+@keyframes aoPulse{0%{width:70px;height:70px;opacity:.6;}100%{width:110px;height:110px;opacity:0;}}
+.ao-mic{width:70px;height:70px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:1.7rem;cursor:pointer;z-index:1;}
+.ao-mic-wrap.listening .ao-mic{background:var(--blue-dark);}
+.ao-status{font-size:.9rem;color:var(--ink-soft);min-height:1.3rem;}
+.ao-bubble{background:var(--bg-soft);border-radius:12px;padding:.9rem 1rem;margin:.8rem 0;text-align:left;}
+.ao-bubble strong{display:block;font-size:.82rem;color:var(--ink-soft);font-weight:600;margin-bottom:.3rem;}
+.ao-bubble p{margin:0;color:var(--ink);font-weight:600;font-size:.92rem;line-height:1.45;}
+.ao-chips{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.9rem;}
+.ao-chips button{background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--ink);}
 </style>
 </head>
 <body data-mode="normal">
@@ -236,7 +256,7 @@ body.simple .simple-screen{display:block;}
     <div class="eyebrow-s">Accesos principales</div>
     <h1>¿En qué te podemos ayudar hoy?</h1>
     <p>Elegí una opción o usá tu voz.</p>
-    <button class="mic" aria-label="Activar micrófono para hablar" onclick="useMic()">🎤</button>
+    <button class="mic" aria-label="Abrir asistente de voz" onclick="openAssistant()">🎤</button>
     <div class="mic-label">Presioná para hablar</div>
     <div class="simple-main">
       <button class="simple-card" onclick="openTramite('Reclamo','Contanos el problema (baches, luminarias, basura) y lo derivamos al área correspondiente.')"><span class="ic" aria-hidden="true">⚠️</span><strong>Hacer un reclamo</strong></button>
@@ -280,6 +300,22 @@ body.simple .simple-screen{display:block;}
 
 <button class="mascot-btn" aria-label="Asistente virtual, sugerencia de accesibilidad" onclick="toggleMascotTip()">🤖</button>
 <div class="mascot-tip hidden" id="mascotTip"><p>¿Sabías que podés activar el <b>Modo Simple</b> para una versión más fácil de usar?</p><button onclick="toggleSimple();toggleMascotTip()">Activar</button></div>
+
+<button class="assistant-btn" aria-label="Abrir asistente de voz" onclick="openAssistant()">🎙️</button>
+<div class="ao-overlay hidden" id="assistantOverlay" role="dialog" aria-label="Asistente de voz">
+  <div class="ao-card">
+    <button class="ao-close" aria-label="Cerrar asistente" onclick="closeAssistant()">✕</button>
+    <div class="ao-mic-wrap" id="aoMicWrap"><div class="ao-ring r1"></div><div class="ao-ring r2"></div><button class="ao-mic" id="aoMicBtn" aria-label="Empezar a hablar" onclick="aoListen()">🎤</button></div>
+    <p class="ao-status" id="aoStatus" aria-live="polite">Presioná el micrófono y decime qué necesitás.</p>
+    <div class="ao-bubble hidden" id="aoBubble" aria-live="polite"><strong id="aoTranscript"></strong><p id="aoReply"></p></div>
+    <div class="ao-chips">
+      <button onclick="aoCommand('reclamo')">Hacer un reclamo</button>
+      <button onclick="aoCommand('pagar tasas')">Pagar tasas</button>
+      <button onclick="aoCommand('turno de salud')">Turnos de salud</button>
+      <button onclick="aoCommand('ayuda')">¿Qué podés hacer?</button>
+    </div>
+  </div>
+</div>
 
 <div class="tabbar" aria-label="Navegación mobile">
   <button class="active"><span class="ic" aria-hidden="true">🏠</span>Inicio</button>
@@ -410,19 +446,56 @@ function doSearch(){
   if(found){ openTramite(found.t, found.d||tramiteTxt[found.t]); }
   else { alert('No encontramos resultados para "'+q+'". Te mostramos todos los programas y servicios.'); document.getElementById('grid-programas').scrollIntoView({behavior:'smooth'}); }
 }
-function useMic(){
-  if(!('webkitSpeechRecognition' in window)){ alert('Tu navegador no soporta reconocimiento de voz. Probá con Chrome.'); return; }
-  var r=new webkitSpeechRecognition(); r.lang='es-AR';
-  r.onresult=function(e){ routeVoice(e.results[0][0].transcript.toLowerCase()); };
-  r.onerror=function(){ alert('No pude escucharte, probá de nuevo.'); };
+/* Asistente de voz estilo Siri */
+function openAssistant(){
+  document.getElementById('assistantOverlay').classList.remove('hidden');
+  document.getElementById('aoStatus').textContent='Presioná el micrófono y decime qué necesitás.';
+  document.getElementById('aoBubble').classList.add('hidden');
+}
+function closeAssistant(){
+  document.getElementById('assistantOverlay').classList.add('hidden');
+  document.getElementById('aoMicWrap').classList.remove('listening');
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(window.aoRecognition){ try{ window.aoRecognition.stop(); }catch(e){} }
+}
+function aoListen(){
+  if(!('webkitSpeechRecognition' in window)){
+    document.getElementById('aoStatus').textContent='Tu navegador no soporta reconocimiento de voz. Probá con Chrome, o tocá una opción de abajo.';
+    return;
+  }
+  var r=new webkitSpeechRecognition(); window.aoRecognition=r; r.lang='es-AR';
+  document.getElementById('aoStatus').textContent='Escuchando...';
+  document.getElementById('aoMicWrap').classList.add('listening');
+  r.onresult=function(e){ aoCommand(e.results[0][0].transcript); };
+  r.onerror=function(){ document.getElementById('aoStatus').textContent='No pude escucharte, probá de nuevo.'; document.getElementById('aoMicWrap').classList.remove('listening'); };
+  r.onend=function(){ document.getElementById('aoMicWrap').classList.remove('listening'); };
   r.start();
 }
-function routeVoice(t){
-  if(t.indexOf('reclamo')>-1) openTramite('Reclamo','Contanos el problema y lo derivamos al área correspondiente.');
-  else if(t.indexOf('pagar')>-1||t.indexOf('tasa')>-1) openTramite('Pagos','Pagá tasas municipales de forma segura.');
-  else if(t.indexOf('tr\u00e1mite')>-1||t.indexOf('tramite')>-1) openTramite('Consultar trámite','Revisá el estado de un trámite iniciado.');
-  else if(t.indexOf('turno')>-1) openTramite('Turnos de salud','Reservá o consultá tu turno en salud.');
-  else alert('Escuché: "'+t+'". Probá decir "reclamo", "pagar tasas" o "consultar trámite".');
+function aoCommand(text){
+  var t=text.toLowerCase();
+  document.getElementById('aoTranscript').textContent='"'+text+'"';
+  document.getElementById('aoBubble').classList.remove('hidden');
+  document.getElementById('aoStatus').textContent='';
+  var reply, action=null;
+  if(t.indexOf('hola')>-1||t.indexOf('buen')>-1){ reply='¡Hola! Puedo ayudarte con reclamos, pagos, trámites, turnos de salud, la agenda o el juego de apps. ¿Qué necesitás?'; }
+  else if(t.indexOf('reclamo')>-1){ reply='Listo, te llevo a hacer un reclamo.'; action=function(){ openTramite('Reclamo','Contanos el problema (baches, luminarias, basura) y lo derivamos al área correspondiente.'); }; }
+  else if(t.indexOf('pagar')>-1||t.indexOf('tasa')>-1||t.indexOf('pago')>-1){ reply='Te llevo al portal de pagos.'; action=function(){ openTramite('Pagos','Pagá tasas municipales de forma segura desde el portal de pagos.'); }; }
+  else if(t.indexOf('tr\u00e1mite')>-1||t.indexOf('tramite')>-1||t.indexOf('estado')>-1){ reply='Vamos a consultar el estado de tu trámite.'; action=function(){ openTramite('Consultar trámite','Revisá el estado de un trámite que ya iniciaste.'); }; }
+  else if(t.indexOf('turno')>-1&&t.indexOf('salud')>-1){ reply='Te muestro los turnos de salud.'; action=function(){ openTramite('Turnos de salud','Reservá o consultá tu turno en los centros de salud municipales.'); }; }
+  else if(t.indexOf('turno')>-1){ reply='Te llevo a sacar un turno.'; action=function(){ openTramite('Turnos','Pedí un turno para trámites municipales o de salud.'); }; }
+  else if(t.indexOf('agenda')>-1||t.indexOf('evento')>-1){ reply='Te muestro la agenda municipal.'; action=function(){ openTramite('Agenda municipal','Conocé las próximas actividades del municipio.'); }; }
+  else if(t.indexOf('aprend')>-1||t.indexOf('juego')>-1||(t.indexOf('app')>-1&&t.indexOf('usar')>-1)){ reply='Vamos a practicar con el juego de apps.'; action=function(){ go('juego-intro'); }; }
+  else if(t.indexOf('modo simple')>-1){ var willTurnOn=!document.body.classList.contains('simple'); reply= willTurnOn?'Activo el Modo Simple.':'Desactivo el Modo Simple.'; action=function(){ toggleSimple(); }; }
+  else if(t.indexOf('contraste')>-1){ reply='Cambio el contraste de la página.'; action=function(){ toggleContrast(); }; }
+  else if(t.indexOf('agrand')>-1||t.indexOf('letra grande')>-1||t.indexOf('aumentar')>-1){ reply='Agrando la letra.'; action=function(){ changeFont(1); }; }
+  else if(t.indexOf('achic')>-1||t.indexOf('letra chica')>-1||t.indexOf('disminuir')>-1){ reply='Achico la letra.'; action=function(){ changeFont(-1); }; }
+  else if(t.indexOf('emergencia')>-1||t.indexOf('same')>-1||t.indexOf('bombero')>-1||t.indexOf('polic')>-1){ reply='El SAME es 107, Bomberos (011) 4664-2222 y Atención al vecino 147.'; }
+  else if(t.indexOf('gracias')>-1){ reply='¡De nada! Para eso estoy.'; }
+  else if(t.indexOf('ayuda')>-1||t.indexOf('pod\u00e9s')>-1||t.indexOf('podes')>-1){ reply='Puedo ayudarte a hacer un reclamo, pagar tasas, consultar un trámite, sacar un turno de salud, ver la agenda, jugar para aprender apps, o activar el Modo Simple y el alto contraste.'; }
+  else { reply='No te entendí bien. Probá decir "hacer un reclamo", "pagar tasas" o "turnos de salud", o tocá una opción de abajo.'; }
+  document.getElementById('aoReply').textContent=reply;
+  if('speechSynthesis' in window){ var u=new SpeechSynthesisUtterance(reply); u.lang='es-AR'; speechSynthesis.cancel(); speechSynthesis.speak(u); }
+  if(action){ setTimeout(function(){ closeAssistant(); action(); }, 1500); }
 }
 
 var preguntas=[

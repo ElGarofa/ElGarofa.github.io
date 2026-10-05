@@ -1,0 +1,160 @@
+=====================================================================
+ CONTROL DE ASISTENCIA - GUIA DE BASE DE DATOS PARA EL HOSTING
+=====================================================================
+
+Este archivo reúne todo lo que necesita la base de datos para funcionar
+bien en un hosting. El SQL completo está en la sección 4 (y también en
+el archivo schema.sql, que es el mismo contenido).
+
+
+---------------------------------------------------------------------
+1) REQUISITOS DEL HOSTING
+---------------------------------------------------------------------
+- MySQL 5.7 o superior, o MariaDB 10.3 o superior.
+- Motor InnoDB (necesario para las claves foráneas).
+- Cotejamiento utf8mb4 (acentos y ñ).
+- PHP 7.4 o superior (mejor 8.x) con las extensiones PDO y pdo_mysql
+  (vienen activadas en casi todos los hostings).
+- HTTPS activo (certificado SSL). Es obligatorio para que la PWA se pueda
+  instalar en el celular o la tablet. Casi todos los hostings ofrecen
+  Let's Encrypt gratis desde el panel.
+- Permiso para crear tablas e insertar/modificar datos
+  (SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, ALTER).
+
+
+---------------------------------------------------------------------
+2) PASOS EN EL HOSTING (cPanel / Plesk / similar)
+---------------------------------------------------------------------
+1. Crear la base de datos desde el panel ("Bases de datos MySQL").
+   OJO: muchos hostings agregan un prefijo, por ejemplo
+   "u123456_asistencia". Anotá el nombre COMPLETO.
+2. Crear un usuario de base de datos con una contraseña fuerte y
+   asignarlo a esa base con "Todos los privilegios".
+   (El usuario también suele llevar prefijo.)
+3. Entrar a phpMyAdmin, elegir la base creada, pestaña "Importar" y
+   subir el archivo schema.sql. Alternativa: pestaña "SQL" y pegar el
+   contenido de la sección 4.
+   (Si no importás nada, setup.php crea las tablas solo.)
+4. Subir todos los archivos de la carpeta por FTP o por el Administrador
+   de archivos (public_html o una subcarpeta).
+5. Editar config.php con los datos reales:
+       DB_HOST  -> casi siempre 'localhost' (si no, el hosting lo indica)
+       DB_NAME  -> nombre completo de la base (con prefijo)
+       DB_USER  -> usuario completo (con prefijo)
+       DB_PASS  -> la contraseña del usuario
+6. Abrir en el navegador https://tudominio.com/setup.php y crear el
+   administrador (usuario + contraseña de al menos 8 caracteres).
+7. BORRAR setup.php del hosting apenas termines.
+8. Probar: https://tudominio.com/admin/login.php
+
+
+---------------------------------------------------------------------
+3) PROBLEMAS FRECUENTES
+---------------------------------------------------------------------
+- "Access denied for user": usuario/clave mal escritos o el usuario no
+  está asignado a la base. Revisar el prefijo en DB_USER y DB_NAME.
+- "Unknown database": el nombre en DB_NAME no coincide con el creado.
+- "Cannot add foreign key constraint": la base no usa InnoDB. Pedir al
+  hosting InnoDB o cambiar el motor de las tablas.
+- Acentos mal vistos: la base/tablas deben ser utf8mb4 (el schema ya lo
+  define).
+- Horas corridas: la app guarda la hora de Argentina (UTC-03:00) con
+  SET time_zone al conectar. Si el hosting bloquea ese comando, igual
+  funciona, pero verificá que la hora del servidor sea la correcta.
+- La PWA no se ofrece para instalar: falta HTTPS, o hay que abrir el
+  sitio una vez con internet para que se registre el service worker.
+- Si el sitio va en una subcarpeta (tudominio.com/asistencia/), no hace
+  falta cambiar nada: todas las rutas son relativas.
+
+
+---------------------------------------------------------------------
+4) SQL COMPLETO (copiar y pegar en phpMyAdmin > SQL)
+---------------------------------------------------------------------
+-- No incluye CREATE DATABASE a propósito: en un hosting la base se crea
+-- desde el panel y se selecciona antes de importar.
+
+CREATE TABLE IF NOT EXISTS empleados (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(80) NOT NULL,
+  apellido VARCHAR(80) NOT NULL,
+  dni VARCHAR(12) NOT NULL UNIQUE,
+  pin_hash VARCHAR(255) NOT NULL,
+  activo TINYINT(1) NOT NULL DEFAULT 1,
+  creado TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS registros (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  empleado_id INT NOT NULL,
+  entrada DATETIME NOT NULL,
+  salida DATETIME NULL,
+  FOREIGN KEY (empleado_id) REFERENCES empleados(id) ON DELETE CASCADE,
+  INDEX (entrada),
+  INDEX (empleado_id, salida)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS intentos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ip VARCHAR(45) NOT NULL,
+  momento DATETIME NOT NULL,
+  INDEX (ip, momento)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+---------------------------------------------------------------------
+5) QUE GUARDA CADA TABLA
+---------------------------------------------------------------------
+empleados : nombre, apellido, DNI (único), PIN con hash (nunca en texto
+            plano) y si está activo. Los empleados no se borran, se
+            desactivan, para conservar su historial.
+registros : una fila por turno: entrada y salida. Mientras la salida es
+            NULL, el empleado figura como "presente".
+admins    : usuarios del panel, con contraseña hasheada.
+intentos  : fallos de login/PIN por IP, para el bloqueo de 10 minutos.
+
+
+---------------------------------------------------------------------
+6) CONSULTAS UTILES (phpMyAdmin > SQL)
+---------------------------------------------------------------------
+-- Verificar que las 4 tablas existen:
+SHOW TABLES;
+
+-- Quién está presente ahora:
+SELECT e.apellido, e.nombre, r.entrada
+FROM registros r JOIN empleados e ON e.id = r.empleado_id
+WHERE r.salida IS NULL;
+
+-- Horas trabajadas por empleado en un mes (ejemplo: octubre 2026):
+SELECT e.apellido, e.nombre,
+       ROUND(SUM(TIMESTAMPDIFF(MINUTE, r.entrada, r.salida)) / 60, 2) AS horas
+FROM registros r JOIN empleados e ON e.id = r.empleado_id
+WHERE r.salida IS NOT NULL
+  AND r.entrada >= '2026-10-01' AND r.entrada < '2026-11-01'
+GROUP BY e.id ORDER BY e.apellido;
+
+-- Cerrar a mano un turno que quedó abierto (cambiar el id y la hora):
+UPDATE registros SET salida = '2026-10-05 18:00:00' WHERE id = 123;
+
+-- Limpiar intentos fallidos viejos (la app ya lo hace sola cada día):
+DELETE FROM intentos WHERE momento < (NOW() - INTERVAL 1 DAY);
+
+-- Si olvidás la contraseña del administrador: borrar el admin y volver a
+-- subir setup.php para crear uno nuevo (luego borrarlo otra vez):
+DELETE FROM admins;
+
+
+---------------------------------------------------------------------
+7) COPIAS DE SEGURIDAD
+---------------------------------------------------------------------
+- phpMyAdmin > Exportar > método "Rápido", formato SQL. Guardar el
+  archivo fuera del hosting.
+- Recomendado: una copia por semana, o activar los backups
+  automáticos del hosting si los ofrece.
+- Desde el panel de administrador también se pueden exportar los
+  registros a CSV (abre en Excel).

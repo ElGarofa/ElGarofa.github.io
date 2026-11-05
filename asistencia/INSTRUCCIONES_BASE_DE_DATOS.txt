@@ -158,3 +158,5 @@ DELETE FROM admins;
   automáticos del hosting si los ofrece.
 - Desde el panel de administrador también se pueden exportar los
   registros a CSV (abre en Excel).
+
+

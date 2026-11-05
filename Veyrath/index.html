@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#101712">
+  <title>VEYRATH — Explorá un mundo vivo</title>
+  <meta name="description" content="Conocé Veyrath: un juego de supervivencia prehistórica en desarrollo. Explorá sus criaturas, sistemas, capturas reales y el estado de la build 0.6.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VEYRATH — Explorá un mundo vivo">
+  <meta property="og:description" content="Supervivencia, dinosaurios, civilizaciones y exploración. Seguí el desarrollo de Veyrath.">
+  <meta property="og:image" content="assets/images/05_gigantes.webp">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/images/05_gigantes.webp" as="image">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/v2.css">
+  <script defer src="data/site-content.js"></script>
+  <script defer src="data/bestiary.js"></script>
+  <script defer src="js/script.js"></script>
+  <script defer src="js/v2.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-arrowup" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24"><path d="m2 20 8-14 5 9 2-3 5 8H2Z"/></symbol>
+    <symbol id="i-swords" viewBox="0 0 24 24"><path d="m14 4 6 6M18 2l4 4-9 9M10 4 4 10M6 2 2 6l9 9M10 16l-5 5M14 16l5 5"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C10 4 4 10 4 16a4 4 0 0 0 4 4c6 0 12-6 12-16ZM4 20c4-6 8-8 12-11"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6m0-9v.1"/></symbol>
+  </svg>
+  <div class="site-grain" aria-hidden="true"></div>
+  <header class="site-header" id="top">
+    <div class="nav-wrap page-width">
+      <a href="#top" class="brand" aria-label="Veyrath, ir al inicio">
+        <span class="brand-symbol" aria-hidden="true">V</span><span class="brand-name">VEYRATH<span class="brand-period">.</span></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Navegación principal">
+        <a href="#universo">EL JUEGO</a>
+        <a href="#atlas">MAPA</a>
+        <a href="#bestiario">BESTIARIO</a>
+        <a href="#roadmap">DESARROLLO</a>
+        <a href="#galeria">GALERÍA</a>
+        <a href="#descargar">DESCARGAS</a>
+      </nav>
+      <div class="header-actions"><span class="header-build"><span class="live-dot"></span> BUILD 0.6</span>
+        <a class="header-cta" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer" id="nav-itch">ITCH.IO <svg><use href="#i-arrowup"/></svg></a>
+        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu"><svg><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
+      <a href="#universo">El universo</a><a href="#atlas">Mapa del mundo</a><a href="#bestiario">Bestiario</a><a href="#sistemas">Sistemas</a><a href="#roadmap">Roadmap</a><a href="#galeria">Galería</a><a href="#descargar">Descargas</a><a href="#guia">Guía</a><a href="#devlog">Devlog</a><a href="#comunidad">Comunidad</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-image" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-content page-width">
+        <div class="eyebrow hero-eyebrow"><span class="eyebrow-rule"></span> UN MUNDO PREHISTÓRICO POR DESCUBRIR</div>
+        <div class="hero-kicker">LA NATURALEZA NO TE DEBE NADA.</div>
+        <h1 id="hero-heading">VEYRATH<span class="hero-endpoint">.</span></h1>
+        <p class="hero-line">Sobreviví. Explorá. Dejá tu historia.</p>
+        <p class="hero-desc">Un sandbox de supervivencia donde criaturas antiguas, asentamientos humanos y un mundo en constante cambio escriben su propia historia. Un proyecto independiente que sigue creciendo.</p>
+        <div class="hero-buttons"><a class="button button-main" href="#bestiario">EXPLORÁ EL BESTIARIO <svg><use href="#i-arrow"/></svg></a><a class="button button-ghost" href="#atlas">VER EL MAPA <svg><use href="#i-arrowup"/></svg></a></div>
+        <div class="hero-caption"><span class="crosshair">＋</span> IMÁGENES REALES DEL JUEGO <span class="hero-caption-line"></span> BUILD 0.6</div>
+      </div>
+      <div class="hero-side" aria-hidden="true">01 / EL ORIGEN</div>
+      <div class="hero-bottom page-width"><span>EN DESARROLLO ACTIVO</span><a href="#universo">DESCUBRÍ EL MUNDO <svg><use href="#i-chevron"/></svg></a><span>DESLIZÁ PARA EXPLORAR</span></div>
+    </section>
+    <div class="ticker-wrap" aria-label="Estado actual del proyecto"><div class="ticker page-width">
+      <div><span class="ticker-mark">01</span><span><strong>VERSIÓN 0.6</strong><small>Build de prueba</small></span></div>
+      <div><span class="ticker-mark">02</span><span><strong>10 CIVILIZACIONES</strong><small>Según las notas de la build</small></span></div>
+      <div><span class="ticker-mark">03</span><span><strong>MULTIJUGADOR LAN</strong><small>En fase experimental</small></span></div>
+      <div><span class="ticker-mark">04</span><span><strong>WINDOWS</strong><small>Versión de prueba para PC</small></span></div>
+    </div></div>
+    <section class="section universe-section" id="universo" aria-labelledby="universe-heading">
+      <div class="page-width universe-grid">
+        <div class="universe-copy reveal"><div class="eyebrow"><span class="eyebrow-rule"></span> 01 / EL UNIVERSO</div><h2 id="universe-heading" class="section-title">No conquistás el mundo.<br><em>Aprendés a vivir en él.</em></h2>
+          <p>Entre bosques, costas y ruinas olvidadas, cada excursión puede convertirse en un descubrimiento o en un peligro. La fauna responde a su temperamento; las personas tienen sus propios intereses.</p>
+          <p>Veyrath busca combinar la tensión de la supervivencia con una historia que emerge de tus decisiones: aprender un oficio, construir un hogar, criar animales o formar tu propio asentamiento.</p>
+          <div class="text-link-line"><a class="inline-link" href="#sistemas">EXPLORAR LOS SISTEMAS <svg><use href="#i-arrow"/></svg></a></div>
+        </div>
+        <div class="universe-art reveal"><img src="assets/images/02_bosque.webp" loading="lazy" alt="Manada de criaturas prehistóricas en un bosque del juego Veyrath"><span class="image-frame-corner corner-a"></span><span class="image-frame-corner corner-b"></span><span class="universe-art-label">CAPTURA DE LA BUILD <strong>0.6</strong></span><span class="art-index">VE / 001</span></div>
+      </div>
+    </section>
+
+    <section class="section atlas-section" id="atlas" aria-labelledby="atlas-heading"><div class="page-width">
+      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> ATLAS / CARTOGRAFÍA</div><h2 class="section-title" id="atlas-heading">Todo un mundo<br><em>por explorar.</em></h2></div><p>Un primer vistazo al territorio de Veyrath. Explorá el mapa, ampliá sus regiones y descubrí los diferentes paisajes del continente.</p></div>
+      <div class="atlas-shell">
+        <div class="atlas-map-column"><div class="atlas-controlbar"><span>ATLAS DE VEYRATH <span class="atlas-separator">/</span> VISTA GENERAL</span><div class="atlas-controlbuttons"><button type="button" id="atlas-minus" title="Alejar" aria-label="Alejar mapa">−</button><button type="button" id="atlas-reset" title="Restablecer mapa">⟳</button><button type="button" id="atlas-plus" title="Acercar" aria-label="Acercar mapa">+</button></div></div>
+          <div class="atlas-viewport" id="atlas-viewport" aria-label="Mapa ilustrado con regiones explorables"><div class="atlas-stage" id="atlas-stage"><img src="assets/images/mapa-veyrath.webp" alt="Recreación cartográfica provisional del mundo de Veyrath basada en la captura del mapa del juego" loading="lazy" draggable="false"><div class="atlas-hotspots" id="atlas-hotspots"></div></div></div>
+          <div class="atlas-footnote"><span>ARRASTRÁ PARA MOVER · DESPLAZÁ PARA AMPLIAR</span><span>MAPA ILUSTRADO PROVISIONAL, NO CARTOGRAFÍA EXACTA</span></div>
+        </div>
+        <aside class="atlas-sidebar"><div class="atlas-sidebar-head"><span>05 ZONAS VISUALES</span><h3>Descubrí el territorio</h3><p>Estas denominaciones describen el terreno visible; todavía no son nombres oficiales de regiones.</p></div><div id="atlas-region-list" class="atlas-region-list"></div><div class="atlas-side-bottom"><span class="mini-rule"></span> El mapa definitivo podrá incorporar biomas, rutas, ruinas, recursos y asentamientos.</div></aside>
+      </div>
+    </div></section>
+    <section class="section features-section" id="sistemas" aria-labelledby="features-heading"><div class="page-width">
+      <div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 02 / LA EXPERIENCIA</div><h2 class="section-title" id="features-heading">Cada decisión<br><em>tiene consecuencias.</em></h2></div><p>Las notas de la versión 0.6 describen sistemas que se conectan entre sí. Estos son algunos de los pilares de Veyrath.</p></div>
+      <div class="feature-grid">
+        <article class="feature-card feature-fauna reveal"><div class="feature-shade"></div><div class="feature-head"><span>01 / FAUNA</span><svg><use href="#i-leaf"/></svg></div><div class="feature-bottom"><h3>Conviví con lo<br>indomable.</h3><p>Observación, domesticación pacífica o por desmayo, monturas y cría.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6</span></div></article>
+        <article class="feature-card feature-survival reveal"><div class="feature-shade"></div><div class="feature-head"><span>02 / SUPERVIVENCIA</span><svg><use href="#i-spark"/></svg></div><div class="feature-bottom"><h3>La vida no<br>es sencilla.</h3><p>Clima, necesidades básicas, alimentación, lesiones y curación.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6</span></div></article>
+        <article class="feature-card feature-build reveal"><div class="feature-shade"></div><div class="feature-head"><span>03 / CONSTRUCCIÓN</span><svg><use href="#i-mountain"/></svg></div><div class="feature-bottom"><h3>Construí un lugar<br>al que volver.</h3><p>Refugios, herramientas, ingeniería, herrería y agricultura.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6</span></div></article>
+        <article class="feature-card feature-people reveal"><div class="feature-shade"></div><div class="feature-head"><span>04 / CIVILIZACIONES</span><svg><use href="#i-map"/></svg></div><div class="feature-bottom"><h3>Un mundo que<br>no se detiene.</h3><p>NPC, asentamientos, diplomacia y diez civilizaciones dinámicas.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6</span></div></article>
+      </div>
+    </div></section>
+    <section class="section roadmap-section" id="roadmap" aria-labelledby="roadmap-heading"><div class="page-width">
+      <div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 03 / TRANSPARENCIA</div><h2 class="section-title" id="roadmap-heading">El desarrollo,<br><em>sin secretos.</em></h2></div><p>Una mirada al estado documentado de la versión de prueba y a los sistemas que todavía necesitan trabajo.</p></div>
+      <div class="roadmap-toolbar"><div class="roadmap-filters" role="group" aria-label="Filtrar progreso"><button class="filter-button active" data-roadmap-filter="todos" aria-pressed="true">TODOS</button><button class="filter-button" data-roadmap-filter="incluido" aria-pressed="false">EN LA BUILD</button><button class="filter-button" data-roadmap-filter="experimental" aria-pressed="false">EXPERIMENTAL</button><button class="filter-button" data-roadmap-filter="planeado" aria-pressed="false">PLANIFICADO</button></div><span class="roadmap-count" id="roadmap-count" aria-live="polite"></span></div>
+      <div class="roadmap-grid" id="roadmap-grid"></div>
+      <div class="roadmap-note"><svg><use href="#i-info"/></svg><p>Estados basados en el archivo <strong>LEEME.txt</strong> incluido en Veyrath 0.6 y en los planes del proyecto. "Incluido" significa documentado en esa build, no que haya sido probado independientemente en todas las situaciones.</p></div>
+    </div></section>
+    <section class="mid-quote" aria-label="La filosofía de Veyrath"><div class="quote-background"></div><div class="quote-shade"></div><div class="page-width quote-inner"><span>LA FILOSOFÍA DE VEYRATH</span><p>Un mundo para perderse.<br><em>Una historia para crear.</em></p><span class="quote-rule"></span></div></section>
+
+    <section class="section bestiary-section" id="bestiario" aria-labelledby="bestiary-heading"><div class="page-width">
+      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> ARCHIVO DE CRIATURAS / MODELOS 3D</div><h2 class="section-title" id="bestiary-heading">183 modelos.<br><em>Un universo salvaje.</em></h2></div><p>Explorá los <strong>183 modelos de criaturas</strong> que, según su desarrollador, ya forman parte de Veyrath. Cada ficha permite abrir una vista 3D giratoria del modelo real, extraída de sus archivos FBX.</p></div>
+      <div class="bestiary-metrics"><div><strong>183</strong><span>CRIATURAS EN EL JUEGO</span></div><div><strong>08</strong><span>GRUPOS DEL CATÁLOGO</span></div><div><strong>183</strong><span>MODELOS VISIBLES EN 3D</span></div></div>
+      <div class="bestiary-toolbar"><label class="bestiary-search"><span aria-hidden="true">⌕</span><input type="search" id="beast-search" placeholder="Buscar especie o género..." autocomplete="off" aria-label="Buscar modelos"></label><select id="beast-group" aria-label="Filtrar por grupo"><option value="Todos">TODOS LOS GRUPOS</option></select><span id="beast-count" aria-live="polite"></span></div>
+      <div id="beast-detail" class="beast-detail" hidden></div><div id="bestiary-grid" class="bestiary-grid"></div><div class="bestiary-more-wrap"><button id="beast-more" type="button" class="button button-outline">MOSTRAR MÁS <span aria-hidden="true">↓</span></button></div>
+      <p class="bestiary-disclaimer">* Catálogo basado en los 183 FBX entregados; la integración en el juego fue confirmada por su creador. Los grupos son descriptivos. Las vistas 3D son estáticas, no reproducen las animaciones del juego y algunos modelos se muestran con un material neutro porque no traen la textura integrada.</p>
+    </div></section>
+    <section class="section gallery-section" id="galeria" aria-labelledby="gallery-heading"><div class="page-width"><div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 04 / DESDE EL MUNDO</div><h2 class="section-title" id="gallery-heading">Así se ve<br><em>Veyrath hoy.</em></h2></div><p>Imágenes capturadas del juego. Criaturas, paisajes y construcciones reales de su desarrollo.</p></div>
+      <div class="gallery-toolbar" role="group" aria-label="Filtrar galería"><button class="filter-button active" data-gallery-filter="todos" aria-pressed="true">TODAS</button><button class="filter-button" data-gallery-filter="fauna" aria-pressed="false">FAUNA</button><button class="filter-button" data-gallery-filter="mundo" aria-pressed="false">PAISAJES</button><button class="filter-button" data-gallery-filter="construccion" aria-pressed="false">CONSTRUCCIÓN</button></div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <p class="gallery-note">* Capturas de desarrollo. El aspecto final y las características pueden cambiar.</p>
+    </div></section>
+
+    <section class="section download-section" id="descargar" aria-labelledby="download-heading"><div class="page-width">
+      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> PRUEBA EL JUEGO</div><h2 class="section-title" id="download-heading">Tu aventura<br><em>comienza acá.</em></h2></div><p>Veyrath todavía está en desarrollo. Consultá el canal oficial para conocer la disponibilidad de sus builds y las notas antes de jugar.</p></div>
+      <div class="download-grid"><div class="download-main"><span class="download-tag">BUILD DE REFERENCIA · V0.6</span><h3>Veyrath <em>Alpha</em></h3><p>Un mundo de supervivencia con dinosaurios, asentamientos y exploración. Esta versión de referencia está destinada a pruebas; puede presentar errores y problemas de rendimiento.</p><a class="button button-main" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer">VISITAR LA PÁGINA DE ITCH.IO <svg><use href="#i-arrowup"/></svg></a><p class="download-small">La descarga y su disponibilidad se gestionan desde Itch.io; esta web no aloja el ejecutable.</p></div>
+        <div class="download-facts"><span>DATOS DE LA BUILD DOCUMENTADA</span><dl><div><dt>Plataforma</dt><dd>Windows 10 / 11 · 64 bits</dd></div><div><dt>Gráficos</dt><dd>DirectX 11</dd></div><div><dt>Equipo de referencia</dt><dd>AMD A4-6300 · 8 GB RAM · GT 730</dd></div><div><dt>Referencia de rendimiento</dt><dd>28–30 FPS a 720p, calidad baja*</dd></div><div><dt>Multijugador</dt><dd>LAN experimental</dd></div></dl><p>* Medición indicada en el LEEME.txt de la build 0.6. No equivale a requisitos mínimos garantizados.</p></div>
+      </div>
+    </div></section>
+    <section class="section guide-section" id="guia" aria-labelledby="guide-heading"><div class="page-width">
+      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> EMPEZAR A JUGAR</div><h2 class="section-title" id="guide-heading">Tu primera<br><em>supervivencia.</em></h2></div><p>Una guía compacta basada en el archivo LEEME.txt de la build 0.6. Los controles se pueden cambiar desde Opciones.</p></div>
+      <div class="guide-layout"><div class="guide-steps"><h3>Primeros pasos</h3><ol><li>Recolectá fibra, madera y piedra para fabricar tus primeras herramientas.</li><li>Construí una fogata y asegurá agua potable hirviéndola.</li><li>Explorá el bosque, observá animales y evitá los enfrentamientos innecesarios.</li><li>Buscá a los náufragos cerca del inicio para conocer oficios e intercambiar.</li><li>Probá la domesticación, la fabricación y los primeros refugios.</li></ol><a href="#roadmap" class="inline-link">VER LOS SISTEMAS <svg><use href="#i-arrow"/></svg></a></div><div class="guide-controls"><h3>Controles de teclado</h3><div class="controls-list"><div><kbd>W A S D</kbd><span>Moverse</span></div><div><kbd>Mayús</kbd><span>Correr</span></div><div><kbd>E</kbd><span>Interactuar</span></div><div><kbd>Tab</kbd><span>Mochila</span></div><div><kbd>C</kbd><span>Fabricación</span></div><div><kbd>B</kbd><span>Construcción</span></div><div><kbd>M</kbd><span>Atlas</span></div><div><kbd>J</kbd><span>Diario / Bestiario</span></div><div><kbd>V</kbd><span>Cambiar cámara</span></div><div><kbd>G</kbd><span>Montar / desmontar</span></div><div><kbd>Esc</kbd><span>Opciones y guardar</span></div></div></div></div>
+    </div></section>
+    <section class="section devlog-section" id="devlog" aria-labelledby="devlog-heading"><div class="page-width"><div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 05 / BITÁCORA</div><h2 class="section-title" id="devlog-heading">La historia<br><em>del desarrollo.</em></h2></div><p>Notas y novedades de Veyrath. Estas primeras entradas resumen el contenido documentado en la versión 0.6.</p></div><div class="news-grid" id="news-grid"></div>
+    </div></section>
+
+    <section class="section faq-section" id="preguntas"><div class="page-width"><div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> PREGUNTAS FRECUENTES</div><h2 class="section-title">¿Tenés dudas?<br><em>Empezá por acá.</em></h2></div><p>Respuestas rápidas sobre el estado actual del proyecto, sus recursos y cómo colaborar con el desarrollo.</p></div>
+      <div class="faq-list">
+        <details><summary>¿Veyrath ya está terminado?</summary><p>No. Es un proyecto en desarrollo. La build 0.6 es una versión de prueba; sus sistemas, contenido y rendimiento pueden cambiar.</p></details>
+        <details><summary>¿Los 183 modelos aparecen en el juego?</summary><p>Sí, su desarrollador confirmó que los modelos del catálogo ya están incorporados al juego. La web presenta una vista 3D estática de cada modelo; esto no implica que todas las mecánicas o animaciones sean iguales para todas las especies.</p></details>
+        <details><summary>¿Dónde puedo conseguir una versión del juego?</summary><p>Consultá <a href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer">la página oficial de Veyrath en Itch.io</a> para conocer las versiones públicas disponibles.</p></details>
+        <details><summary>¿Se puede jugar con amigos?</summary><p>Las notas de la build 0.6 incluyen multijugador experimental por red local. La sincronización de NPC, domesticación y fauna tiene limitaciones conocidas.</p></details>
+        <details><summary>¿Cómo puedo ayudar al desarrollo?</summary><p>Unite al <a href="https://discord.gg/x9DaFD35H" target="_blank" rel="noopener noreferrer">Discord de Veyrath</a> para compartir sugerencias, comentar novedades y reportar problemas.</p></details>
+      </div>
+    </div></section>
+    <section class="community-section" id="comunidad"><div class="community-bg"></div><div class="community-overlay"></div><div class="page-width community-inner"><div class="eyebrow"><span class="eyebrow-rule"></span> EL VIAJE RECIÉN EMPIEZA</div><h2>El mundo está creciendo.<br><em>Vos podés ser parte.</em></h2><p>Seguí los avances, explorá las actualizaciones y acompañá el desarrollo de Veyrath desde sus primeras versiones.</p><div class="community-buttons"><a class="button button-main" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer" id="community-itch">VER PÁGINA EN ITCH.IO <svg><use href="#i-arrowup"/></svg></a><a class="button button-outline" href="#roadmap">VER EL ROADMAP <svg><use href="#i-arrow"/></svg></a><a class="button button-outline" href="#comunidad" id="discord-link" hidden>UNIRME AL DISCORD <svg><use href="#i-arrowup"/></svg></a></div><p class="itch-note">Visita los canales oficiales para seguir las nuevas versiones. El enlace de Itch.io puede ofrecer descargas según el estado de publicación.</p></div></section>
+  </main>
+  <footer class="site-footer"><div class="page-width footer-top"><a href="#top" class="brand footer-brand"><span class="brand-symbol">V</span><span class="brand-name">VEYRATH<span class="brand-period">.</span></span></a><span>UN MUNDO VIVO. UN PROYECTO EN EVOLUCIÓN.</span><a href="#top" class="back-top">VOLVER ARRIBA <svg><use href="#i-arrowup"/></svg></a></div><div class="page-width footer-bottom"><span>© <span id="copyright-year"></span> VEYRATH. PROYECTO INDEPENDIENTE.</span><span>BUILD 0.6 · VERSIÓN DE PRUEBA · PC / WINDOWS</span></div></footer>
+
+  <div class="model-modal" id="model-modal" role="dialog" aria-modal="true" aria-labelledby="model-title" hidden><div class="model-dialog"><div class="model-dialog-top"><div><span>ARCHIVO 3D · VEYRATH</span><h2 id="model-title">Visor de criaturas</h2></div><button id="model-close" type="button" aria-label="Cerrar visor">✕</button></div><div class="model-canvas-wrap"><canvas id="model-canvas" width="800" height="580" aria-label="Modelo tridimensional giratorio"></canvas><div class="model-loading" id="model-loading">Cargando modelo tridimensional...</div></div><div class="model-instructions"><span>ARRASTRÁ PARA ROTAR · RUEDA PARA ACERCAR</span><span>MODELO 3D ORIGINAL · SIN ANIMACIÓN EN WEB</span></div></div></div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada" hidden><button class="lightbox-close" id="lightbox-close" aria-label="Cerrar imagen"><svg><use href="#i-x"/></svg></button><button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Imagen anterior">‹</button><figure class="lightbox-frame"><img id="lightbox-image" src="" alt=""><figcaption><strong id="lightbox-title"></strong><span id="lightbox-counter"></span></figcaption></figure><button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Imagen siguiente">›</button></div>
+</body>
+</html>

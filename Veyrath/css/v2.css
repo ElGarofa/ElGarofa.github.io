@@ -27,3 +27,9 @@
 .beast-card small{font-size:10px}
 .beast-card-bottom{margin:13px 18px 0;padding:13px 0 16px}
 @media(max-width:600px){.beast-card{min-height:270px}.beast-card-image{height:130px;min-height:130px}.beast-card-main{padding:13px 12px 0}.beast-card h3{font-size:18px;line-height:1.1}.beast-card-bottom{margin:10px 12px 0;padding-bottom:12px}.beast-number{font-size:8px;padding:5px}}
+
+/* Emblema de VEYRATH: encabezado, pie y portada */
+.brand-emblem{width:42px;height:42px;border-radius:50%;display:block;flex:none;object-fit:cover;box-shadow:0 0 0 1px rgba(215,201,141,.35),0 4px 14px rgba(0,0,0,.55)}
+.hero-emblem{position:absolute;right:clamp(24px,3.5vw,56px);top:50%;width:clamp(240px,27vw,410px);height:auto;aspect-ratio:1/1;border-radius:50%;transform:translateY(-42%);box-shadow:0 34px 90px rgba(0,0,0,.6),0 0 0 1px rgba(215,201,141,.22),0 0 70px rgba(224,120,44,.16);pointer-events:none;user-select:none}
+@media(max-width:1100px){.hero-emblem{right:40px;top:92px;width:clamp(120px,17vw,170px);transform:none;box-shadow:0 14px 40px rgba(0,0,0,.6),0 0 0 1px rgba(215,201,141,.22)}}
+@media(max-width:760px){.brand-emblem{width:34px;height:34px}.hero-emblem{position:static;display:block;width:84px;margin:0 0 16px}}

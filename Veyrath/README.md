@@ -1,6 +1,6 @@
 # VEYRATH — Web oficial v2.1, bestiario 3D completo
 
-Sitio estático basado en la build 0.6 de Unity, los archivos proporcionados por el desarrollador, ocho capturas y el mapa provisional ilustrado.
+Sitio estático actualizado a la versión 0.6.1 del juego (Windows, Linux, macOS y Android), con los archivos proporcionados por el desarrollador, ocho capturas y el mapa provisional ilustrado.
 
 ## Cómo probar
 

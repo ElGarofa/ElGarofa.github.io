@@ -1,38 +1,48 @@
 /*
   DATOS EDITABLES DE VEYRATH
   Modificá las entradas de este archivo para actualizar la web.
-  Los estados reflejan la documentación de la versión 0.6.1, no una prueba técnica independiente.
-  Estados permitidos: "incluido", "experimental", "planeado".
+  - version: se muestra en el encabezado, la portada, las descargas y el pie.
+  - developmentStart: año-mes en que empezó el desarrollo; la web calcula los años.
+  Estados del roadmap: "meta", "incluido", "desarrollo", "experimental", "planeado".
+  "incluido" = jugable en la versión actual; "meta" y "planeado" son objetivos, no promesas.
 */
 window.VEYRATH_DATA = {
-  version: "0.6.1",
-  subtitle: "Versión de prueba para Windows, Linux, macOS y Android",
+  version: "0.8.3",
+  developmentStart: "2024-11",
+  subtitle: "Versión en desarrollo para Windows, Linux, macOS y Android",
   links: {
     itch: "https://elgarofa.itch.io/veyrath",
     discord: "https://discord.gg/x9DaFD35H"
   },
   roadmap: [
-    { name: "Exploración y mundo", category: "Mundo", status: "incluido", detail: "Regiones naturales, ríos, lagos, cuevas, minerales, ruinas y atlas de exploración." },
+    { name: "Un montón de líneas de diálogo", category: "Diálogos", status: "meta", detail: "Sumar muchísimas líneas de diálogo escritas para las 30.000 personas del mundo. Hoy sus charlas combinan episodios escritos con los datos de cada habitante." },
+    { name: "Mundo social: 30.000 NPC", category: "Sociedades", status: "incluido", detail: "Habitantes persistentes con nombre, edad, oficio, hogar, familia y amistades; 18 temas de conversación, confianza, regalos y promesas." },
+    { name: "10 civilizaciones con territorio", category: "Sociedades", status: "incluido", detail: "3 ciudades y 5 pueblos por civilización, mercaderes con trueques y aranceles según la reputación, encargos, guerras, paces y líderes." },
+    { name: "Cuevas bajo el mapa", category: "Mundo", status: "incluido", detail: "18 cuevas grandes con nombre, salas con cristales que dan luz, vetas, restos de expediciones y una ciudad subterránea." },
+    { name: "Exploración y mundo", category: "Mundo", status: "incluido", detail: "Regiones naturales, ríos, lagos, minerales, ruinas, tormentas con rayos y atlas de exploración." },
     { name: "Domesticación y monturas", category: "Fauna", status: "incluido", detail: "Habituación, alimentación, desmayo, narcóticos, boleadoras y monturas por especie. Niveles salvajes 20–150 y ficha de cada criatura con su modelo 3D." },
+    { name: "Linaje y cría de animales", category: "Progresión", status: "incluido", detail: "Modo Crónica con herederos; crianza con camadas de 1 a 3 crías, herencia de estadísticas y mutaciones." },
     { name: "Supervivencia exigente", category: "Supervivencia", status: "incluido", detail: "Sed, alimentación, clima, heridas, infecciones, fracturas y deterioro de comida." },
     { name: "Combate por zonas", category: "Combate", status: "incluido", detail: "Vida según la especie, zonas de impacto (cabeza, cuerpo, patas y cola) y puntos débiles en los acorazados." },
-    { name: "Construcción e ingeniería", category: "Construcción", status: "incluido", detail: "Fogatas, refugios, reparaciones y piezas de ingeniería, como puentes y torres." },
-    { name: "Oficios, agricultura y forja", category: "Progresión", status: "incluido", detail: "Fabricación, carpintería, herrería, siembra, riego y cosecha." },
-    { name: "NPC y asentamientos", category: "Sociedades", status: "incluido", detail: "Campamento de náufragos, encargos, intercambio, reclutamiento y producción del asentamiento." },
-    { name: "10 civilizaciones dinámicas", category: "Sociedades", status: "incluido", detail: "Noticias, relaciones diplomáticas, guerras, paces, líderes y reputación." },
-    { name: "Linaje y cría de animales", category: "Progresión", status: "incluido", detail: "Modo Crónica con herederos; crianza con camadas de 1 a 3 crías, herencia de estadísticas y mutaciones." },
-    { name: "Linux, macOS y Android", category: "Plataformas", status: "experimental", detail: "Versiones nuevas en la 0.6.1, con controles táctiles en Android; todavía sin probar en equipos reales." },
+    { name: "Construcción e ingeniería", category: "Construcción", status: "incluido", detail: "Fogatas, refugios, reparaciones y piezas de ingeniería, como puentes, muelles y torres de vigía." },
+    { name: "Oficios, agricultura y forja", category: "Progresión", status: "incluido", detail: "Fabricación con calidad, carpintería, herrería, siembra, riego y cosecha." },
+    { name: "500 dinosaurios en los datos", category: "Fauna", status: "desarrollo", detail: "Las 500 especies ya están registradas en los datos del juego; sus modelos 3D se van sumando por etapas." },
+    { name: "Animaciones y patas en pendientes", category: "Fauna", status: "desarrollo", detail: "Animaciones nuevas de dinosaurios y apoyo de las patas sobre el terreno inclinado." },
+    { name: "Misiones y nueva interfaz", category: "Jugabilidad", status: "desarrollo", detail: "Misiones del prólogo, misiones que nacen del mundo y renovación del HUD y de los íconos." },
+    { name: "Conexión mediante Epic Online Services", category: "Multijugador", status: "desarrollo", detail: "El código ya está en las versiones de PC; falta configurar el producto de Epic para habilitarlo." },
+    { name: "Linux, macOS y Android", category: "Plataformas", status: "experimental", detail: "Descargas con controles táctiles en Android. Todavía sin probar en equipos reales y, por ahora, sin el mundo social de la versión de Windows." },
     { name: "Multijugador por red local", category: "Multijugador", status: "experimental", detail: "Enlace local de prueba (misma red): jugadores, construcciones, cofres, recursos, chat y fauna; los NPC todavía tienen limitaciones de sincronización." },
-    { name: "Conexión mediante Epic Online Services", category: "Multijugador", status: "planeado", detail: "El código ya está en las versiones de PC; falta configurar el producto de Epic para habilitarlo." },
-    { name: "Servidores y modos online", category: "Multijugador", status: "planeado", detail: "Visión a futuro: servidores oficiales/privados y modalidades PvE y PvP." },
-    { name: "Mejoras de rendimiento y sincronización", category: "Calidad", status: "planeado", detail: "Optimización de los NPC y revisión de la sincronización multijugador." }
+    { name: "Mejoras de rendimiento", category: "Calidad", status: "planeado", detail: "Niveles de detalle para los dinosaurios, optimización de los NPC y revisión de la sincronización multijugador." },
+    { name: "Economía, profesiones y gobiernos", category: "Sociedades", status: "planeado", detail: "Unas 100 profesiones, economía con monedas y contratos, y gobiernos jugables." },
+    { name: "Servidores y modos online", category: "Multijugador", status: "planeado", detail: "Servidores dedicados y oficiales, con modalidades PvE y PvP." }
   ],
   news: [
-    { tag: "NUEVA VERSIÓN", version: "0.6.1", title: "Linux, macOS y Android", text: "La 0.6.1 se puede descargar para Windows, Linux, macOS y Android, con controles táctiles en celulares. Las versiones nuevas todavía no se probaron en equipos reales: cada reporte ayuda.", image: "assets/images/01_costa.webp" },
-    { tag: "GDD 1.0", version: "0.6.1", title: "Combate por zonas y crianza", text: "Días de 40 minutos, combate por zonas con puntos débiles, doma con niveles 20–150, crianza con camadas y mutaciones, calidad de fabricación y lluvia con salpicaduras.", image: "assets/images/04_depredador.webp" },
-    { tag: "NOTAS DE LA BUILD", version: "0.6", title: "Un mundo con más vida", text: "La versión de prueba incluye fauna de distintos temperamentos, cría, ruinas, exploración y civilizaciones con relaciones cambiantes.", image: "assets/images/05_gigantes.webp" },
-    { tag: "SISTEMAS", version: "0.6", title: "Supervivencia, oficios y refugios", text: "Agua potable, heridas, forja, agricultura, construcción e ingeniería forman parte de las pruebas sugeridas para esta build.", image: "assets/images/07_construccion.webp" },
-    { tag: "EN EVALUACIÓN", version: "0.6", title: "Primeras partidas por LAN", text: "El multijugador local está disponible para probar, con limitaciones conocidas en NPC, domesticación y fauna compartida.", image: "assets/images/02_bosque.webp" }
+    { tag: "DOS AÑOS", version: "0.8.3", title: "Dos años de Veyrath", text: "El desarrollo empezó hace dos años y hoy el juego está en la versión 0.8.3. Estamos acomodando las actualizaciones, así que algunas descargas pueden mostrar otra numeración por un tiempo.", image: "assets/images/05_gigantes.webp" },
+    { tag: "MUNDO SOCIAL", version: "0.8.3", title: "30.000 habitantes con historia", text: "Cada NPC tiene nombre, edad, oficio, hogar, familia y amistades. Se puede conversar sobre 18 temas, ganar su confianza, hacer regalos y cumplir promesas.", image: "assets/images/12_registro_gentes.webp" },
+    { tag: "PRÓXIMA META", when: "SIN FECHA", footer: "META A LOGRAR", title: "Un montón de diálogos nuevos", text: "Lo que sigue es sumar muchísimas líneas de diálogo escritas para que las charlas de los 30.000 habitantes suenen distintas. Todavía no está en el juego.", image: "assets/images/13_conversacion.webp" },
+    { tag: "CIVILIZACIONES", version: "0.8.3", title: "Ciudades, pueblos y cuevas", text: "Cada civilización tiene 3 ciudades y 5 pueblos con mercaderes y encargos. Bajo el mapa hay cuevas con cristales y una ciudad subterránea.", image: "assets/images/11_noche.webp" },
+    { tag: "CRIATURAS", version: "0.8.3", title: "500 dinosaurios en los datos", text: "La base de datos del juego ya registra 500 especies, de terópodos a saurópodos. Sus modelos 3D se van sumando por etapas.", image: "assets/images/09_ceratopsios.webp" },
+    { tag: "PLATAFORMAS", version: "0.6.1", title: "Linux, macOS y Android", text: "Desde la 0.6.1 hay descargas para Windows, Linux, macOS y Android, con controles táctiles en celulares. Las versiones nuevas todavía no se probaron en equipos reales: cada reporte ayuda.", image: "assets/images/01_costa.webp" }
   ],
   gallery: [
     { image: "01_costa.webp", title: "La costa", type: "mundo", description: "Agua, vegetación y horizontes abiertos." },

@@ -6,25 +6,46 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#101712">
   <title>VEYRATH — Explorá un mundo vivo</title>
-  <meta name="description" content="Conocé Veyrath: un juego de supervivencia prehistórica en desarrollo. Explorá sus criaturas, sistemas, capturas reales y el estado de la versión 0.6.1.">
+  <meta name="description" content="Veyrath es un juego de supervivencia prehistórica con 500 dinosaurios en sus datos, 30.000 habitantes y diez civilizaciones. Lleva dos años en desarrollo y está en la versión 0.8.3.">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="VEYRATH">
   <meta property="og:title" content="VEYRATH — Explorá un mundo vivo">
-  <meta property="og:description" content="Supervivencia, dinosaurios, civilizaciones y exploración. Alfa 0.6.1 para Windows, Linux, macOS y Android.">
+  <meta property="og:description" content="Supervivencia con 500 dinosaurios en sus datos, 30.000 NPC y diez civilizaciones. Versión 0.8.3, después de dos años de desarrollo.">
   <meta property="og:url" content="https://elgarofa.github.io/Veyrath/">
   <meta property="og:image" content="https://elgarofa.github.io/Veyrath/assets/images/og-veyrath.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Manada de dinosaurios cruzando un claro en VEYRATH">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://elgarofa.github.io/Veyrath/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/images/05_gigantes.webp" as="image">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/v2.css">
+  <link rel="stylesheet" href="css/v3.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "VEYRATH",
+    "url": "https://elgarofa.github.io/Veyrath/",
+    "image": "https://elgarofa.github.io/Veyrath/assets/images/og-veyrath.jpg",
+    "description": "Juego independiente de supervivencia prehistórica con 500 dinosaurios en sus datos, 30.000 habitantes y diez civilizaciones. En desarrollo, versión 0.8.3.",
+    "inLanguage": "es",
+    "genre": ["Supervivencia", "Mundo abierto", "Sandbox"],
+    "gamePlatform": ["Windows", "Linux", "macOS", "Android"],
+    "softwareVersion": "0.8.3",
+    "author": { "@type": "Person", "name": "ElGarofa" },
+    "sameAs": ["https://elgarofa.itch.io/veyrath"]
+  }
+  </script>
   <script defer src="data/site-content.js"></script>
   <script defer src="data/bestiary.js"></script>
   <script defer src="js/script.js"></script>
   <script defer src="js/v2.js"></script>
+  <script defer src="js/v3.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Saltar al contenido</a>
@@ -40,6 +61,8 @@
     <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15"/></symbol>
     <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6m0-9v.1"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8M8 12h5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.6 3-5.6 6-5.6s5.4 2 6 5.6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.6c1.7.7 2.8 2.5 3 5.4"/></symbol>
   </svg>
   <div class="site-grain" aria-hidden="true"></div>
   <header class="site-header" id="top">
@@ -49,19 +72,20 @@
       </a>
       <nav class="desktop-nav" aria-label="Navegación principal">
         <a href="#universo">EL JUEGO</a>
+        <a href="#gentes">GENTES</a>
         <a href="#atlas">MAPA</a>
         <a href="#bestiario">BESTIARIO</a>
         <a href="#roadmap">DESARROLLO</a>
         <a href="#galeria">GALERÍA</a>
         <a href="#descargar">DESCARGAS</a>
       </nav>
-      <div class="header-actions"><span class="header-build"><span class="live-dot"></span> BUILD 0.6.1</span>
+      <div class="header-actions"><span class="header-build"><span class="live-dot"></span> VERSIÓN <span data-veyrath-version>0.8.3</span></span>
         <a class="header-cta" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer" id="nav-itch">ITCH.IO <svg><use href="#i-arrowup"/></svg></a>
         <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu"><svg><use href="#i-menu"/></svg></button>
       </div>
     </div>
     <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
-      <a href="#universo">El universo</a><a href="#atlas">Mapa del mundo</a><a href="#bestiario">Bestiario</a><a href="#sistemas">Sistemas</a><a href="#roadmap">Roadmap</a><a href="#galeria">Galería</a><a href="#descargar">Descargas</a><a href="#guia">Guía</a><a href="#devlog">Devlog</a><a href="#comunidad">Comunidad</a>
+      <a href="#universo">El universo</a><a href="#cifras">Veyrath en cifras</a><a href="#gentes">Gentes y vínculos</a><a href="#meta">Próxima meta</a><a href="#atlas">Mapa del mundo</a><a href="#sistemas">Sistemas</a><a href="#roadmap">Roadmap</a><a href="#bestiario">Bestiario</a><a href="#galeria">Galería</a><a href="#descargar">Descargas</a><a href="#guia">Guía</a><a href="#devlog">Devlog</a><a href="#preguntas">Preguntas</a><a href="#comunidad">Comunidad</a>
     </nav>
   </header>
   <main id="main">
@@ -69,33 +93,93 @@
       <div class="hero-image" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-content page-width">
         <img class="hero-emblem" src="assets/images/emblema-veyrath.jpg" width="760" height="760" alt="Emblema de VEYRATH: una V de piedra con un tiranosaurio al atardecer" fetchpriority="high">
-        <div class="eyebrow hero-eyebrow"><span class="eyebrow-rule"></span> UN MUNDO PREHISTÓRICO POR DESCUBRIR</div>
+        <div class="eyebrow hero-eyebrow"><span class="eyebrow-rule"></span> <span><span data-dev-years>2</span> AÑOS DE DESARROLLO · VERSIÓN <span data-veyrath-version>0.8.3</span></span></div>
         <div class="hero-kicker">LA NATURALEZA NO TE DEBE NADA.</div>
         <h1 id="hero-heading">VEYRATH<span class="hero-endpoint">.</span></h1>
         <p class="hero-line">Sobreviví. Explorá. Dejá tu historia.</p>
-        <p class="hero-desc">Un sandbox de supervivencia donde criaturas antiguas, asentamientos humanos y un mundo en constante cambio escriben su propia historia. Un proyecto independiente que sigue creciendo.</p>
-        <div class="hero-buttons"><a class="button button-main" href="#bestiario">EXPLORÁ EL BESTIARIO <svg><use href="#i-arrow"/></svg></a><a class="button button-ghost" href="#atlas">VER EL MAPA <svg><use href="#i-arrowup"/></svg></a></div>
-        <div class="hero-caption"><span class="crosshair">＋</span> IMÁGENES REALES DEL JUEGO <span class="hero-caption-line"></span> BUILD 0.6</div>
+        <p class="hero-desc">Un sandbox de supervivencia prehistórica con <strong>500 dinosaurios</strong> en sus datos, <strong>30.000 habitantes</strong> con nombre e historia propia y diez civilizaciones que no esperan al jugador. Un proyecto independiente que sigue creciendo.</p>
+        <div class="hero-buttons"><a class="button button-main" href="#descargar"><span>JUGÁ LA <span data-veyrath-version>0.8.3</span></span> <svg><use href="#i-arrow"/></svg></a><a class="button button-ghost" href="#bestiario">EXPLORÁ EL BESTIARIO <svg><use href="#i-arrow"/></svg></a></div>
+        <div class="hero-caption"><span class="crosshair">＋</span> <span>VERSIÓN <span data-veyrath-version>0.8.3</span></span> <span class="hero-caption-line"></span> <span>ACOMODANDO LAS ACTUALIZACIONES</span></div>
       </div>
       <div class="hero-side" aria-hidden="true">01 / EL ORIGEN</div>
-      <div class="hero-bottom page-width"><span>EN DESARROLLO ACTIVO</span><a href="#universo">DESCUBRÍ EL MUNDO <svg><use href="#i-chevron"/></svg></a><span>DESLIZÁ PARA EXPLORAR</span></div>
+      <div class="hero-bottom page-width"><span>EN DESARROLLO DESDE <span data-dev-start-year>2024</span></span><a href="#universo">DESCUBRÍ EL MUNDO <svg><use href="#i-chevron"/></svg></a><span>DESLIZÁ PARA EXPLORAR</span></div>
     </section>
     <div class="ticker-wrap" aria-label="Estado actual del proyecto"><div class="ticker page-width">
-      <div><span class="ticker-mark">01</span><span><strong>VERSIÓN 0.6.1</strong><small>Build de prueba</small></span></div>
-      <div><span class="ticker-mark">02</span><span><strong>10 CIVILIZACIONES</strong><small>Según las notas de la build</small></span></div>
-      <div><span class="ticker-mark">03</span><span><strong>MULTIJUGADOR LAN</strong><small>En fase experimental</small></span></div>
-      <div><span class="ticker-mark">04</span><span><strong>4 PLATAFORMAS</strong><small>Windows, Linux, macOS y Android</small></span></div>
+      <div><span class="ticker-mark">01</span><span><strong><span data-dev-years>2</span> AÑOS DE DESARROLLO</strong><small>Desde <span data-dev-start-year>2024</span>, en evolución constante</small></span></div>
+      <div><span class="ticker-mark">02</span><span><strong>VERSIÓN <span data-veyrath-version>0.8.3</span></strong><small>Acomodando las actualizaciones</small></span></div>
+      <div><span class="ticker-mark">03</span><span><strong>500 DINOSAURIOS · 30.000 NPC</strong><small>Registrados en los datos del juego</small></span></div>
+      <div><span class="ticker-mark">04</span><span><strong>PRÓXIMA META</strong><small>Un montón de diálogos nuevos</small></span></div>
     </div></div>
     <section class="section universe-section" id="universo" aria-labelledby="universe-heading">
       <div class="page-width universe-grid">
         <div class="universe-copy reveal"><div class="eyebrow"><span class="eyebrow-rule"></span> 01 / EL UNIVERSO</div><h2 id="universe-heading" class="section-title">No conquistás el mundo.<br><em>Aprendés a vivir en él.</em></h2>
-          <p>Entre bosques, costas y ruinas olvidadas, cada excursión puede convertirse en un descubrimiento o en un peligro. La fauna responde a su temperamento; las personas tienen sus propios intereses.</p>
-          <p>Veyrath busca combinar la tensión de la supervivencia con una historia que emerge de tus decisiones: aprender un oficio, construir un hogar, criar animales o formar tu propio asentamiento.</p>
+          <p>Entre bosques, costas, cuevas y ruinas olvidadas, cada excursión puede convertirse en un descubrimiento o en un peligro. La fauna responde a su temperamento; las personas, que son miles, tienen sus propios oficios, familias e intereses.</p>
+          <p>Veyrath busca combinar la tensión de la supervivencia con una historia que emerge de tus decisiones: aprender un oficio, construir un hogar, criar animales, ganarte la confianza de un pueblo o formar tu propio asentamiento.</p>
           <div class="text-link-line"><a class="inline-link" href="#sistemas">EXPLORAR LOS SISTEMAS <svg><use href="#i-arrow"/></svg></a></div>
         </div>
-        <div class="universe-art reveal"><img src="assets/images/02_bosque.webp" loading="lazy" alt="Manada de criaturas prehistóricas en un bosque del juego Veyrath"><span class="image-frame-corner corner-a"></span><span class="image-frame-corner corner-b"></span><span class="universe-art-label">CAPTURA DE LA BUILD <strong>0.6</strong></span><span class="art-index">VE / 001</span></div>
+        <div class="universe-art reveal"><img src="assets/images/02_bosque.webp" loading="lazy" alt="Manada de criaturas prehistóricas en un bosque del juego Veyrath"><span class="image-frame-corner corner-a"></span><span class="image-frame-corner corner-b"></span><span class="universe-art-label">CAPTURA <strong>DE DESARROLLO</strong></span><span class="art-index">VE / 001</span></div>
       </div>
     </section>
+
+    <section class="section stats-section" id="cifras" aria-labelledby="stats-heading"><div class="page-width">
+      <div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 02 / VEYRATH EN CIFRAS</div><h2 class="section-title" id="stats-heading">Dos años de trabajo.<br><em>Un mundo enorme.</em></h2></div><p>Lo que ya forma parte de los datos de la versión <strong data-veyrath-version>0.8.3</strong> y lo que todavía falta escribir.</p></div>
+      <div class="stats-grid">
+        <article class="stat-card stat-major stat-dinos reveal"><div class="stat-shade" aria-hidden="true"></div><span class="stat-index">01 / FAUNA</span><strong class="stat-number" data-count="500">500</strong><h3>Dinosaurios en los datos</h3><p>De terópodos a saurópodos, ya registrados en los datos del juego. La cuenta incluye pterosaurios y reptiles marinos; sus modelos 3D se suman por etapas.</p></article>
+        <article class="stat-card stat-major stat-people reveal"><div class="stat-shade" aria-hidden="true"></div><span class="stat-index">02 / SOCIEDADES</span><strong class="stat-number" data-count="30000">30.000</strong><h3>NPC con identidad propia</h3><p>Cada uno con nombre completo, edad, oficio, hogar, familia y amistades, repartidos entre diez civilizaciones.</p></article>
+        <article class="stat-card reveal"><span class="stat-index">03</span><strong class="stat-number" data-count="10">10</strong><h3>Civilizaciones</h3><p>Con territorio, relaciones, guerras, paces y reputación.</p></article>
+        <article class="stat-card reveal"><span class="stat-index">04</span><strong class="stat-number" data-count="80">80</strong><h3>Ciudades y pueblos</h3><p>Tres ciudades y cinco pueblos por civilización, con mercaderes y encargos.</p></article>
+        <article class="stat-card reveal"><span class="stat-index">05</span><strong class="stat-number" data-count="18">18</strong><h3>Temas por habitante</h3><p>Infancia, familia, oficio, sueños, secretos y más. La confianza abre los más íntimos.</p></article>
+        <article class="stat-card reveal"><span class="stat-index">06</span><strong class="stat-number" data-count="183">183</strong><h3>Modelos 3D para ver</h3><p>Criaturas del juego que podés girar en el <a href="#bestiario">bestiario de esta web</a>.</p></article>
+      </div>
+      <ol class="dev-track reveal" aria-label="Recorrido del desarrollo">
+        <li class="dev-step is-done"><span class="dev-dot" aria-hidden="true"></span><span class="dev-when"><span data-dev-start-year>2024</span></span><strong>Empieza el desarrollo</strong><p>Arranca el trabajo sobre Veyrath como proyecto independiente.</p></li>
+        <li class="dev-step is-now"><span class="dev-dot" aria-hidden="true"></span><span class="dev-when">HOY · <span data-dev-years>2</span> AÑOS DESPUÉS</span><strong>Versión <span data-veyrath-version>0.8.3</span></strong><p>El juego está acomodando sus actualizaciones.</p></li>
+        <li class="dev-step is-next"><span class="dev-dot" aria-hidden="true"></span><span class="dev-when">PRÓXIMA META</span><strong>Un montón de diálogos</strong><p>Más líneas de diálogo escritas para sus 30.000 habitantes.</p></li>
+      </ol>
+    </div></section>
+
+    <section class="section people-section" id="gentes" aria-labelledby="people-heading"><div class="page-width">
+      <div class="people-grid">
+        <div class="people-copy reveal">
+          <div class="eyebrow"><span class="eyebrow-rule"></span> 03 / GENTES Y VÍNCULOS</div>
+          <h2 class="section-title" id="people-heading">30.000 personas.<br><em>Cada una con su historia.</em></h2>
+          <p>Veyrath tiene 30.000 NPC persistentes: 3.000 por cada una de sus diez civilizaciones, repartidos entre 30 ciudades y 50 pueblos. Cada persona tiene nombre completo, edad, oficio, apariencia, hogar, familia y una amistad dentro del mismo registro.</p>
+          <p>Podés conversar con ellas, ganarte su confianza, compartir una comida, regalarles materiales para su oficio o prometer llevar un mensaje y volver con la respuesta. Desde <strong>Gentes</strong> se busca a cualquiera por nombre, oficio o lugar y se la ubica en el atlas.</p>
+          <ul class="people-facts">
+            <li><strong>7.500</strong><span>FAMILIAS</span></li>
+            <li><strong>24</strong><span>OFICIOS</span></li>
+            <li><strong>3.000</strong><span>POR CIVILIZACIÓN</span></li>
+          </ul>
+        </div>
+        <figure class="people-shot reveal">
+          <div class="people-frame"><img src="assets/images/12_registro_gentes.webp" width="1280" height="720" loading="lazy" decoding="async" alt="Pantalla Gentes y vínculos del juego: registro con 30.000 habitantes, 10 civilizaciones y 80 ciudades y pueblos"><span class="image-frame-corner corner-a" aria-hidden="true"></span><span class="image-frame-corner corner-b" aria-hidden="true"></span></div>
+          <figcaption><span>CAPTURA DEL JUEGO</span> Registro «Gentes y vínculos»</figcaption>
+        </figure>
+      </div>
+      <div class="topics reveal">
+        <div class="topics-head"><svg aria-hidden="true"><use href="#i-chat"/></svg><span>LOS 18 TEMAS DE CADA HABITANTE</span></div>
+        <ul class="topic-list">
+          <li>Identidad</li><li>Infancia</li><li>Familia</li><li>Oficio</li><li>Viajes</li><li>Acontecimiento personal</li><li>Tradiciones</li><li>Pérdidas</li><li>Sueños</li><li>Secretos</li><li>Política</li><li>Preocupaciones</li><li>Aficiones</li><li>Amistad</li><li>Noticias del día</li><li>Promesas</li><li>Consejos</li><li>Legado</li>
+        </ul>
+      </div>
+      <article class="goal-card reveal" id="meta" aria-labelledby="goal-heading">
+        <div class="goal-copy">
+          <span class="goal-badge"><i aria-hidden="true"></i> PRÓXIMA META · TODAVÍA NO ESTÁ EN EL JUEGO</span>
+          <h3 id="goal-heading">Darles voz propia:<br><em>un montón de líneas de diálogo nuevas.</em></h3>
+          <p>Hoy las conversaciones combinan episodios escritos con los datos de cada habitante, así que muchas comparten estructura. La próxima gran meta es sumar muchísimas líneas de diálogo escritas para que cada charla suene distinta.</p>
+          <ol class="goal-steps" aria-label="Estado de la meta">
+            <li class="is-active"><span>01</span>Meta definida</li>
+            <li><span>02</span>Escritura de diálogos</li>
+            <li><span>03</span>En el juego</li>
+          </ol>
+          <p class="goal-note">Es un objetivo a lograr, no una función terminada. Los avances se van a contar en la bitácora y en Discord.</p>
+        </div>
+        <figure class="goal-shot">
+          <img src="assets/images/13_conversacion.webp" width="1280" height="720" loading="lazy" decoding="async" alt="Pantalla de conversación del juego con una habitante, sus temas y tres respuestas posibles">
+          <figcaption>Así se ve hoy una conversación</figcaption>
+        </figure>
+      </article>
+    </div></section>
 
     <section class="section atlas-section" id="atlas" aria-labelledby="atlas-heading"><div class="page-width">
       <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> ATLAS / CARTOGRAFÍA</div><h2 class="section-title" id="atlas-heading">Todo un mundo<br><em>por explorar.</em></h2></div><p>Un primer vistazo al territorio de Veyrath. Explorá el mapa, ampliá sus regiones y descubrí los diferentes paisajes del continente.</p></div>
@@ -108,61 +192,64 @@
       </div>
     </div></section>
     <section class="section features-section" id="sistemas" aria-labelledby="features-heading"><div class="page-width">
-      <div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 02 / LA EXPERIENCIA</div><h2 class="section-title" id="features-heading">Cada decisión<br><em>tiene consecuencias.</em></h2></div><p>Las notas de la versión 0.6.1 describen sistemas que se conectan entre sí. Estos son algunos de los pilares de Veyrath.</p></div>
+      <div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 04 / LA EXPERIENCIA</div><h2 class="section-title" id="features-heading">Cada decisión<br><em>tiene consecuencias.</em></h2></div><p>Sistemas que se conectan entre sí. Estos son algunos de los pilares de Veyrath en la versión <strong data-veyrath-version>0.8.3</strong>.</p></div>
       <div class="feature-grid">
-        <article class="feature-card feature-fauna reveal"><div class="feature-shade"></div><div class="feature-head"><span>01 / FAUNA</span><svg><use href="#i-leaf"/></svg></div><div class="feature-bottom"><h3>Conviví con lo<br>indomable.</h3><p>Observación, domesticación pacífica o por desmayo, monturas y cría.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6.1</span></div></article>
-        <article class="feature-card feature-survival reveal"><div class="feature-shade"></div><div class="feature-head"><span>02 / SUPERVIVENCIA</span><svg><use href="#i-spark"/></svg></div><div class="feature-bottom"><h3>La vida no<br>es sencilla.</h3><p>Clima, necesidades básicas, alimentación, lesiones y curación.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6.1</span></div></article>
-        <article class="feature-card feature-build reveal"><div class="feature-shade"></div><div class="feature-head"><span>03 / CONSTRUCCIÓN</span><svg><use href="#i-mountain"/></svg></div><div class="feature-bottom"><h3>Construí un lugar<br>al que volver.</h3><p>Refugios, herramientas, ingeniería, herrería y agricultura.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6.1</span></div></article>
-        <article class="feature-card feature-people reveal"><div class="feature-shade"></div><div class="feature-head"><span>04 / CIVILIZACIONES</span><svg><use href="#i-map"/></svg></div><div class="feature-bottom"><h3>Un mundo que<br>no se detiene.</h3><p>NPC, asentamientos, diplomacia y diez civilizaciones dinámicas.</p><span class="feature-status"><span></span> INCLUIDO EN BUILD 0.6.1</span></div></article>
+        <article class="feature-card feature-fauna reveal"><div class="feature-shade"></div><div class="feature-head"><span>01 / FAUNA</span><svg><use href="#i-leaf"/></svg></div><div class="feature-bottom"><h3>Conviví con lo<br>indomable.</h3><p>Observación, domesticación pacífica o por desmayo, monturas y cría.</p><span class="feature-status"><span></span><b>JUGABLE EN LA <b data-veyrath-version>0.8.3</b></b></span></div></article>
+        <article class="feature-card feature-survival reveal"><div class="feature-shade"></div><div class="feature-head"><span>02 / SUPERVIVENCIA</span><svg><use href="#i-spark"/></svg></div><div class="feature-bottom"><h3>La vida no<br>es sencilla.</h3><p>Clima, necesidades básicas, alimentación, lesiones y curación.</p><span class="feature-status"><span></span><b>JUGABLE EN LA <b data-veyrath-version>0.8.3</b></b></span></div></article>
+        <article class="feature-card feature-build reveal"><div class="feature-shade"></div><div class="feature-head"><span>03 / CONSTRUCCIÓN</span><svg><use href="#i-mountain"/></svg></div><div class="feature-bottom"><h3>Construí un lugar<br>al que volver.</h3><p>Refugios, herramientas, ingeniería, herrería y agricultura.</p><span class="feature-status"><span></span><b>JUGABLE EN LA <b data-veyrath-version>0.8.3</b></b></span></div></article>
+        <article class="feature-card feature-people reveal"><div class="feature-shade"></div><div class="feature-head"><span>04 / CIVILIZACIONES</span><svg><use href="#i-users"/></svg></div><div class="feature-bottom"><h3>Un mundo que<br>no se detiene.</h3><p>30.000 NPC, 80 ciudades y pueblos, mercaderes y diez civilizaciones dinámicas.</p><span class="feature-status"><span></span><b>JUGABLE EN LA <b data-veyrath-version>0.8.3</b></b></span></div></article>
       </div>
     </div></section>
     <section class="section roadmap-section" id="roadmap" aria-labelledby="roadmap-heading"><div class="page-width">
-      <div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 03 / TRANSPARENCIA</div><h2 class="section-title" id="roadmap-heading">El desarrollo,<br><em>sin secretos.</em></h2></div><p>Una mirada al estado documentado de la versión de prueba y a los sistemas que todavía necesitan trabajo.</p></div>
-      <div class="roadmap-toolbar"><div class="roadmap-filters" role="group" aria-label="Filtrar progreso"><button class="filter-button active" data-roadmap-filter="todos" aria-pressed="true">TODOS</button><button class="filter-button" data-roadmap-filter="incluido" aria-pressed="false">EN LA BUILD</button><button class="filter-button" data-roadmap-filter="experimental" aria-pressed="false">EXPERIMENTAL</button><button class="filter-button" data-roadmap-filter="planeado" aria-pressed="false">PLANIFICADO</button></div><span class="roadmap-count" id="roadmap-count" aria-live="polite"></span></div>
+      <div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 05 / TRANSPARENCIA</div><h2 class="section-title" id="roadmap-heading">El desarrollo,<br><em>sin secretos.</em></h2></div><p>Qué se puede jugar hoy, qué está en desarrollo y cuáles son las metas que todavía hay que lograr.</p></div>
+      <div class="roadmap-toolbar"><div class="roadmap-filters" role="group" aria-label="Filtrar progreso"><button class="filter-button active" data-roadmap-filter="todos" aria-pressed="true">TODOS</button><button class="filter-button" data-roadmap-filter="meta" aria-pressed="false">METAS</button><button class="filter-button" data-roadmap-filter="incluido" aria-pressed="false">JUGABLE HOY</button><button class="filter-button" data-roadmap-filter="desarrollo" aria-pressed="false">EN DESARROLLO</button><button class="filter-button" data-roadmap-filter="experimental" aria-pressed="false">EXPERIMENTAL</button><button class="filter-button" data-roadmap-filter="planeado" aria-pressed="false">MÁS ADELANTE</button></div><span class="roadmap-count" id="roadmap-count" aria-live="polite"></span></div>
       <div class="roadmap-grid" id="roadmap-grid"></div>
-      <div class="roadmap-note"><svg><use href="#i-info"/></svg><p>Estados basados en las notas de la versión <strong>0.6.1</strong> y en los planes del proyecto. "Incluido" significa documentado en esa build, no que haya sido probado independientemente en todas las situaciones.</p></div>
+      <div class="roadmap-note"><svg><use href="#i-info"/></svg><p>Estados según el desarrollo de la versión <strong data-veyrath-version>0.8.3</strong>. «Jugable hoy» significa que está en la versión actual, no que se haya probado en todas las situaciones. Las metas y lo planificado para más adelante son objetivos, no promesas.</p></div>
     </div></section>
     <section class="mid-quote" aria-label="La filosofía de Veyrath"><div class="quote-background"></div><div class="quote-shade"></div><div class="page-width quote-inner"><span>LA FILOSOFÍA DE VEYRATH</span><p>Un mundo para perderse.<br><em>Una historia para crear.</em></p><span class="quote-rule"></span></div></section>
 
     <section class="section bestiary-section" id="bestiario" aria-labelledby="bestiary-heading"><div class="page-width">
-      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> ARCHIVO DE CRIATURAS / MODELOS 3D</div><h2 class="section-title" id="bestiary-heading">183 modelos.<br><em>Un universo salvaje.</em></h2></div><p>Explorá los <strong>183 modelos de criaturas</strong> que, según su desarrollador, ya forman parte de Veyrath. Cada ficha permite abrir una vista 3D giratoria del modelo real, extraída de sus archivos FBX.</p></div>
-      <div class="bestiary-metrics"><div><strong>183</strong><span>CRIATURAS EN EL JUEGO</span></div><div><strong>08</strong><span>GRUPOS DEL CATÁLOGO</span></div><div><strong>183</strong><span>MODELOS VISIBLES EN 3D</span></div></div>
+      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> ARCHIVO DE CRIATURAS / MODELOS 3D</div><h2 class="section-title" id="bestiary-heading">500 dinosaurios.<br><em>Un universo salvaje.</em></h2></div><p>Los datos de Veyrath registran <strong>500 dinosaurios</strong>. Acá podés explorar <strong>183 modelos de criaturas</strong> que, según su desarrollador, ya forman parte del juego. Cada ficha abre una vista 3D giratoria del modelo real, extraída de sus archivos FBX.</p></div>
+      <div class="bestiary-metrics"><div><strong>500</strong><span>DINOSAURIOS EN LOS DATOS</span></div><div><strong>183</strong><span>MODELOS 3D PARA EXPLORAR</span></div><div><strong>08</strong><span>GRUPOS DEL CATÁLOGO</span></div></div>
       <div class="bestiary-toolbar"><label class="bestiary-search"><span aria-hidden="true">⌕</span><input type="search" id="beast-search" placeholder="Buscar especie o género..." autocomplete="off" aria-label="Buscar modelos"></label><select id="beast-group" aria-label="Filtrar por grupo"><option value="Todos">TODOS LOS GRUPOS</option></select><span id="beast-count" aria-live="polite"></span></div>
       <div id="beast-detail" class="beast-detail" hidden></div><div id="bestiary-grid" class="bestiary-grid"></div><div class="bestiary-more-wrap"><button id="beast-more" type="button" class="button button-outline">MOSTRAR MÁS <span aria-hidden="true">↓</span></button></div>
-      <p class="bestiary-disclaimer">* Catálogo basado en los 183 FBX entregados; la integración en el juego fue confirmada por su creador. Los grupos son descriptivos. Las vistas 3D son estáticas, no reproducen las animaciones del juego y algunos modelos se muestran con un material neutro porque no traen la textura integrada.</p>
+      <p class="bestiary-disclaimer">* Los 500 corresponden a los datos del juego e incluyen pterosaurios y reptiles marinos; sus modelos se suman por etapas. Este catálogo web muestra los 183 FBX entregados, cuya integración en el juego fue confirmada por su creador. Los grupos son descriptivos. Las vistas 3D son estáticas, no reproducen las animaciones del juego y algunos modelos se muestran con un material neutro porque no traen la textura integrada.</p>
     </div></section>
-    <section class="section gallery-section" id="galeria" aria-labelledby="gallery-heading"><div class="page-width"><div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 04 / DESDE EL MUNDO</div><h2 class="section-title" id="gallery-heading">Así se ve<br><em>Veyrath hoy.</em></h2></div><p>Imágenes capturadas del juego. Criaturas, paisajes y construcciones reales de su desarrollo.</p></div>
+    <section class="section gallery-section" id="galeria" aria-labelledby="gallery-heading"><div class="page-width"><div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 06 / DESDE EL MUNDO</div><h2 class="section-title" id="gallery-heading">Así se ve<br><em>Veyrath hoy.</em></h2></div><p>Imágenes capturadas del juego. Criaturas, paisajes y construcciones reales de su desarrollo.</p></div>
       <div class="gallery-toolbar" role="group" aria-label="Filtrar galería"><button class="filter-button active" data-gallery-filter="todos" aria-pressed="true">TODAS</button><button class="filter-button" data-gallery-filter="fauna" aria-pressed="false">FAUNA</button><button class="filter-button" data-gallery-filter="mundo" aria-pressed="false">PAISAJES</button><button class="filter-button" data-gallery-filter="construccion" aria-pressed="false">CONSTRUCCIÓN</button></div>
       <div class="gallery-grid" id="gallery-grid"></div>
       <p class="gallery-note">* Capturas de desarrollo. El aspecto final y las características pueden cambiar.</p>
     </div></section>
 
     <section class="section download-section" id="descargar" aria-labelledby="download-heading"><div class="page-width">
-      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> PRUEBA EL JUEGO</div><h2 class="section-title" id="download-heading">Tu aventura<br><em>comienza acá.</em></h2></div><p>Veyrath todavía está en desarrollo. Consultá el canal oficial para conocer la disponibilidad de sus builds y las notas antes de jugar.</p></div>
-      <div class="download-grid"><div class="download-main"><span class="download-tag">VERSIÓN ACTUAL · V0.6.1</span><h3>Veyrath <em>Alpha</em></h3><p>Un mundo de supervivencia con dinosaurios, asentamientos y exploración. Se descarga para Windows, Linux, macOS y Android. Es una versión de prueba: puede presentar errores y problemas de rendimiento, y las versiones de Linux, macOS y Android todavía no se probaron en equipos reales.</p><a class="button button-main" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer">VISITAR LA PÁGINA DE ITCH.IO <svg><use href="#i-arrowup"/></svg></a><p class="download-small">La descarga y su disponibilidad se gestionan desde Itch.io; esta web no aloja el ejecutable.</p></div>
-        <div class="download-facts"><span>DATOS DE LA BUILD DOCUMENTADA</span><dl><div><dt>Plataformas</dt><dd>Windows 10/11 · Linux · macOS · Android 7+</dd></div><div><dt>Gráficos</dt><dd>DirectX 11 · OpenGL/Vulkan · Metal · OpenGL ES 3</dd></div><div><dt>Equipo de referencia</dt><dd>AMD A4-6300 · 8 GB RAM · GT 730</dd></div><div><dt>Referencia de rendimiento</dt><dd>28–30 FPS a 720p, calidad baja*</dd></div><div><dt>Multijugador</dt><dd>Enlace local experimental</dd></div></dl><p>* Medición en Windows indicada en el LEEME de la versión 0.6.1. No equivale a requisitos mínimos garantizados.</p></div>
+      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> PROBÁ EL JUEGO</div><h2 class="section-title" id="download-heading">Tu aventura<br><em>comienza acá.</em></h2></div><p>Veyrath lleva <span data-dev-years>2</span> años en desarrollo y está acomodando sus actualizaciones. Leé las notas de cada descarga antes de jugar.</p></div>
+      <div class="download-grid"><div class="download-main"><span class="download-tag">VERSIÓN ACTUAL · V<span data-veyrath-version>0.8.3</span></span><h3>Veyrath <em>Alpha</em></h3><p>Supervivencia con dinosaurios, 30.000 habitantes, civilizaciones y exploración, para Windows, Linux, macOS y Android. Es una versión en desarrollo: puede presentar errores y problemas de rendimiento.</p><a class="button button-main" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer" id="download-itch">VISITAR LA PÁGINA DE ITCH.IO <svg><use href="#i-arrowup"/></svg></a><p class="download-small">Mientras se acomodan las actualizaciones, algunos archivos de descarga pueden figurar con otra numeración: la versión vigente es la <span data-veyrath-version>0.8.3</span>. La descarga se gestiona desde Itch.io; esta web no aloja el ejecutable.</p></div>
+        <div class="download-facts"><span>DATOS DE LA VERSIÓN</span><dl><div><dt>Plataformas</dt><dd>Windows 10/11 · Linux · macOS · Android 7+</dd></div><div><dt>Más reciente</dt><dd>Windows, con el mundo social de 30.000 NPC</dd></div><div><dt>Gráficos</dt><dd>DirectX 11 · OpenGL/Vulkan · Metal · OpenGL ES 3</dd></div><div><dt>Equipo de referencia</dt><dd>AMD A4-6300 · 8 GB RAM · GT 730</dd></div><div><dt>Idioma</dt><dd>Español</dd></div><div><dt>Multijugador</dt><dd>Enlace local experimental</dd></div></dl><p>Las versiones de Linux, macOS y Android se compilaron desde Windows y todavía no se probaron en esos sistemas. El equipo de referencia es el de pruebas del desarrollador: no equivale a requisitos mínimos garantizados.</p></div>
       </div>
     </div></section>
     <section class="section guide-section" id="guia" aria-labelledby="guide-heading"><div class="page-width">
-      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> EMPEZAR A JUGAR</div><h2 class="section-title" id="guide-heading">Tu primera<br><em>supervivencia.</em></h2></div><p>Una guía compacta basada en el LEEME de la versión 0.6.1. Los controles se pueden cambiar desde Opciones; también se juega con mando tipo Xbox o con pantalla táctil.</p></div>
-      <div class="guide-layout"><div class="guide-steps"><h3>Primeros pasos</h3><ol><li>Recolectá fibra, madera y piedra para fabricar tus primeras herramientas.</li><li>Construí una fogata y asegurá agua potable hirviéndola.</li><li>Explorá el bosque, observá animales y evitá los enfrentamientos innecesarios.</li><li>Buscá a los náufragos cerca del inicio para conocer oficios e intercambiar.</li><li>Probá la domesticación, la fabricación y los primeros refugios.</li></ol><a href="#roadmap" class="inline-link">VER LOS SISTEMAS <svg><use href="#i-arrow"/></svg></a></div><div class="guide-controls"><h3>Controles de teclado</h3><div class="controls-list"><div><kbd>W A S D</kbd><span>Moverse</span></div><div><kbd>Mayús</kbd><span>Correr</span></div><div><kbd>E</kbd><span>Interactuar</span></div><div><kbd>Tab</kbd><span>Mochila</span></div><div><kbd>C</kbd><span>Fabricación</span></div><div><kbd>B</kbd><span>Construcción</span></div><div><kbd>M</kbd><span>Atlas</span></div><div><kbd>J</kbd><span>Diario / Bestiario</span></div><div><kbd>V</kbd><span>Cambiar cámara</span></div><div><kbd>G</kbd><span>Montar / desmontar</span></div><div><kbd>F</kbd><span>Ficha de criatura</span></div><div><kbd>Esc</kbd><span>Opciones y guardar</span></div></div></div></div>
+      <div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> EMPEZAR A JUGAR</div><h2 class="section-title" id="guide-heading">Tu primera<br><em>supervivencia.</em></h2></div><p>Una guía compacta basada en el LEEME del juego. Los controles se pueden cambiar desde Opciones; también se juega con mando tipo Xbox o con pantalla táctil.</p></div>
+      <div class="guide-layout"><div class="guide-steps"><h3>Primeros pasos</h3><ol><li>Recolectá fibra, madera y piedra para fabricar tus primeras herramientas.</li><li>Construí una fogata y asegurá agua potable hirviéndola.</li><li>Explorá el bosque, observá animales y evitá los enfrentamientos innecesarios.</li><li>Buscá a los náufragos cerca del inicio para conocer oficios e intercambiar.</li><li>Visitá un pueblo y abrí <strong>Gentes</strong> para conocer a sus habitantes y sus historias.</li><li>Probá la domesticación, la fabricación y los primeros refugios.</li></ol><a href="#roadmap" class="inline-link">VER LOS SISTEMAS <svg><use href="#i-arrow"/></svg></a></div><div class="guide-controls"><h3>Controles de teclado</h3><div class="controls-list"><div><kbd>W A S D</kbd><span>Moverse</span></div><div><kbd>Mayús</kbd><span>Correr</span></div><div><kbd>E</kbd><span>Interactuar</span></div><div><kbd>Tab</kbd><span>Mochila y Gentes</span></div><div><kbd>C</kbd><span>Fabricación</span></div><div><kbd>K</kbd><span>Aprender</span></div><div><kbd>B</kbd><span>Construcción</span></div><div><kbd>P</kbd><span>Estado</span></div><div><kbd>M</kbd><span>Atlas</span></div><div><kbd>J</kbd><span>Diario / Bestiario</span></div><div><kbd>V</kbd><span>Cambiar cámara</span></div><div><kbd>G</kbd><span>Montar / desmontar</span></div><div><kbd>F</kbd><span>Ficha de criatura</span></div><div><kbd>Esc</kbd><span>Opciones y guardar</span></div></div></div></div>
     </div></section>
-    <section class="section devlog-section" id="devlog" aria-labelledby="devlog-heading"><div class="page-width"><div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 05 / BITÁCORA</div><h2 class="section-title" id="devlog-heading">La historia<br><em>del desarrollo.</em></h2></div><p>Notas y novedades de Veyrath. Cada entrada resume lo documentado en su versión.</p></div><div class="news-grid" id="news-grid"></div>
+    <section class="section devlog-section" id="devlog" aria-labelledby="devlog-heading"><div class="page-width"><div class="section-top reveal"><div><div class="eyebrow"><span class="eyebrow-rule"></span> 07 / BITÁCORA</div><h2 class="section-title" id="devlog-heading">La historia<br><em>del desarrollo.</em></h2></div><p>Notas y novedades de Veyrath: lo que trae cada versión y las metas que vienen.</p></div><div class="news-grid" id="news-grid"></div>
     </div></section>
 
-    <section class="section faq-section" id="preguntas"><div class="page-width"><div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> PREGUNTAS FRECUENTES</div><h2 class="section-title">¿Tenés dudas?<br><em>Empezá por acá.</em></h2></div><p>Respuestas rápidas sobre el estado actual del proyecto, sus recursos y cómo colaborar con el desarrollo.</p></div>
+    <section class="section faq-section" id="preguntas" aria-labelledby="faq-heading"><div class="page-width"><div class="section-top"><div><div class="eyebrow"><span class="eyebrow-rule"></span> PREGUNTAS FRECUENTES</div><h2 class="section-title" id="faq-heading">¿Tenés dudas?<br><em>Empezá por acá.</em></h2></div><p>Respuestas rápidas sobre el estado actual del proyecto, sus números y cómo colaborar con el desarrollo.</p></div>
       <div class="faq-list">
-        <details><summary>¿Veyrath ya está terminado?</summary><p>No. Es un proyecto en desarrollo. La 0.6.1 es una versión de prueba; sus sistemas, contenido y rendimiento pueden cambiar.</p></details>
-        <details><summary>¿Los 183 modelos aparecen en el juego?</summary><p>Sí, su desarrollador confirmó que los modelos del catálogo ya están incorporados al juego. La web presenta una vista 3D estática de cada modelo; esto no implica que todas las mecánicas o animaciones sean iguales para todas las especies.</p></details>
-        <details><summary>¿Dónde puedo conseguir una versión del juego?</summary><p>Consultá <a href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer">la página oficial de Veyrath en Itch.io</a> para conocer las versiones públicas disponibles.</p></details>
-        <details><summary>¿En qué plataformas se puede jugar?</summary><p>En Windows, Linux, macOS y Android (APK). Las versiones de Linux, macOS y Android son nuevas y todavía no se probaron en equipos reales. Para iPhone y iPad no hay una app instalable por ahora.</p></details>
-        <details><summary>¿Se puede jugar con amigos?</summary><p>La 0.6.1 incluye un enlace local experimental para jugar en la misma red, todavía con limitaciones. El multijugador por Epic Online Services está en preparación.</p></details>
+        <details><summary>¿Veyrath ya está terminado?</summary><p>No. Lleva dos años en desarrollo y hoy está en la versión 0.8.3. Sus sistemas, su contenido y su rendimiento todavía pueden cambiar.</p></details>
+        <details><summary>¿Por qué algunas descargas muestran otra numeración?</summary><p>Porque el proyecto está acomodando sus actualizaciones. La versión vigente es la 0.8.3; mientras se ordena todo, algunos archivos de Itch.io pueden figurar con otro número.</p></details>
+        <details><summary>¿De verdad hay 30.000 NPC?</summary><p>Sí: son 30.000 habitantes persistentes, cada uno con nombre, edad, oficio, hogar, familia e historia, repartidos entre diez civilizaciones. No se mueven los 30.000 a la vez en pantalla: aparecen los que están cerca del jugador y el resto sigue su horario dentro del registro.</p></details>
+        <details><summary>¿Cuántos dinosaurios tiene el juego?</summary><p>Los datos del juego registran 500 dinosaurios; la cuenta incluye también pterosaurios y reptiles marinos. Sus modelos 3D se suman por etapas: en esta web podés explorar 183.</p></details>
+        <details><summary>¿Los NPC tienen diálogos escritos?</summary><p>Hoy cada habitante conversa sobre 18 temas, con historias que combinan episodios escritos con sus propios datos. Sumar un montón de líneas de diálogo nuevas es la próxima gran meta del proyecto: todavía no está en el juego.</p></details>
+        <details><summary>¿Dónde puedo conseguir una versión del juego?</summary><p>En <a href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer">la página oficial de Veyrath en Itch.io</a>, donde están las versiones públicas disponibles.</p></details>
+        <details><summary>¿En qué plataformas se puede jugar?</summary><p>En Windows, Linux, macOS y Android (APK). La descarga de Windows es la más reciente; las de Linux, macOS y Android todavía no incluyen el mundo social y no se probaron en equipos reales. Para iPhone y iPad no hay una app instalable por ahora.</p></details>
+        <details><summary>¿Se puede jugar con amigos?</summary><p>Hay un enlace local experimental para jugar en la misma red, todavía con limitaciones. El multijugador por Epic Online Services está en desarrollo.</p></details>
         <details><summary>¿Cómo puedo ayudar al desarrollo?</summary><p>Unite al <a href="https://discord.gg/x9DaFD35H" target="_blank" rel="noopener noreferrer">Discord de Veyrath</a> para compartir sugerencias, comentar novedades y reportar problemas.</p></details>
       </div>
     </div></section>
-    <section class="community-section" id="comunidad"><div class="community-bg"></div><div class="community-overlay"></div><div class="page-width community-inner"><div class="eyebrow"><span class="eyebrow-rule"></span> EL VIAJE RECIÉN EMPIEZA</div><h2>El mundo está creciendo.<br><em>Vos podés ser parte.</em></h2><p>Seguí los avances, explorá las actualizaciones y acompañá el desarrollo de Veyrath desde sus primeras versiones.</p><div class="community-buttons"><a class="button button-main" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer" id="community-itch">VER PÁGINA EN ITCH.IO <svg><use href="#i-arrowup"/></svg></a><a class="button button-outline" href="#roadmap">VER EL ROADMAP <svg><use href="#i-arrow"/></svg></a><a class="button button-outline" href="#comunidad" id="discord-link" hidden>UNIRME AL DISCORD <svg><use href="#i-arrowup"/></svg></a></div><p class="itch-note">Visitá los canales oficiales para seguir las nuevas versiones. El enlace de Itch.io puede ofrecer descargas según el estado de publicación.</p></div></section>
+    <section class="community-section" id="comunidad"><div class="community-bg"></div><div class="community-overlay"></div><div class="page-width community-inner"><div class="eyebrow"><span class="eyebrow-rule"></span> <span><span data-dev-years>2</span> AÑOS Y CONTANDO</span></div><h2>El mundo está creciendo.<br><em>Vos podés ser parte.</em></h2><p>Seguí los avances, probá las actualizaciones y acompañá a Veyrath en su camino hacia las próximas metas. Las sugerencias y los reportes de errores son bienvenidos en Discord.</p><div class="community-buttons"><a class="button button-main" href="https://elgarofa.itch.io/veyrath" target="_blank" rel="noopener noreferrer" id="community-itch">VER PÁGINA EN ITCH.IO <svg><use href="#i-arrowup"/></svg></a><a class="button button-outline" href="#roadmap">VER EL ROADMAP <svg><use href="#i-arrow"/></svg></a><a class="button button-outline" href="#comunidad" id="discord-link" hidden>UNIRME AL DISCORD <svg><use href="#i-arrowup"/></svg></a></div><p class="itch-note">Visitá los canales oficiales para seguir las nuevas versiones. El enlace de Itch.io puede ofrecer descargas según el estado de publicación.</p></div></section>
   </main>
-  <footer class="site-footer"><div class="page-width footer-top"><a href="#top" class="brand footer-brand"><img class="brand-emblem" src="assets/images/emblema-96.jpg" width="42" height="42" alt="" aria-hidden="true"><span class="brand-name">VEYRATH<span class="brand-period">.</span></span></a><span>UN MUNDO VIVO. UN PROYECTO EN EVOLUCIÓN.</span><a href="#top" class="back-top">VOLVER ARRIBA <svg><use href="#i-arrowup"/></svg></a></div><div class="page-width footer-bottom"><span>© <span id="copyright-year"></span> VEYRATH. PROYECTO INDEPENDIENTE.</span><span>BUILD 0.6.1 · VERSIÓN DE PRUEBA · WINDOWS · LINUX · MACOS · ANDROID</span></div></footer>
+  <footer class="site-footer"><div class="page-width footer-top"><a href="#top" class="brand footer-brand"><img class="brand-emblem" src="assets/images/emblema-96.jpg" width="42" height="42" alt="" aria-hidden="true"><span class="brand-name">VEYRATH<span class="brand-period">.</span></span></a><span>UN MUNDO VIVO. UN PROYECTO EN EVOLUCIÓN.</span><a href="#top" class="back-top">VOLVER ARRIBA <svg><use href="#i-arrowup"/></svg></a></div><div class="page-width footer-bottom"><span>© <span id="copyright-year"></span> VEYRATH. PROYECTO INDEPENDIENTE.</span><span>VERSIÓN <span data-veyrath-version>0.8.3</span> · EN DESARROLLO DESDE <span data-dev-start-year>2024</span> · WINDOWS · LINUX · MACOS · ANDROID</span></div></footer>
 
   <div class="model-modal" id="model-modal" role="dialog" aria-modal="true" aria-labelledby="model-title" hidden><div class="model-dialog"><div class="model-dialog-top"><div><span>ARCHIVO 3D · VEYRATH</span><h2 id="model-title">Visor de criaturas</h2></div><button id="model-close" type="button" aria-label="Cerrar visor">✕</button></div><div class="model-canvas-wrap"><canvas id="model-canvas" width="800" height="580" aria-label="Modelo tridimensional giratorio"></canvas><div class="model-loading" id="model-loading">Cargando modelo tridimensional...</div></div><div class="model-instructions"><span>ARRASTRÁ PARA ROTAR · RUEDA PARA ACERCAR</span><span>MODELO 3D ORIGINAL · SIN ANIMACIÓN EN WEB</span></div></div></div>
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada" hidden><button class="lightbox-close" id="lightbox-close" aria-label="Cerrar imagen"><svg><use href="#i-x"/></svg></button><button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Imagen anterior">‹</button><figure class="lightbox-frame"><img id="lightbox-image" src="" alt=""><figcaption><strong id="lightbox-title"></strong><span id="lightbox-counter"></span></figcaption></figure><button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Imagen siguiente">›</button></div>

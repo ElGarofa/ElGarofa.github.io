@@ -14,7 +14,7 @@
     return node;
   };
   const imagePath = filename => 'assets/images/' + filename;
-  const roadmapLabels = { incluido: 'EN LA BUILD', experimental: 'EXPERIMENTAL', planeado: 'PLANIFICADO' };
+  const roadmapLabels = { meta: 'META', incluido: 'JUGABLE HOY', desarrollo: 'EN DESARROLLO', experimental: 'EXPERIMENTAL', planeado: 'MÁS ADELANTE' };
   const icons = { arrow: 'i-arrow', arrowup: 'i-arrowup' };
   function svgIcon(name) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -27,7 +27,7 @@
   /* Enlaces oficiales: agregar Discord en el archivo de datos cuando exista. */
   const itchUrl = data.links && data.links.itch;
   if (itchUrl && /^https:\/\//.test(itchUrl)) {
-    $$('#nav-itch, #community-itch').forEach(a => a.href = itchUrl);
+    $$('#nav-itch, #community-itch, #download-itch').forEach(a => a.href = itchUrl);
   }
   const discordUrl = data.links && data.links.discord;
   if (discordUrl && /^https:\/\//.test(discordUrl)) {
@@ -56,7 +56,7 @@
   });
   window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
 
-  /* Roadmap: estados documentados de la build 0.6 + trabajo pendiente. */
+  /* Roadmap: lo jugable hoy, lo que está en desarrollo y las metas. */
   const roadmapGrid = $('#roadmap-grid');
   const roadmapCount = $('#roadmap-count');
   let roadmapFilter = 'todos';
@@ -74,7 +74,7 @@
       card.append(top, element('h3', null, item.name), element('p', null, item.detail));
       roadmapGrid.append(card);
     });
-    roadmapCount.textContent = String(entries.length).padStart(2, '0') + ' SISTEMAS';
+    roadmapCount.textContent = String(entries.length).padStart(2, '0') + (entries.length === 1 ? ' ENTRADA' : ' ENTRADAS');
   };
   $$('[data-roadmap-filter]').forEach(btn => btn.addEventListener('click', () => {
     roadmapFilter = btn.dataset.roadmapFilter;
@@ -178,15 +178,16 @@
   const newsGrid = $('#news-grid');
   (data.news || []).forEach(entry => {
     const card = element('article', 'news-card');
+    if (!entry.version) card.classList.add('news-card-goal');
     const photo = element('img', 'news-image');
     photo.src = entry.image;
     photo.alt = 'Captura de Veyrath asociada a: ' + entry.title;
     photo.loading = 'lazy';
     const content = element('div', 'news-content');
     const top = element('div', 'news-eyebrow');
-    top.append(element('span', null, entry.tag), element('span', null, 'VERSIÓN ' + entry.version));
+    top.append(element('span', null, entry.tag), element('span', null, entry.version ? 'VERSIÓN ' + entry.version : (entry.when || '')));
     const footer = element('div', 'news-footer');
-    footer.append(element('span', null, 'DOCUMENTADO EN LA BUILD'), svgIcon('arrowup'));
+    footer.append(element('span', null, entry.footer || 'NOTAS DE LA VERSIÓN'), svgIcon('arrowup'));
     content.append(top, element('h3', null, entry.title), element('p', null, entry.text), footer);
     card.append(photo, content);
     newsGrid.append(card);
